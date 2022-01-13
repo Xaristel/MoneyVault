@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +15,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,8 +38,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,7 +67,94 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\Account_Operation.cs" />
+    <Compile Include="Model\Expense.cs" />
+    <Compile Include="Model\Expense_Type.cs" />
+    <Compile Include="Model\Goal.cs" />
+    <Compile Include="Model\Income.cs" />
+    <Compile Include="Model\Income_Type.cs" />
+    <Compile Include="Database\DatabaseContext.cs" />
+    <Compile Include="Model\Note.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\Product_List.cs" />
+    <Compile Include="Model\Product_Type.cs" />
+    <Compile Include="Model\Shop.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="ViewModel\AuthViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseCategoryViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseGeneralViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseMainViewModel.cs" />
+    <Compile Include="ViewModel\ExpensePriceViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseReportViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseStatisticViewModel.cs" />
+    <Compile Include="ViewModel\GeneralViewModel.cs" />
+    <Compile Include="ViewModel\HelpViewModel.cs" />
+    <Compile Include="ViewModel\IncomeCategoryViewModel.cs" />
+    <Compile Include="ViewModel\IncomeGeneralViewModel.cs" />
+    <Compile Include="ViewModel\IncomeMainViewModel.cs" />
+    <Compile Include="ViewModel\IncomeReportViewModel.cs" />
+    <Compile Include="ViewModel\IncomeStatisticViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PlanningAccumulationViewModel.cs" />
+    <Compile Include="ViewModel\PlanningGoalViewModel.cs" />
+    <Compile Include="ViewModel\PlanningMainViewModel.cs" />
+    <Compile Include="ViewModel\PlanningNoteViewModel.cs" />
+    <Compile Include="View\ExpenseCategoryPage.xaml.cs">
+      <DependentUpon>ExpenseCategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseGeneralPage.xaml.cs">
+      <DependentUpon>ExpenseGeneralPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseMainPage.xaml.cs">
+      <DependentUpon>ExpenseMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpensePricePage.xaml.cs">
+      <DependentUpon>ExpensePricePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseReportPage.xaml.cs">
+      <DependentUpon>ExpenseReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseStatisticPage.xaml.cs">
+      <DependentUpon>ExpenseStatisticPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GeneralPage.xaml.cs">
+      <DependentUpon>GeneralPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpPage.xaml.cs">
+      <DependentUpon>HelpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeCategoryPage.xaml.cs">
+      <DependentUpon>IncomeCategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeGeneralPage.xaml.cs">
+      <DependentUpon>IncomeGeneralPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeMainPage.xaml.cs">
+      <DependentUpon>IncomeMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeReportPage.xaml.cs">
+      <DependentUpon>IncomeReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeStatisticPage.xaml.cs">
+      <DependentUpon>IncomeStatisticPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningAccumulationPage.xaml.cs">
+      <DependentUpon>PlanningAccumulationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningGoalPage.xaml.cs">
+      <DependentUpon>PlanningGoalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningMainPage.xaml.cs">
+      <DependentUpon>PlanningMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningNotePage.xaml.cs">
+      <DependentUpon>PlanningNotePage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\AuthWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -63,10 +162,82 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\AuthWindow.xaml.cs">
+      <DependentUpon>AuthWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ExpenseCategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseGeneralPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpensePricePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseStatisticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GeneralPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeCategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeGeneralPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeStatisticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningAccumulationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningGoalPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningNotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +257,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,5 +266,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>
