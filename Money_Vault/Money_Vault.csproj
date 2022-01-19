@@ -81,6 +81,8 @@
     <Compile Include="Model\Product_Type.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="MultiConverter.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModel\AuthViewModel.cs" />
     <Compile Include="ViewModel\ExpenseCategoryViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralViewModel.cs" />
