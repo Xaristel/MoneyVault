@@ -50,7 +50,8 @@ namespace Money_Vault.ViewModel
                 {
                     string login = ((Tuple<string, string>)tuple).Item1;
                     string password = ((Tuple<string, string>)tuple).Item2;
-                    Debug.WriteLine(login + " abc " + password);
+
+                    
                 }));
             }
         }
@@ -58,6 +59,7 @@ namespace Money_Vault.ViewModel
         public AuthViewModel()
         {
             _database = new DatabaseContext();
+
             Users = _database.User.ToList();
         }
 

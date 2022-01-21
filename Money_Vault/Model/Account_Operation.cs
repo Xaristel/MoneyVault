@@ -1,23 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Money_Vault.Model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
+    [Table("Account_Operations")]
     public partial class Account_Operation
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required]
         public int Id { get; set; }
 
+        [Required]
         public int Account_Id { get; set; }
 
-        [StringLength(50)]
+        [Required]
         public string Type { get; set; }
 
-        public int? Amount { get; set; }
+        [Required]
+        public int Amount { get; set; }
 
-        public virtual Account Account { get; set; }
     }
 }

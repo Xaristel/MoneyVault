@@ -94,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database\DatabaseContext.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Account_Operation.cs" />
     <Compile Include="Model\Expense.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Model\Goal.cs" />
     <Compile Include="Model\Income.cs" />
     <Compile Include="Model\Income_Type.cs" />
-    <Compile Include="Database\DatabaseContext.cs" />
     <Compile Include="Model\Note.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Product_List.cs" />
@@ -302,7 +302,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Font\Password.ttf" />
-    <None Include="Database\Database.sqlite">
+    <None Include="Database\Database.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -336,6 +336,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
