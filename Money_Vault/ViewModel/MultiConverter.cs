@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace Money_Vault
+namespace Money_Vault.ViewModel
 {
     public class MultiConverter : IMultiValueConverter
     {

@@ -15,7 +15,7 @@ namespace Money_Vault.ViewModel
     /// <summary>
     /// ViewModel для AuthWindow.xaml. Содержит взаимодействие с БД (таблица User)
     /// </summary>
-    internal class AuthViewModel : INotifyPropertyChanged
+    internal class AuthViewModel : BaseViewModel
     {
         private DatabaseContext _database;
 
@@ -51,7 +51,18 @@ namespace Money_Vault.ViewModel
                     string login = ((Tuple<string, string>)tuple).Item1;
                     string password = ((Tuple<string, string>)tuple).Item2;
 
-                    
+                    try
+                    {
+                        User user = _database.User.Find(login);
+                        if (user == null)
+                        {
+                            //
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Ошибка при выполнении SQL-запроса к БД.", ex);
+                    }
                 }));
             }
         }
@@ -61,15 +72,6 @@ namespace Money_Vault.ViewModel
             _database = new DatabaseContext();
 
             Users = _database.User.ToList();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
         }
     }
 }

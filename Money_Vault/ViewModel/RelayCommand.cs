@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Money_Vault
+namespace Money_Vault.ViewModel
 {
     public class RelayCommand : ICommand
     {
