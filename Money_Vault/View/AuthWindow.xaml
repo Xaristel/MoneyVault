@@ -24,7 +24,7 @@
             <converter:MultiConverter x:Key="multiConverter"></converter:MultiConverter>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid x:Name="AuthGrid" Margin="0,10,0,0">
         <Label 
             x:Name="label_programName" 
@@ -78,7 +78,6 @@
             </Button.CommandParameter>
         </Button>
 
-
         <TextBox x:Name="textBox_Password" 
             HorizontalAlignment="Center" 
             Margin="0,412,0,0" 
@@ -112,7 +111,7 @@
                 <ScaleTransform ScaleX="1.3" ScaleY="1.3" />
             </CheckBox.LayoutTransform>
         </CheckBox>
-        
+
         <Button x:Name="button_Register" 
             Content="Регистрация" 
             HorizontalAlignment="Center" 
@@ -121,7 +120,9 @@
             Height="50" 
             Width="300" 
             FontSize="36" BorderThickness="3" 
-            Background="White" ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." BorderBrush="Black"/>
+            Background="White" ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
+            BorderBrush="Black"
+            Command="{Binding RegisterCommand}"/>
 
     </Grid>
 </Window>

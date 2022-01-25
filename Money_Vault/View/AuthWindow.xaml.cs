@@ -12,7 +12,7 @@ namespace Money_Vault.View
         {
             InitializeComponent();
 
-            this.DataContext = new AuthViewModel();
+            DataContext = new AuthViewModel();
         }
     }
 }

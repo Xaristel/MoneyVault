@@ -97,6 +97,7 @@
     <Compile Include="Database\DatabaseContext.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Account_Operation.cs" />
+    <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Expense.cs" />
     <Compile Include="Model\Expense_Type.cs" />
     <Compile Include="Model\Goal.cs" />
@@ -108,7 +109,9 @@
     <Compile Include="Model\Product_Type.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="ViewModel\DisplayRootRegistry.cs" />
     <Compile Include="ViewModel\MultiConverter.cs" />
+    <Compile Include="ViewModel\RegistrationViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\AuthViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -191,6 +194,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\RegistrationModalWindow.xaml.cs">
+      <DependentUpon>RegistrationModalWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Style.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PlanningNotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RegistrationModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,14 +4,41 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Money_Vault.Model
 {
     [Table("Expense_Types")]
-    public partial class Expense_Type
+    public partial class Expense_Type : BaseModel
     {
-        [Required]
-        public int Id { get; set; }
+        private int _id;
+        private string _name;
+        private string _note;
+
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
+            }
+        }
 
         [Required]
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name");
+            }
+        }
 
-        public string Note { get; set; }
+        public string Note
+        {
+            get => _note;
+            set
+            {
+                _note = value;
+                OnPropertyChanged("Note");
+            }
+        }
     }
 }
