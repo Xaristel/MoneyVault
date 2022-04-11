@@ -1,15 +1,10 @@
 ﻿using Money_Vault.Database;
 using Money_Vault.Model;
 using System;
-using System.Data.Entity.Validation;
-using System.Linq;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
 {
-    /// <summary>
-    /// Логика для модального окна регистрации RegistrationModalWindow.
-    /// </summary>
     public class RegistrationViewModel : BaseViewModel
     {
         private RelayCommand _registerNewUserCommand;
@@ -86,7 +81,9 @@ namespace Money_Vault.ViewModel
                         throw ex;
                     }
 
-                    //закрытие окна
+                    var messageViewModel = new MessageViewModel("", $"Пользователь {RegLogin} успешно зарегистрирован.");
+                    (Application.Current as App).displayRootRegistry.ShowPresentation(messageViewModel);
+
                     (Application.Current as App).displayRootRegistry.HidePresentation(this);
                 }));
             }

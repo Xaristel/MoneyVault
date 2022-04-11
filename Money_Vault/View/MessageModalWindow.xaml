@@ -42,12 +42,12 @@
             />
         <TextBlock 
             HorizontalAlignment="Center" 
-            Margin="0,63,0,0" 
+            Margin="0,70,0,0" 
             TextWrapping="Wrap" 
             Text="{Binding Message}" 
             VerticalAlignment="Top" 
             FontSize="36" 
-            Height="194" 
+            Height="187" 
             Width="500" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
             TextAlignment="Left"/>

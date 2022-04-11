@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using Money_Vault.Database;
 using Money_Vault.Model;
@@ -14,17 +9,37 @@ using Money_Vault.Properties;
 
 namespace Money_Vault.ViewModel
 {
-    /// <summary>
-    /// Логика (ViewModel) для AuthWindow.xaml
-    /// </summary>
     public class AuthViewModel : BaseViewModel
     {
         private DatabaseContext _database;
+
+        private string _login;
+        private bool _isKeepLogin;
 
         private RelayCommand _registerCommand;
         private RelayCommand _authCommand;
 
         private IEnumerable<User> _users;
+
+        public string Login
+        {
+            get => _login;
+            set
+            {
+                _login = value;
+                OnPropertyChanged("Login");
+            }
+        }
+
+        public bool IsKeepLogin
+        {
+            get => _isKeepLogin;
+            set
+            {
+                _isKeepLogin = value;
+                OnPropertyChanged("IsKeepLogin");
+            }
+        }
 
         public IEnumerable<User> Users
         {
@@ -41,10 +56,11 @@ namespace Money_Vault.ViewModel
             _database = new DatabaseContext();
 
             Users = _database.Users.ToList();
+            IsKeepLogin = Convert.ToBoolean(Settings.Default["isKeepLogin"]);
 
-            if (Convert.ToBoolean(Settings.Default["isKeepAuthData"]))
+            if (IsKeepLogin)
             {
-
+                Login = Settings.Default["keepLogin"].ToString();
             }
         }
 
@@ -71,11 +87,12 @@ namespace Money_Vault.ViewModel
                 {
                     string login = ((Tuple<string, string, bool>)tuple).Item1;
                     string password = ((Tuple<string, string, bool>)tuple).Item2;
-                    bool isKeepAuthData = ((Tuple<string, string, bool>)tuple).Item3;
+                    IsKeepLogin = ((Tuple<string, string, bool>)tuple).Item3;
 
                     string secretPassword = Convert.ToString(login.GetHashCode() + password.GetHashCode());
-                    Settings.Default["isKeepAuthData"] = isKeepAuthData;
-                    Settings.Default["login"] = login;
+                    Settings.Default["isKeepLogin"] = IsKeepLogin;
+                    Settings.Default["keepLogin"] = login;
+                    Settings.Default.Save();
 
                     try
                     {
@@ -85,7 +102,6 @@ namespace Money_Vault.ViewModel
 
                         if (result.Count() != 0)
                         {
-
                             var displayRootRegistry = (Application.Current as App).displayRootRegistry;
                             var mainViewModel = new MainViewModel();
 

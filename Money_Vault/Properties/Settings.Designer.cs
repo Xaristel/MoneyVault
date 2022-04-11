@@ -25,19 +25,19 @@ namespace Money_Vault.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool isKeepAuthData {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isKeepLogin {
             get {
-                return ((bool)(this["isKeepAuthData"]));
+                return ((bool)(this["isKeepLogin"]));
             }
             set {
-                this["isKeepAuthData"] = value;
+                this["isKeepLogin"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("NoUser")]
         public string keepLogin {
             get {
                 return ((string)(this["keepLogin"]));

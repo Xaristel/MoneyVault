@@ -8,7 +8,7 @@ using System.Windows;
 namespace Money_Vault.ViewModel
 {
     /// <summary>
-    /// Логика для модального окна с информационным сообщением
+    /// Логика для модального окна с информационным сообщением об ошибке/предупреждении
     /// </summary>
     public class MessageViewModel : BaseViewModel
     {

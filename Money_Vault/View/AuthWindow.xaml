@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converter="clr-namespace:Money_Vault.ViewModel"
+        xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:AuthViewModel}"
         mc:Ignorable="d"
-        
         Title="MoneyVault v2.01" 
         Height="900" 
         Width="1600" 
@@ -58,7 +59,7 @@
             ToolTip="Введите ваш логин."
             Style="{StaticResource placeHolder_common}" 
             Tag="Введите ваш логин..." 
-            FontWeight="Normal"/>
+            FontWeight="Normal" Text="{Binding Login}"/>
 
         <Button x:Name="button_Auth" 
             Content="Вход" 
@@ -94,19 +95,18 @@
 
         <CheckBox 
             x:Name="checkBox_isKeepingData" 
-            Content="Запомнить пароль" 
+            Content="Запомнить логин" 
             HorizontalAlignment="Center" 
             Margin="0,482,0,0" 
             VerticalAlignment="Top" 
             FontSize="24" 
             FontWeight="Normal" 
             BorderThickness="3" 
-            IsChecked="True" 
             ToolTip="Отметьте, если хотите, чтобы программа запомнила ваш пароль." 
             Width="300" 
             Background="White" 
             BorderBrush="Black" 
-            Height="24">
+            Height="24" IsChecked="{Binding IsKeepLogin}">
 
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.3" ScaleY="1.3" />

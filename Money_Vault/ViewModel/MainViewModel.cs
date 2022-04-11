@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Money_Vault.ViewModel
 {
-    internal class MainViewModel
+    public class MainViewModel
     {
     }
 }
