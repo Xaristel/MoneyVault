@@ -17,6 +17,7 @@ namespace Money_Vault
             displayRootRegistry.RegisterWindowType<AuthViewModel, AuthWindow>();
             displayRootRegistry.RegisterWindowType<MainViewModel, MainWindow>();
             displayRootRegistry.RegisterWindowType<RegistrationViewModel, RegistrationModalWindow>();
+            displayRootRegistry.RegisterWindowType<MessageViewModel, MessageModalWindow>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

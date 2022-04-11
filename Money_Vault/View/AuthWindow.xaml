@@ -74,6 +74,7 @@
                 <MultiBinding Converter="{StaticResource multiConverter}">
                     <Binding Path="Text" ElementName="textBox_Login"/>
                     <Binding Path="Text" ElementName="textBox_Password"/>
+                    <Binding Path="IsChecked" ElementName="checkBox_isKeepingData"/>
                 </MultiBinding>
             </Button.CommandParameter>
         </Button>
@@ -92,7 +93,7 @@
             FontWeight="Normal"/>
 
         <CheckBox 
-            x:Name="checkBox_isKeepingPassword" 
+            x:Name="checkBox_isKeepingData" 
             Content="Запомнить пароль" 
             HorizontalAlignment="Center" 
             Margin="0,482,0,0" 

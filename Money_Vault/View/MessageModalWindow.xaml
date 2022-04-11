@@ -1,0 +1,56 @@
+﻿<Window x:Name="MessageModalMainWindow" 
+        x:Class="Money_Vault.View.MessageModalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Money_Vault.View"
+        xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:MessageViewModel}"
+        mc:Ignorable="d"
+        Title="Внимание" 
+        Height="376" 
+        Width="550" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Center" 
+        FontFamily="Balsamiq Sans" 
+        FontSize="14" 
+        FontWeight="Normal" 
+        Icon="/Icon/icon_chest_fill.png" 
+        ResizeMode="NoResize" 
+        WindowStyle="ThreeDBorderWindow" 
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,-6">
+        <Label 
+            x:Name="LabelHeader" 
+            Content="{Binding Header}" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top" 
+            FontSize="50" Height="58" Width="480" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Button x:Name="button_Ok" 
+            Content="Ок" 
+            HorizontalAlignment="Center" 
+            Margin="0,272,0,0" 
+            VerticalAlignment="Top" 
+            Width="300" 
+            Height="50" 
+            FontWeight="Bold" 
+            FontSize="28" 
+            Background="White" 
+            BorderBrush="Black" 
+            BorderThickness="3" ToolTip="Нажмите, чтобы закрыть окно." Command="{Binding CloseWindowCommand, Mode=OneWay}"
+            />
+        <TextBlock 
+            HorizontalAlignment="Center" 
+            Margin="0,63,0,0" 
+            TextWrapping="Wrap" 
+            Text="{Binding Message}" 
+            VerticalAlignment="Top" 
+            FontSize="36" 
+            Height="194" 
+            Width="500" 
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            TextAlignment="Left"/>
+
+    </Grid>
+</Window>

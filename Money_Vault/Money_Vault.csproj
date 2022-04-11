@@ -110,6 +110,7 @@
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
+    <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\MultiConverter.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
@@ -177,6 +178,9 @@
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageModalWindow.xaml.cs">
+      <DependentUpon>MessageModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PlanningAccumulationPage.xaml.cs">
       <DependentUpon>PlanningAccumulationPage.xaml</DependentUpon>
@@ -258,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,7 +23,6 @@ namespace Money_Vault.ViewModel
 
         private RelayCommand _registerCommand;
         private RelayCommand _authCommand;
-        private bool _isKeepAuthData;
 
         private IEnumerable<User> _users;
 
@@ -34,6 +33,18 @@ namespace Money_Vault.ViewModel
             {
                 _users = value;
                 OnPropertyChanged("Users");
+            }
+        }
+
+        public AuthViewModel()
+        {
+            _database = new DatabaseContext();
+
+            Users = _database.Users.ToList();
+
+            if (Convert.ToBoolean(Settings.Default["isKeepAuthData"]))
+            {
+
             }
         }
 
@@ -58,9 +69,13 @@ namespace Money_Vault.ViewModel
                 return _authCommand ??
                 (_authCommand = new RelayCommand(tuple =>
                 {
-                    string login = ((Tuple<string, string>)tuple).Item1;
-                    string password = ((Tuple<string, string>)tuple).Item2;
+                    string login = ((Tuple<string, string, bool>)tuple).Item1;
+                    string password = ((Tuple<string, string, bool>)tuple).Item2;
+                    bool isKeepAuthData = ((Tuple<string, string, bool>)tuple).Item3;
+
                     string secretPassword = Convert.ToString(login.GetHashCode() + password.GetHashCode());
+                    Settings.Default["isKeepAuthData"] = isKeepAuthData;
+                    Settings.Default["login"] = login;
 
                     try
                     {
@@ -70,6 +85,7 @@ namespace Money_Vault.ViewModel
 
                         if (result.Count() != 0)
                         {
+
                             var displayRootRegistry = (Application.Current as App).displayRootRegistry;
                             var mainViewModel = new MainViewModel();
 
@@ -79,7 +95,9 @@ namespace Money_Vault.ViewModel
                         }
                         else
                         {
-                            //открытие модального окна с ошибкой
+                            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                            var messageViewModel = new MessageViewModel("Ошибка", "Пользователя не существует или были введены неверные данные.");
+                            displayRootRegistry.ShowPresentation(messageViewModel);
                         }
                     }
                     catch (Exception ex)
@@ -88,13 +106,6 @@ namespace Money_Vault.ViewModel
                     }
                 }));
             }
-        }
-
-        public AuthViewModel()
-        {
-            _database = new DatabaseContext();
-
-            Users = _database.Users.ToList();
         }
     }
 }
