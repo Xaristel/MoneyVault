@@ -5,10 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ExpenseMainPage">
+      Title="ExpenseMainPage" Width="1600" Height="900" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Grid>
-        
+        <Label Content="Expenses Page" HorizontalAlignment="Center" Margin="0,468,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Balsamiq Sans" FontWeight="Bold" FontSize="14"/>
+
     </Grid>
 </Page>

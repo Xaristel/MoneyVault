@@ -6,9 +6,11 @@
       xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="HelpPage">
+      Title="HelpPage" Width="1600" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White">
 
     <Grid>
-        
+        <Label Content="HelpPage
+               " HorizontalAlignment="Center" VerticalAlignment="Center" Width="72" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Center" FontFamily="Balsamiq Sans" FontSize="14" FontWeight="Bold"/>
+
     </Grid>
 </Page>

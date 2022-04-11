@@ -18,7 +18,8 @@
         FontFamily="Balsamiq Sans" 
         FontSize="14" 
         FontWeight="Bold" 
-        WindowStyle="ThreeDBorderWindow">
+        WindowStyle="ThreeDBorderWindow" 
+        BorderThickness="3">
 
     <Window.Resources>
         <ResourceDictionary >
