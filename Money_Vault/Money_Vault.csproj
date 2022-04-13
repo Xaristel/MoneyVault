@@ -62,6 +62,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -110,6 +111,7 @@
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
+    <Compile Include="Model\ListItem.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\MultiConverter.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
@@ -322,7 +324,7 @@
     </Resource>
     <Resource Include="Font\Password.ttf" />
     <None Include="Database\Database.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

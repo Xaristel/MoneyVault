@@ -4,16 +4,271 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Money_Vault.View"
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:GeneralViewModel}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="GeneralPage" 
       Foreground="#FFF5F0F0" 
       Background="White" 
-      Width="1600" 
-      Height="900" 
+      Width="1439" 
+      Height="852" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid Height="457"/>
+    <Grid 
+        Background="White" 
+          Width="1439" 
+          Height="852">
+        <ListView x:Name="listView_Options" 
+                  ItemsSource="{Binding TypesList, Mode=OneWay}" 
+                  Margin="453,61,708,512" 
+                  Background="White" 
+                  BorderBrush="Black" 
+                  HorizontalContentAlignment="Center" 
+                  VerticalContentAlignment="Center" 
+                  FontFamily="Balsamiq Sans" 
+                  FontWeight="Normal" 
+                  FontSize="18" 
+                  BorderThickness="3,3,3,3" 
+                  Foreground="Black">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label 
+            Content="Расходы" 
+            HorizontalAlignment="Left" 
+            Margin="1031,17,0,0" 
+            VerticalAlignment="Top" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="24" 
+            RenderTransformOrigin="0.505,0.541"/>
+
+        <Label 
+            Content="Доходы" 
+            HorizontalAlignment="Left" 
+            Margin="1037,426,0,0" 
+            VerticalAlignment="Top" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="24" 
+            RenderTransformOrigin="0.477,1.197"/>
+
+        <CheckBox 
+            x:Name="checkBox_Saving" 
+            Content="Убрать сбережения" 
+            HorizontalAlignment="Left" 
+            Margin="453,362,0,0" 
+            VerticalAlignment="Top" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Left" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="20" 
+            Height="20" 
+            Width="280" 
+            BorderThickness="3,3,3,3"/>
+
+        <CheckBox 
+            x:Name="checkBox_Income" 
+            Content="Убрать доходы" 
+            HorizontalAlignment="Left" 
+            Margin="453,402,0,0" 
+            VerticalAlignment="Top" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Left" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="20" 
+            Height="20" 
+            Width="280" 
+            BorderThickness="3,3,3,3"/>
+
+        <CheckBox 
+            x:Name="checkBox_Expense" 
+            Content="Убрать расходы" 
+            HorizontalAlignment="Left" 
+            Margin="453,442,0,0" 
+            VerticalAlignment="Top" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Left" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="20" 
+            Height="20" 
+            Width="280" 
+            BorderThickness="3,3,3,3"/>
+
+        <Label Content="Прогноз" 
+               HorizontalAlignment="Left" 
+               Margin="30,477,0,0" 
+               VerticalAlignment="Top" 
+               Background="White" 
+               BorderBrush="Black" 
+               HorizontalContentAlignment="Center" 
+               VerticalContentAlignment="Center" 
+               FontFamily="Balsamiq Sans" 
+               FontWeight="Bold" 
+               FontSize="24" 
+               Width="702"/>
+
+        <Label Content="Расходы" 
+               HorizontalAlignment="Left" 
+               Margin="542,794,0,0" 
+               VerticalAlignment="Top" 
+               Background="White" 
+               BorderBrush="Black" 
+               HorizontalContentAlignment="Center" 
+               VerticalContentAlignment="Center" 
+               FontFamily="Balsamiq Sans" 
+               FontWeight="Bold" 
+               FontSize="24"/>
+
+        <Label Content="Доходы" 
+               HorizontalAlignment="Left" 
+               Margin="120,793,0,0" 
+               VerticalAlignment="Top" 
+               Background="White" 
+               BorderBrush="Black" 
+               HorizontalContentAlignment="Center" 
+               VerticalContentAlignment="Center" 
+               FontFamily="Balsamiq Sans" 
+               FontWeight="Bold" 
+               FontSize="24"/>
+
+        <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}"
+            x:Name="comboBox_Year" 
+            HorizontalAlignment="Left" 
+            Margin="165,21,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            ToolTip="Выберите год для отображения статистики." 
+            Height="30"
+            BorderThickness="3" 
+            ItemsSource="{Binding YearsList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentYear, Mode=TwoWay}"
+            />
+
+        <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}" 
+            x:Name="comboBox_Month" 
+            HorizontalAlignment="Left" 
+            Margin="395,21,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Height="30"
+            BorderThickness="3"
+            ItemsSource="{Binding MonthsList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentMonth, Mode=TwoWay}">
+        </ComboBox>
+
+        <DataGrid 
+            x:Name="dataGrid_Income" 
+            ItemsSource="{Binding IncomesList, Mode=OneWay}" 
+            AutoGenerateColumns="False"
+            Margin="749,466,20,26" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Normal" 
+            FontSize="18" 
+            Height="360" 
+            BorderThickness="3,3,3,3" 
+            Width="670"
+            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Категория дохода" 
+                    Width="370"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="300"
+                    Binding="{Binding TotalAmount, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            x:Name="dataGrid_Expense" 
+            ItemsSource="{Binding ExpensesList, Mode=OneWay}" 
+            Margin="749,61,20,431" Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Normal" 
+            FontSize="18" 
+            Height="360" 
+            BorderThickness="3,3,3,3" 
+            Width="670"
+            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Категория расхода" 
+                    Width="370"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="300"
+                    Binding="{Binding TotalAmount, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Height="400" 
+            Margin="30,61,0,0" 
+            Stroke="Black" 
+            VerticalAlignment="Top" 
+            Width="398"/>
+
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Height="275" 
+            Margin="30,513,0,0" 
+            Stroke="Black" 
+            VerticalAlignment="Top" 
+            Width="275"/>
+
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Height="275" 
+            Margin="457,514,0,0" 
+            Stroke="Black" 
+            VerticalAlignment="Top" 
+            Width="276"/>
+    </Grid>
 </Page>
