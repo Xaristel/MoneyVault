@@ -13,7 +13,10 @@ namespace Money_Vault.ViewModel
     {
         private DatabaseContext _database;
 
-        private RelayCommand _updateDataCommand;
+        private RelayCommand _removeTypeCommand;
+
+        private bool isRemoveIncomes;
+        private bool isRemoveExpenses;
 
         private IEnumerable<Income_Type> _income_Types;
         private IEnumerable<Expense_Type> _expense_Types;
@@ -22,8 +25,8 @@ namespace Money_Vault.ViewModel
         private IEnumerable<Account> _accounts;
         private IEnumerable<ListItem> _incomesList;
         private IEnumerable<ListItem> _expensesList;
+        private IEnumerable<ListItem> _typesList;
 
-        private List<string> _typesList;
         private List<string> _yearsList;
         private string _currentYear;
         private string _currentMonth;
@@ -118,7 +121,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public List<string> TypesList
+        public IEnumerable<ListItem> TypesList
         {
             get => _typesList;
             set
@@ -168,16 +171,35 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        //public RelayCommand UpdateDataCommand
-        //{
-        //    get
-        //    {
-        //        return _updateDataCommand ?? (_updateDataCommand = new RelayCommand((args) =>
-        //        {
-        //            UpdateData();
-        //        }));
-        //    }
-        //}
+        public RelayCommand RemoveTypeCommand
+        {
+            get
+            {
+                return _removeTypeCommand ?? (_removeTypeCommand = new RelayCommand((args) =>
+                {
+                    UpdateData();
+                }));
+            }
+        }
+
+        public bool IsRemoveIncomes
+        {
+            get => isRemoveIncomes;
+            set
+            {
+                isRemoveIncomes = value;
+                OnPropertyChanged("IsRemoveIncomes");
+            }
+        }
+        public bool IsRemoveExpenses
+        {
+            get => isRemoveExpenses;
+            set
+            {
+                isRemoveExpenses = value;
+                OnPropertyChanged("IsRemoveExpenses");
+            }
+        }
 
         public void UpdateData()
         {
@@ -186,8 +208,30 @@ namespace Money_Vault.ViewModel
                 CurrentMonth = "Полный год";
             }
 
-            FillIncomesList();
-            FillExpensesList();
+            if (IsRemoveExpenses && !IsRemoveIncomes)
+            {
+                FillIncomesList();
+                FillTypesList();
+                ExpensesList = new List<ListItem>();
+            }
+            else if (IsRemoveIncomes && !IsRemoveExpenses)
+            {
+                FillExpensesList();
+                FillTypesList();
+                IncomesList = new List<ListItem>();
+            }
+            else if (!IsRemoveIncomes && !IsRemoveExpenses)
+            {
+                FillIncomesList();
+                FillExpensesList();
+                FillTypesList();
+            }
+            else
+            {
+                IncomesList = new List<ListItem>();
+                ExpensesList = new List<ListItem>();
+                FillTypesList();
+            }
         }
 
         public GeneralViewModel()
@@ -211,17 +255,25 @@ namespace Money_Vault.ViewModel
 
         private void FillTypesList()
         {
-            TypesList = new List<string>();
+            List<ListItem> tempList = new List<ListItem>();
 
-            foreach (var item in Income_Types)
+            if (!IsRemoveIncomes)
             {
-                TypesList.Add(item.Name);
+                foreach (var item in Income_Types)
+                {
+                    tempList.Add(new ListItem() { TypeName = item.Name, TotalAmount = "0" });
+                }
             }
 
-            foreach (var item in Expense_Types)
+            if (!IsRemoveExpenses)
             {
-                TypesList.Add(item.Name);
+                foreach (var item in Expense_Types)
+                {
+                    tempList.Add(new ListItem() { TypeName = item.Name, TotalAmount = "0" });
+                }
             }
+
+            TypesList = tempList;
         }
 
         private void FillYearsList()
