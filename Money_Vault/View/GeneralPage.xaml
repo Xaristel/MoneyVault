@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:local="clr-namespace:Money_Vault.View"
       xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
       d:DataContext="{d:DesignInstance Type=viewmodel:GeneralViewModel}"
@@ -52,7 +53,7 @@
             x:Name="checkBox_Income" 
             Content="Убрать доходы" 
             HorizontalAlignment="Left" 
-            Margin="453,402,0,0" 
+            Margin="30,405,0,0" 
             VerticalAlignment="Top" 
             Background="White" 
             BorderBrush="Black" 
@@ -62,16 +63,17 @@
             FontWeight="Bold" 
             FontSize="20" 
             Height="20" 
-            Width="280" 
+            Width="204" 
             BorderThickness="3,3,3,3"
             Command="{Binding RemoveTypeCommand}"
-            IsChecked="{Binding IsRemoveIncomes, Mode=TwoWay}"/>
+            IsChecked="{Binding IsRemoveIncomes, Mode=TwoWay}"
+            Panel.ZIndex="1"/>
 
         <CheckBox 
             x:Name="checkBox_Expense" 
             Content="Убрать расходы" 
             HorizontalAlignment="Left" 
-            Margin="453,442,0,0" 
+            Margin="30,441,0,0" 
             VerticalAlignment="Top" 
             Background="White" 
             BorderBrush="Black" 
@@ -81,15 +83,16 @@
             FontWeight="Bold" 
             FontSize="20" 
             Height="20" 
-            Width="280" 
+            Width="204" 
             BorderThickness="3,3,3,3"
             Command="{Binding RemoveTypeCommand}"
-            IsChecked="{Binding IsRemoveExpenses, Mode=TwoWay}"
+            IsChecked="{Binding IsRemoveExpenses, Mode=TwoWay}" 
+            Panel.ZIndex="1"
             />
 
         <Label Content="Прогноз" 
                HorizontalAlignment="Left" 
-               Margin="30,477,0,0" 
+               Margin="30,466,0,0" 
                VerticalAlignment="Top" 
                Background="White" 
                BorderBrush="Black" 
@@ -232,57 +235,80 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid 
-            x:Name="dataGrid_CategoriesList" 
-            ItemsSource="{Binding TypesList, Mode=OneWay}" 
-            Margin="453,61,706,471" 
-            FontFamily="Balsamiq Sans" 
-            FontWeight="Normal" 
-            FontSize="18" 
-            BorderThickness="3" 
-            Background="White" 
-            BorderBrush="Black" 
-            AutoGenerateColumns="False" 
-            CanUserReorderColumns="False" 
-            CanUserResizeColumns="False"
-            CanUserSortColumns="False"
-            HorizontalScrollBarVisibility="Disabled"
-            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
-            CanUserAddRows="False" 
-            CanUserDeleteRows="False" 
-            CanUserResizeRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn 
-                    Header="Категории" 
-                    Width="270"
-                    Binding="{Binding TypeName}">
-                </DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <lvc:PieChart x:Name="pieChart_General" 
+            Hoverable="True" 
+            Margin="30,61,706,432"
+            LegendLocation="Right"
+            Series="{Binding SeriesGeneral, Mode=OneWay}">
 
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend 
+                    BulletSize="18" 
+                    TextBlock.FontSize="18"
+                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontStyle="Normal"
+                    TextBlock.Foreground="Black"/>
+            </lvc:PieChart.ChartLegend>
 
-        <Rectangle 
-            HorizontalAlignment="Left" 
-            Height="400" 
-            Margin="30,61,0,0" 
-            Stroke="Black" 
-            VerticalAlignment="Top" 
-            Width="398"/>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip 
+                    BulletSize="18"
+                    TextBlock.FontSize="18"
+                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontStyle="Normal"
+                    TextBlock.Foreground="Black"
+                    Background="LightGray"/>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
 
-        <Rectangle 
-            HorizontalAlignment="Left" 
-            Height="275" 
-            Margin="30,513,0,0" 
-            Stroke="Black" 
-            VerticalAlignment="Top" 
-            Width="275"/>
+        <lvc:PieChart x:Name="pieChart_Incomes" 
+            Hoverable="True" 
+            Margin="30,505,1094,57"
+            LegendLocation="Right"
+            Series="{Binding SeriesIncomes, Mode=OneWay}" Height="290" Width="315">
 
-        <Rectangle 
-            HorizontalAlignment="Left" 
-            Height="275" 
-            Margin="457,514,0,0" 
-            Stroke="Black" 
-            VerticalAlignment="Top" 
-            Width="276"/>
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend 
+                    BulletSize="18" 
+                    TextBlock.FontSize="18"
+                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontStyle="Normal"
+                    TextBlock.Foreground="Black"/>
+            </lvc:PieChart.ChartLegend>
+
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip 
+                    BulletSize="18"
+                    TextBlock.FontSize="18"
+                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontStyle="Normal"
+                    TextBlock.Foreground="Black"
+                    Background="LightGray"/>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+
+        <lvc:PieChart x:Name="pieChart_Expenses" 
+            Hoverable="True" 
+            Margin="417,505,707,57"
+            LegendLocation="Right"
+            Series="{Binding SeriesExpenses, Mode=OneWay}" Width="315" Height="290">
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend 
+                    BulletSize="18" 
+                    TextBlock.FontSize="18"
+                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontStyle="Normal"
+                    TextBlock.Foreground="Black"/>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip 
+                    BulletSize="18"
+                    TextBlock.FontSize="18"
+                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontStyle="Normal"
+                    TextBlock.Foreground="Black"
+                    Background="LightGray"/>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
     </Grid>
 </Page>

@@ -3,9 +3,11 @@ using Money_Vault.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using System.Windows.Media;
+using LiveCharts.Wpf.Charts.Base;
 
 namespace Money_Vault.ViewModel
 {
@@ -25,7 +27,9 @@ namespace Money_Vault.ViewModel
         private IEnumerable<Account> _accounts;
         private IEnumerable<ListItem> _incomesList;
         private IEnumerable<ListItem> _expensesList;
-        private IEnumerable<ListItem> _typesList;
+        private SeriesCollection _seriesGeneral;
+        private SeriesCollection _seriesIncomes;
+        private SeriesCollection _seriesExpenses;
 
         private List<string> _yearsList;
         private string _currentYear;
@@ -46,6 +50,8 @@ namespace Money_Vault.ViewModel
         "Декабрь",
         "Полный год"
         };
+
+        public Func<ChartPoint, string> PointLabel { get; set; }
 
         public string CurrentYear
         {
@@ -121,16 +127,6 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<ListItem> TypesList
-        {
-            get => _typesList;
-            set
-            {
-                _typesList = value;
-                OnPropertyChanged("TypesList");
-            }
-        }
-
         public List<string> YearsList
         {
             get => _yearsList;
@@ -201,36 +197,31 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public void UpdateData()
+        public SeriesCollection SeriesGeneral
         {
-            if (CurrentYear == "Все года" && CurrentMonth != "Полный год")
+            get => _seriesGeneral;
+            set
             {
-                CurrentMonth = "Полный год";
+                _seriesGeneral = value;
+                OnPropertyChanged("SeriesGeneral");
             }
-
-            if (IsRemoveExpenses && !IsRemoveIncomes)
+        }
+        public SeriesCollection SeriesIncomes
+        {
+            get => _seriesIncomes;
+            set
             {
-                FillIncomesList();
-                FillTypesList();
-                ExpensesList = new List<ListItem>();
+                _seriesIncomes = value;
+                OnPropertyChanged("SeriesIncomes");
             }
-            else if (IsRemoveIncomes && !IsRemoveExpenses)
+        }
+        public SeriesCollection SeriesExpenses
+        {
+            get => _seriesExpenses;
+            set
             {
-                FillExpensesList();
-                FillTypesList();
-                IncomesList = new List<ListItem>();
-            }
-            else if (!IsRemoveIncomes && !IsRemoveExpenses)
-            {
-                FillIncomesList();
-                FillExpensesList();
-                FillTypesList();
-            }
-            else
-            {
-                IncomesList = new List<ListItem>();
-                ExpensesList = new List<ListItem>();
-                FillTypesList();
+                _seriesExpenses = value;
+                OnPropertyChanged("SeriesExpenses");
             }
         }
 
@@ -244,36 +235,42 @@ namespace Money_Vault.ViewModel
             Expenses = _database.Expenses.ToList();
             Accounts = _database.Accounts.ToList();
 
-            FillTypesList();
             FillYearsList();
-
             CurrentMonth = MonthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
 
             UpdateData();
         }
 
-        private void FillTypesList()
+        public void UpdateData()
         {
-            List<ListItem> tempList = new List<ListItem>();
-
-            if (!IsRemoveIncomes)
+            if (CurrentYear == "Все года" && CurrentMonth != "Полный год")
             {
-                foreach (var item in Income_Types)
-                {
-                    tempList.Add(new ListItem() { TypeName = item.Name, TotalAmount = "0" });
-                }
+                CurrentMonth = "Полный год";
             }
 
-            if (!IsRemoveExpenses)
+            if (IsRemoveExpenses && !IsRemoveIncomes)
             {
-                foreach (var item in Expense_Types)
-                {
-                    tempList.Add(new ListItem() { TypeName = item.Name, TotalAmount = "0" });
-                }
+                FillIncomesList();
+                ExpensesList = new List<ListItem>();
+            }
+            else if (IsRemoveIncomes && !IsRemoveExpenses)
+            {
+                FillExpensesList();
+                IncomesList = new List<ListItem>();
+            }
+            else if (!IsRemoveIncomes && !IsRemoveExpenses)
+            {
+                FillIncomesList();
+                FillExpensesList();
+            }
+            else
+            {
+                IncomesList = new List<ListItem>();
+                ExpensesList = new List<ListItem>();
             }
 
-            TypesList = tempList;
+            FillPieChartData();
         }
 
         private void FillYearsList()
@@ -331,13 +328,16 @@ namespace Money_Vault.ViewModel
 
             foreach (var item in query)
             {
-                tempList.Add(new ListItem()
+                if (item.TotalAmount != 0)
                 {
-                    TypeName = Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
-                    TotalAmount = item.TotalAmount.ToString()
-                });
+                    tempList.Add(new ListItem()
+                    {
+                        TypeName = Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                        TotalAmount = item.TotalAmount.ToString()
+                    });
 
-                totalSum += item.TotalAmount;
+                    totalSum += item.TotalAmount;
+                }
             }
 
             tempList.Add(new ListItem()
@@ -383,11 +383,16 @@ namespace Money_Vault.ViewModel
 
             foreach (var item in query)
             {
-                tempList.Add(new ListItem()
+                if (item.TotalAmount != 0)
                 {
-                    TypeName = Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
-                    TotalAmount = item.TotalAmount.ToString()
-                });
+                    tempList.Add(new ListItem()
+                    {
+                        TypeName = Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                        TotalAmount = item.TotalAmount.ToString()
+                    });
+
+                    totalSum += item.TotalAmount;
+                }
             }
 
             tempList.Add(new ListItem()
@@ -409,6 +414,116 @@ namespace Money_Vault.ViewModel
             });
 
             ExpensesList = tempList;
+        }
+
+        private void FillPieChartData()
+        {
+            SeriesCollection tempCollectionIncomes = new SeriesCollection();
+            SeriesCollection tempCollectionExpenses = new SeriesCollection();
+            SeriesCollection tempCollectionGeneral = new SeriesCollection();
+
+            if (IncomesList.Count() > 3)
+            {
+                for (int i = 0; i < IncomesList.Count() - 3; i++)
+                {
+                    tempCollectionIncomes.Add(
+                        new PieSeries
+                        {
+                            Title = IncomesList.ToList()[i].TypeName,
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(Convert.ToDouble(IncomesList.ToList()[i].TotalAmount))
+                            },
+                            DataLabels = false
+                        });
+
+                    tempCollectionGeneral.Add(
+                        new PieSeries
+                        {
+                            Title = IncomesList.ToList()[i].TypeName,
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(Convert.ToDouble(IncomesList.ToList()[i].TotalAmount))
+                            },
+                            DataLabels = false
+                        });
+                }
+            }
+            else
+            {
+                tempCollectionIncomes.Add(
+                        new PieSeries
+                        {
+                            Title = "Нет доходов",
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(100)
+                            },
+                            DataLabels = false,
+                            Fill = new SolidColorBrush(Colors.Gray)
+                        });
+            }
+
+            if (ExpensesList.Count() > 3)
+            {
+                for (int i = 0; i < ExpensesList.Count() - 3; i++)
+                {
+                    tempCollectionExpenses.Add(
+                        new PieSeries
+                        {
+                            Title = ExpensesList.ToList()[i].TypeName,
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(Convert.ToDouble(ExpensesList.ToList()[i].TotalAmount))
+                            },
+                            DataLabels = false
+                        });
+
+                    tempCollectionGeneral.Add(
+                        new PieSeries
+                        {
+                            Title = ExpensesList.ToList()[i].TypeName,
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(Convert.ToDouble(ExpensesList.ToList()[i].TotalAmount))
+                            },
+                            DataLabels = false
+                        });
+                }
+            }
+            else
+            {
+                tempCollectionExpenses.Add(
+                        new PieSeries
+                        {
+                            Title = "Нет расходов",
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(100)
+                            },
+                            DataLabels = false,
+                            Fill = new SolidColorBrush(Colors.Gray)
+                        });
+            }
+
+            if (ExpensesList.Count() <= 3 && IncomesList.Count() <= 3)
+            {
+                tempCollectionGeneral.Add(
+                        new PieSeries
+                        {
+                            Title = "Нет расходов и доходов",
+                            Values = new ChartValues<ObservableValue>
+                            {
+                            new ObservableValue(100)
+                            },
+                            DataLabels = false,
+                            Fill = new SolidColorBrush(Colors.Gray)
+                        });
+            }
+
+            SeriesIncomes = tempCollectionIncomes;
+            SeriesExpenses = tempCollectionExpenses;
+            SeriesGeneral = tempCollectionGeneral;
         }
     }
 }
