@@ -24,7 +24,7 @@
         <Label 
             Content="Расходы" 
             HorizontalAlignment="Left" 
-            Margin="1031,17,0,0" 
+            Margin="1056,426,0,0" 
             VerticalAlignment="Top" 
             Background="White" 
             BorderBrush="Black" 
@@ -38,7 +38,7 @@
         <Label 
             Content="Доходы" 
             HorizontalAlignment="Left" 
-            Margin="1037,426,0,0" 
+            Margin="1062,17,0,0" 
             VerticalAlignment="Top" 
             Background="White" 
             BorderBrush="Black" 
@@ -105,7 +105,7 @@
 
         <Label Content="Расходы" 
                HorizontalAlignment="Left" 
-               Margin="542,794,0,0" 
+               Margin="529,794,0,0" 
                VerticalAlignment="Top" 
                Background="White" 
                BorderBrush="Black" 
@@ -117,7 +117,7 @@
 
         <Label Content="Доходы" 
                HorizontalAlignment="Left" 
-               Margin="120,793,0,0" 
+               Margin="148,794,0,0" 
                VerticalAlignment="Top" 
                Background="White" 
                BorderBrush="Black" 
@@ -129,7 +129,7 @@
 
         <ComboBox 
             Template="{DynamicResource ComboBoxTemplateCommon}"
-            x:Name="comboBox_Year" 
+            x:Name="СomboBox_Year" 
             HorizontalAlignment="Left" 
             Margin="165,21,0,0" 
             VerticalAlignment="Top" 
@@ -143,7 +143,7 @@
             Height="30"
             BorderThickness="3" 
             ItemsSource="{Binding YearsList, Mode=OneWay}"
-            SelectedItem="{Binding CurrentYear, Mode=TwoWay}"
+            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" SelectionChanged="ComboBox_Year_SelectionChanged"
             />
 
         <ComboBox 
@@ -168,7 +168,7 @@
             x:Name="dataGrid_Income" 
             ItemsSource="{Binding IncomesList, Mode=OneWay}" 
             AutoGenerateColumns="False"
-            Margin="749,466,20,26" 
+            Margin="800,61,20,431" 
             Background="White" 
             BorderBrush="Black" 
             HorizontalContentAlignment="Center" 
@@ -177,8 +177,7 @@
             FontWeight="Normal" 
             FontSize="18" 
             Height="360" 
-            BorderThickness="3,3,3,3" 
-            Width="670"
+            BorderThickness="3,3,3,3"
             ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
             CanUserReorderColumns="False" 
             CanUserResizeColumns="False"
@@ -204,7 +203,7 @@
             x:Name="dataGrid_Expense" 
             ItemsSource="{Binding ExpensesList, Mode=OneWay}" 
             AutoGenerateColumns="False"
-            Margin="749,61,20,431" Background="White" 
+            Margin="800,466,20,26" Background="White" 
             BorderBrush="Black" 
             HorizontalContentAlignment="Center" 
             VerticalContentAlignment="Center" 
@@ -212,8 +211,7 @@
             FontWeight="Normal" 
             FontSize="18" 
             Height="360" 
-            BorderThickness="3,3,3,3" 
-            Width="670"
+            BorderThickness="3,3,3,3"
             ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
             CanUserReorderColumns="False" 
             CanUserResizeColumns="False"
@@ -247,7 +245,7 @@
                     TextBlock.FontSize="18"
                     TextBlock.FontFamily="Balsamiq Sans"
                     TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black"/>
+                    TextBlock.Foreground="Black" Width="180" Height="221"/>
             </lvc:PieChart.ChartLegend>
 
             <lvc:PieChart.DataTooltip>
@@ -263,9 +261,10 @@
 
         <lvc:PieChart x:Name="pieChart_Incomes" 
             Hoverable="True" 
-            Margin="30,505,1094,57"
-            LegendLocation="Right"
-            Series="{Binding SeriesIncomes, Mode=OneWay}" Height="290" Width="315">
+            Margin="30,505,1079,65"
+            LegendLocation="Bottom"
+            Series="{Binding SeriesIncomes, Mode=OneWay}" 
+            Width="330">
 
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend 
@@ -273,7 +272,7 @@
                     TextBlock.FontSize="18"
                     TextBlock.FontFamily="Balsamiq Sans"
                     TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black"/>
+                    TextBlock.Foreground="Black" Width="170"/>
             </lvc:PieChart.ChartLegend>
 
             <lvc:PieChart.DataTooltip>
@@ -289,16 +288,18 @@
 
         <lvc:PieChart x:Name="pieChart_Expenses" 
             Hoverable="True" 
-            Margin="417,505,707,57"
-            LegendLocation="Right"
-            Series="{Binding SeriesExpenses, Mode=OneWay}" Width="315" Height="290">
+            Margin="417,505,692,65"
+            LegendLocation="Bottom"
+            Series="{Binding SeriesExpenses, Mode=OneWay}" 
+            Width="330"
+            >
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend 
                     BulletSize="18" 
                     TextBlock.FontSize="18"
                     TextBlock.FontFamily="Balsamiq Sans"
                     TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black"/>
+                    TextBlock.Foreground="Black" Width="170"/>
             </lvc:PieChart.ChartLegend>
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip 

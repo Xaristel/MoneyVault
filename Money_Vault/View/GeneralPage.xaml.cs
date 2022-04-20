@@ -14,5 +14,19 @@ namespace Money_Vault.View
 
             DataContext = new GeneralViewModel();
         }
+
+        private void ComboBox_Year_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedItem = (sender as ComboBox).SelectedItem as string;
+
+            if (selectedItem == "Все годы")
+            {
+                comboBox_Month.IsEnabled = false;
+            }
+            else
+            {
+                comboBox_Month.IsEnabled = true;
+            }
+        }
     }
 }
