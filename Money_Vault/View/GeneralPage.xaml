@@ -195,7 +195,8 @@
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
                     Width="289"
-                    Binding="{Binding TotalAmount, Mode=OneWay}"/>
+                    Binding="{Binding TotalAmount, Mode=OneWay}">
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
