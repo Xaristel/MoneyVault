@@ -9,6 +9,7 @@
       Title="IncomeCategoryPage">
 
     <Grid>
-        
+        <Label Content="Category" HorizontalAlignment="Left" Margin="316,170,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Page>

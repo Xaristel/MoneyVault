@@ -20,13 +20,20 @@
         ResizeMode="NoResize" 
         WindowStyle="ThreeDBorderWindow" 
         WindowStartupLocation="CenterScreen">
+
     <Grid Margin="0,0,0,-6">
         <Label 
             x:Name="LabelHeader" 
             Content="{Binding Header}" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Top" 
-            FontSize="50" Height="58" Width="480" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            FontSize="50" 
+            Height="58" 
+            Width="480" 
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            VerticalContentAlignment="Center" 
+            HorizontalContentAlignment="Center"/>
+
         <Button x:Name="button_Ok" 
             Content="Ок" 
             HorizontalAlignment="Center" 
@@ -38,7 +45,9 @@
             FontSize="28" 
             Background="White" 
             BorderBrush="Black" 
-            BorderThickness="3" ToolTip="Нажмите, чтобы закрыть окно." Command="{Binding CloseWindowCommand, Mode=OneWay}"
+            BorderThickness="3" 
+            ToolTip="Нажмите, чтобы закрыть окно." 
+            Command="{Binding CloseWindowCommand, Mode=OneWay}"
             />
         <TextBlock 
             HorizontalAlignment="Center" 

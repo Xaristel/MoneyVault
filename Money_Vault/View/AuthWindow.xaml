@@ -69,8 +69,11 @@
             VerticalAlignment="Top" 
             Height="50" 
             Width="300" 
-            FontSize="36" BorderThickness="3" 
-            Background="White" ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." BorderBrush="Black"
+            FontSize="36" 
+            BorderThickness="3" 
+            Background="White" 
+            ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
+            BorderBrush="Black"
             Command="{Binding AuthCommand}">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource multiConverter}">
@@ -103,11 +106,12 @@
             FontSize="24" 
             FontWeight="Normal" 
             BorderThickness="3" 
-            ToolTip="Отметьте, если хотите, чтобы программа запомнила ваш пароль." 
+            ToolTip="Отметьте, если хотите, чтобы программа запомнила ваш логин." 
             Width="300" 
             Background="White" 
             BorderBrush="Black" 
-            Height="24" IsChecked="{Binding IsKeepLogin}">
+            Height="24" 
+            IsChecked="{Binding IsKeepLogin}">
 
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.3" ScaleY="1.3" />

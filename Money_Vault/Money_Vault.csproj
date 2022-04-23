@@ -118,6 +118,10 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
     <Compile Include="Model\ListItem.cs" />
+    <Compile Include="ViewModel\IncomeCategoryAddViewModel.cs" />
+    <Compile Include="ViewModel\IncomeCategoryEditViewModel.cs" />
+    <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />
+    <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\MultiConverter.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
@@ -169,8 +173,20 @@
     <Compile Include="View\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\IncomeCategoryAddWindow.xaml.cs">
+      <DependentUpon>IncomeCategoryAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeCategoryEditWindow.xaml.cs">
+      <DependentUpon>IncomeCategoryEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\IncomeCategoryPage.xaml.cs">
       <DependentUpon>IncomeCategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeGeneralAddWindow.xaml.cs">
+      <DependentUpon>IncomeGeneralAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IncomeGeneralEditWindow.xaml.cs">
+      <DependentUpon>IncomeGeneralEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IncomeGeneralPage.xaml.cs">
       <DependentUpon>IncomeGeneralPage.xaml</DependentUpon>
@@ -249,7 +265,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\IncomeCategoryAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeCategoryEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\IncomeCategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeGeneralAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IncomeGeneralEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
