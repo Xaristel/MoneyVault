@@ -135,7 +135,7 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand((args) =>
+                return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
@@ -143,14 +143,30 @@ namespace Money_Vault.ViewModel
                     {
                         case "/View/IncomeGeneralPage.xaml":
                             {
-                                var messageViewModel = new MessageViewModel("Ошибка", "Пользователя не существует или были введены неверные данные.");
-                                _displayRootRegistry.ShowPresentation(messageViewModel);
+                                var messageViewModel = new MessageViewModel(
+                                    "Внимание",
+                                    "Вы действительно хотите удалить данную запись?");
+
+                                await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                                if (messageViewModel.Result)
+                                {
+                                    //
+                                }
                                 break;
                             }
                         case "/View/IncomeCategoryPage.xaml":
                             {
-                                var messageViewModel = new MessageViewModel("Ошибка", "Пользователя не существует или были введены неверные данные.");
-                                _displayRootRegistry.ShowPresentation(messageViewModel);
+                                var messageViewModel = new MessageViewModel(
+                                    "Внимание",
+                                    "Вы действительно хотите удалить данную категорию?");
+
+                                await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                                if (messageViewModel.Result)
+                                {
+                                    //
+                                }
                                 break;
                             }
                         default:
@@ -171,13 +187,17 @@ namespace Money_Vault.ViewModel
                     {
                         case "/View/IncomeGeneralPage.xaml":
                             {
-                                var messageViewModel = new MessageViewModel("Ошибка", "Пользователя не существует или были введены неверные данные.");
+                                var messageViewModel = new MessageViewModel(
+                                    "Тестирование",
+                                    "");
                                 _displayRootRegistry.ShowPresentation(messageViewModel);
                                 break;
                             }
                         case "/View/IncomeCategoryPage.xaml":
                             {
-                                var messageViewModel = new MessageViewModel("Ошибка", "Пользователя не существует или были введены неверные данные.");
+                                var messageViewModel = new MessageViewModel(
+                                    "Тестирование",
+                                    "");
                                 _displayRootRegistry.ShowPresentation(messageViewModel);
                                 break;
                             }

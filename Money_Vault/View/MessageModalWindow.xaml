@@ -36,10 +36,10 @@
 
         <Button x:Name="button_Ok" 
             Content="Ок" 
-            HorizontalAlignment="Center" 
-            Margin="0,272,0,0" 
+            HorizontalAlignment="Left" 
+            Margin="25,272,0,0" 
             VerticalAlignment="Top" 
-            Width="300" 
+            Width="230" 
             Height="50" 
             FontWeight="Bold" 
             FontSize="28" 
@@ -47,7 +47,8 @@
             BorderBrush="Black" 
             BorderThickness="3" 
             ToolTip="Нажмите, чтобы закрыть окно." 
-            Command="{Binding CloseWindowCommand, Mode=OneWay}"
+            Click="button_Ok_Click"
+            IsDefault="True"
             />
         <TextBlock 
             HorizontalAlignment="Center" 
@@ -60,6 +61,22 @@
             Width="500" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
             TextAlignment="Left"/>
+
+        <Button x:Name="button_Cancel" 
+            Content="Отмена" 
+            HorizontalAlignment="Left" 
+            Margin="275,272,0,0" 
+            VerticalAlignment="Top" 
+            Width="230" 
+            Height="50" 
+            FontWeight="Bold" 
+            FontSize="28" 
+            Background="White" 
+            BorderBrush="Black" 
+            BorderThickness="3" 
+            ToolTip="Нажмите, чтобы закрыть окно." 
+            IsCancel="True"
+            />
 
     </Grid>
 </Window>

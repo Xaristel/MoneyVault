@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
@@ -12,22 +8,9 @@ namespace Money_Vault.ViewModel
     /// </summary>
     public class MessageViewModel : BaseViewModel
     {
-        private RelayCommand _closeWindowCommand;
-
         private string _header;
         private string _message;
-
-        public MessageViewModel()
-        {
-            Header = "Внимание";
-            Message = "Сообщение";
-        }
-
-        public MessageViewModel(string header, string message)
-        {
-            Header = header;
-            Message = message;
-        }
+        private bool _result;
 
         public string Header
         {
@@ -49,22 +32,26 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public RelayCommand CloseWindowCommand
+        public bool Result
         {
-            get
+            get => _result;
+            set
             {
-                return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand((args) =>
-                {
-                    try
-                    {
-                        (Application.Current as App).displayRootRegistry.HidePresentation(this);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                }));
+                _result = value;
+                OnPropertyChanged("Result");
             }
+        }
+
+        public MessageViewModel()
+        {
+            Header = "Внимание";
+            Message = "Сообщение";
+        }
+
+        public MessageViewModel(string header, string message)
+        {
+            Header = header;
+            Message = message;
         }
     }
 }

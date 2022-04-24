@@ -58,7 +58,7 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _registerNewUserCommand ?? (_registerNewUserCommand = new RelayCommand((args) =>
+                return _registerNewUserCommand ?? (_registerNewUserCommand = new RelayCommand(async (args) =>
                 {
                     try
                     {
@@ -82,7 +82,7 @@ namespace Money_Vault.ViewModel
                     }
 
                     var messageViewModel = new MessageViewModel("", $"Пользователь {RegLogin} успешно зарегистрирован.");
-                    (Application.Current as App).displayRootRegistry.ShowPresentation(messageViewModel);
+                    await (Application.Current as App).displayRootRegistry.ShowModalPresentation(messageViewModel);
 
                     (Application.Current as App).displayRootRegistry.HidePresentation(this);
                 }));

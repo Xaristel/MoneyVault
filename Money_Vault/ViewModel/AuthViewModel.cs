@@ -83,7 +83,7 @@ namespace Money_Vault.ViewModel
             get
             {
                 return _authCommand ??
-                (_authCommand = new RelayCommand(tuple =>
+                (_authCommand = new RelayCommand(async tuple =>
                 {
                     string login = ((Tuple<string, string, bool>)tuple).Item1;
                     string password = ((Tuple<string, string, bool>)tuple).Item2;
@@ -112,8 +112,10 @@ namespace Money_Vault.ViewModel
                         else
                         {
                             var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                            var messageViewModel = new MessageViewModel("Ошибка", "Пользователя не существует или были введены неверные данные.");
-                            displayRootRegistry.ShowPresentation(messageViewModel);
+                            var messageViewModel = new MessageViewModel(
+                                "Ошибка",
+                                "Пользователя не существует или были введены неверные данные.");
+                            await displayRootRegistry.ShowModalPresentation(messageViewModel);
                         }
                     }
                     catch (Exception ex)
