@@ -14,7 +14,6 @@ namespace Money_Vault.ViewModel
         private RelayCommand _showAddFrameCommand;
         private RelayCommand _showEditFrameCommand;
         private RelayCommand _showDeleteFrameCommand;
-        private RelayCommand _showInfoFrameCommand;
 
         private string _currentIncomePagePath;
 
@@ -33,6 +32,7 @@ namespace Money_Vault.ViewModel
             CurrentIncomePagePath = "/View/IncomeGeneralPage.xaml";
         }
 
+        //main income menu buttons
         public RelayCommand ShowIncomeGeneralFrameCommand
         {
             get
@@ -74,7 +74,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        //sub_buttons
+        //sub income buttons
         public RelayCommand ShowAddFrameCommand
         {
             get
@@ -167,38 +167,6 @@ namespace Money_Vault.ViewModel
                                 {
                                     //
                                 }
-                                break;
-                            }
-                        default:
-                            break;
-                    }
-                }));
-            }
-        }
-        public RelayCommand ShowInfoFrameCommand
-        {
-            get
-            {
-                return _showInfoFrameCommand ?? (_showInfoFrameCommand = new RelayCommand((args) =>
-                {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
-                    switch (CurrentIncomePagePath)
-                    {
-                        case "/View/IncomeGeneralPage.xaml":
-                            {
-                                var messageViewModel = new MessageViewModel(
-                                    "Тестирование",
-                                    "");
-                                _displayRootRegistry.ShowPresentation(messageViewModel);
-                                break;
-                            }
-                        case "/View/IncomeCategoryPage.xaml":
-                            {
-                                var messageViewModel = new MessageViewModel(
-                                    "Тестирование",
-                                    "");
-                                _displayRootRegistry.ShowPresentation(messageViewModel);
                                 break;
                             }
                         default:

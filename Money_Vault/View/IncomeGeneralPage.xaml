@@ -5,10 +5,98 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="IncomeGeneralPage">
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:IncomeGeneralViewModel}"
+      Title="IncomeGeneralPage" 
+      Background="White" 
+      Width="1439" 
+      Height="727" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid>
-        
+    <Grid Width="1439">
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Height="734" 
+            Stroke="Black" 
+            VerticalAlignment="Center" 
+            Width="169" 
+            StrokeThickness="3"/>
+
+        <DataGrid 
+            x:Name="dataGrid_Income" 
+            ItemsSource="{Binding IncomesList, Mode=OneWay}" 
+            AutoGenerateColumns="False"
+            Margin="180,10,22,25" 
+            Background="White" 
+            BorderBrush="Black" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Normal" 
+            FontSize="18" 
+            BorderThickness="3,3,3,3"
+            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
+            CanUserReorderColumns="False" 
+            CanUserResizeColumns="False"
+            CanUserSortColumns="False"
+            CanUserAddRows="False" 
+            CanUserDeleteRows="False" 
+            CanUserResizeRows="False"
+            HorizontalScrollBarVisibility="Disabled">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Номер дохода" 
+                    Width="auto"
+                    Binding="{Binding Id, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Категория" 
+                    Width="auto"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="auto"
+                    Binding="{Binding Amount, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Дата" 
+                    Width="auto"
+                    Binding="{Binding Date, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Примечание" 
+                    Width="auto"
+                    Binding="{Binding Note, Mode=OneWay}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border 
+            BorderBrush="Black" 
+            BorderThickness="0,0,0,0" 
+            Margin="0,0,1273,25">
+
+            <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}"
+            x:Name="СomboBox_Year" 
+            HorizontalAlignment="Left" 
+            Margin="25,10,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            ToolTip="Выберите год для отображения статистики." 
+            Height="30"
+            BorderThickness="3" 
+            ItemsSource="{Binding YearsList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" 
+            />
+        </Border>
     </Grid>
 </Page>

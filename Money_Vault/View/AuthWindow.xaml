@@ -19,7 +19,7 @@
         FontSize="14" 
         FontWeight="Bold" 
         WindowStyle="ThreeDBorderWindow" 
-        BorderThickness="3">
+        BorderThickness="3,3,3,3">
 
     <Window.Resources>
         <ResourceDictionary >

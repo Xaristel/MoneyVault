@@ -109,6 +109,7 @@
     <Compile Include="Model\Expense_Type.cs" />
     <Compile Include="Model\Goal.cs" />
     <Compile Include="Model\Income.cs" />
+    <Compile Include="Model\IncomeCommonListItem.cs" />
     <Compile Include="Model\Income_Type.cs" />
     <Compile Include="Model\Note.cs" />
     <Compile Include="Model\Product.cs" />
@@ -117,7 +118,7 @@
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
-    <Compile Include="Model\ListItem.cs" />
+    <Compile Include="Model\IncomeTotalListItem.cs" />
     <Compile Include="ViewModel\IncomeCategoryAddViewModel.cs" />
     <Compile Include="ViewModel\IncomeCategoryEditViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />

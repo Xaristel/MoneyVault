@@ -30,9 +30,8 @@ namespace Money_Vault.ViewModel
         private IEnumerable<Expense_Type> _expense_Types;
         private IEnumerable<Income> _incomes;
         private IEnumerable<Expense> _expenses;
-        private IEnumerable<Account> _accounts;
-        private IEnumerable<ListItem> _incomesList;
-        private IEnumerable<ListItem> _expensesList;
+        private IEnumerable<IncomeTotalListItem> _incomesList;
+        private IEnumerable<IncomeTotalListItem> _expensesList;
         private SeriesCollection _seriesGeneral;
         private SeriesCollection _seriesIncomes;
         private SeriesCollection _seriesExpenses;
@@ -56,8 +55,6 @@ namespace Money_Vault.ViewModel
         "Декабрь",
         "Полный год"
         };
-
-        public Func<ChartPoint, string> PointLabel { get; set; }
 
         public string CurrentYear
         {
@@ -129,16 +126,6 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<Account> Accounts
-        {
-            get => _accounts;
-            set
-            {
-                _accounts = value;
-                OnPropertyChanged("Accounts");
-            }
-        }
-
         public List<string> YearsList
         {
             get => _yearsList;
@@ -159,7 +146,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<ListItem> IncomesList
+        public IEnumerable<IncomeTotalListItem> IncomesList
         {
             get => _incomesList;
             set
@@ -169,7 +156,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<ListItem> ExpensesList
+        public IEnumerable<IncomeTotalListItem> ExpensesList
         {
             get => _expensesList;
             set
@@ -255,7 +242,6 @@ namespace Money_Vault.ViewModel
             Expense_Types = _database.Expense_Types.ToList();
             Incomes = _database.Incomes.ToList();
             Expenses = _database.Expenses.ToList();
-            Accounts = _database.Accounts.ToList();
 
             CurrentMonth = MonthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
@@ -285,12 +271,12 @@ namespace Money_Vault.ViewModel
             if (IsRemoveExpenses && !IsRemoveIncomes)
             {
                 FillIncomesList();
-                ExpensesList = new List<ListItem>();
+                ExpensesList = new List<IncomeTotalListItem>();
             }
             else if (IsRemoveIncomes && !IsRemoveExpenses)
             {
                 FillExpensesList();
-                IncomesList = new List<ListItem>();
+                IncomesList = new List<IncomeTotalListItem>();
             }
             else if (!IsRemoveIncomes && !IsRemoveExpenses)
             {
@@ -299,8 +285,8 @@ namespace Money_Vault.ViewModel
             }
             else
             {
-                IncomesList = new List<ListItem>();
-                ExpensesList = new List<ListItem>();
+                IncomesList = new List<IncomeTotalListItem>();
+                ExpensesList = new List<IncomeTotalListItem>();
             }
 
             FillPieChartData();
@@ -354,7 +340,7 @@ namespace Money_Vault.ViewModel
                                            select item.Total_Amount).Sum()
                         };
 
-            List<ListItem> tempList = new List<ListItem>();
+            List<IncomeTotalListItem> tempList = new List<IncomeTotalListItem>();
 
             int totalSum = 0;
 
@@ -362,7 +348,7 @@ namespace Money_Vault.ViewModel
             {
                 if (item.TotalAmount != 0)
                 {
-                    tempList.Add(new ListItem()
+                    tempList.Add(new IncomeTotalListItem()
                     {
                         TypeName = Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                         TotalAmount = ConvertToCurrencyFormat(item.TotalAmount)
@@ -372,7 +358,7 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            tempList.Add(new ListItem()
+            tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = ConvertToCurrencyFormat(totalSum)
@@ -380,13 +366,13 @@ namespace Money_Vault.ViewModel
 
             _incomesForecast = CalculateForecast(true);
 
-            tempList.Add(new ListItem()
+            tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Прогноз",
                 TotalAmount = ConvertToCurrencyFormat(_incomesForecast)
             });
 
-            tempList.Add(new ListItem()
+            tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Разница",
                 TotalAmount = ConvertToCurrencyFormat(Math.Abs(totalSum - _incomesForecast))
@@ -410,7 +396,7 @@ namespace Money_Vault.ViewModel
                                            select item.Total_Price).Sum()
                         };
 
-            List<ListItem> tempList = new List<ListItem>();
+            List<IncomeTotalListItem> tempList = new List<IncomeTotalListItem>();
 
             int totalSum = 0;
 
@@ -418,7 +404,7 @@ namespace Money_Vault.ViewModel
             {
                 if (item.TotalAmount != 0)
                 {
-                    tempList.Add(new ListItem()
+                    tempList.Add(new IncomeTotalListItem()
                     {
                         TypeName = Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                         TotalAmount = ConvertToCurrencyFormat(item.TotalAmount)
@@ -428,7 +414,7 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            tempList.Add(new ListItem()
+            tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = ConvertToCurrencyFormat(totalSum)
@@ -436,13 +422,13 @@ namespace Money_Vault.ViewModel
 
             _expensesForecast = CalculateForecast(false);
 
-            tempList.Add(new ListItem()
+            tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Прогноз",
                 TotalAmount = ConvertToCurrencyFormat(_expensesForecast)
             });
 
-            tempList.Add(new ListItem()
+            tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Разница",
                 TotalAmount = ConvertToCurrencyFormat(Math.Abs(totalSum - _expensesForecast))

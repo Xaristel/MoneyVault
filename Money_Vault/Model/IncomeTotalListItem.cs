@@ -1,6 +1,6 @@
 ﻿namespace Money_Vault.ViewModel
 {
-    public class ListItem
+    public class IncomeTotalListItem
     {
         private string _typeName;
         private string _totalAmount;

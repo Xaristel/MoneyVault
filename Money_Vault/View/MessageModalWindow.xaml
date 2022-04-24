@@ -28,7 +28,7 @@
             HorizontalAlignment="Center" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            Height="58" 
+            Height="61" 
             Width="480" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
             VerticalContentAlignment="Center" 

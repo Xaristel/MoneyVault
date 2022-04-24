@@ -7,8 +7,7 @@
       mc:Ignorable="d" 
       xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
       d:DataContext="{d:DesignInstance Type=viewmodel:IncomeMainViewModel}"
-      Title="IncomePage" 
-      Foreground="#FFF5F0F0" 
+      Title="IncomeMainPage" 
       Background="White" 
       Width="1439" 
       Height="852" 
@@ -18,37 +17,11 @@
 
     <Grid>
         <Rectangle 
-            Height="110" 
-            Margin="30,30,30,0" 
+            Height="128" 
             Stroke="Black" 
             VerticalAlignment="Top" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-            StrokeThickness="3"
-            />
-
-        <Border 
-            x:Name="Border_Buttons" 
-            BorderBrush="Black" 
-            BorderThickness="1" 
-            Margin="30,30,30,712" 
-            Panel.ZIndex="-1"/>
-
-        <Button 
-            x:Name="Button_Info" 
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
-            Content="Подробнее" 
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="85" 
-            Width="110" 
-            BorderThickness="3" 
-            Background="White" 
-            ToolTip="Нажмите, чтобы показать расширенную информацию выбранного элемента." 
-            BorderBrush="Black" 
-            Margin="1285,43,0,0"
-            Command="{Binding ShowInfoFrameCommand}"
+            StrokeThickness="3" Panel.ZIndex="-1"
             />
 
         <Button 
@@ -59,13 +32,13 @@
             Content="Удалить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="110" 
+            Height="90" 
+            Width="150" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы удалить выбранный элемент." 
             BorderBrush="Black" 
-            Margin="1160,43,0,0" 
+            Margin="1266,25,0,0" 
             Command="{Binding ShowDeleteFrameCommand}"/>
 
         <Button 
@@ -76,13 +49,13 @@
             Content="Изменить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="110" 
+            Height="90" 
+            Width="150" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
             BorderBrush="Black" 
-            Margin="1035,42,0,0" 
+            Margin="1089,25,0,0" 
             Command="{Binding ShowEditFrameCommand}"/>
 
         <Button 
@@ -93,18 +66,18 @@
             Content="Добавить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="110" 
+            Height="90" 
+            Width="150" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы показать расширенную информацию." 
             BorderBrush="Black" 
-            Margin="910,42,0,0" 
+            Margin="911,25,0,0" 
             Command="{Binding ShowAddFrameCommand}"/>
 
         <Rectangle 
             HorizontalAlignment="Left" 
-            Height="110" Margin="895,30,0,0" 
+            Height="125" Margin="894,0,0,0" 
             Stroke="Black" 
             VerticalAlignment="Top" 
             Width="3" 
@@ -127,13 +100,13 @@
             FontWeight="Bold"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="170" 
+            Height="90" 
+            Width="190" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
             BorderBrush="Black" 
-            Margin="43,42,0,0"
+            Margin="25,25,0,0"
             Command="{Binding ShowIncomeGeneralFrameCommand}">
             <TextBlock TextAlignment="Center">Общий<LineBreak/>список</TextBlock>
         </Button>
@@ -146,13 +119,13 @@
             FontWeight="Bold"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="170" 
+            Height="90" 
+            Width="190" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы открыть вкладку со статистикой доходов." 
             BorderBrush="Black" 
-            Margin="268,42,0,0"
+            Margin="247,25,0,0"
             Command="{Binding ShowIncomeStatisticFrameCommand}">
         </Button>
 
@@ -164,13 +137,13 @@
             FontWeight="Bold"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="170" 
+            Height="90" 
+            Width="190" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
             BorderBrush="Black" 
-            Margin="490,42,0,0"
+            Margin="468,25,0,0"
             Command="{Binding ShowIncomeCategoryFrameCommand}">
         </Button>
 
@@ -182,21 +155,21 @@
             FontWeight="Bold"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Height="85" 
-            Width="170" 
+            Height="90" 
+            Width="190" 
             BorderThickness="3" 
             Background="White" 
             ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
             BorderBrush="Black" 
-            Margin="715,42,0,0"
+            Margin="690,25,0,0"
             Command="{Binding ShowIncomeReportFrameCommand}">
         </Button>
 
         <Frame 
             x:Name="Frame_IncomeMain" 
-            Margin="30,137,30,30" 
+            Margin="0,125,0,0" 
             NavigationUIVisibility="Hidden" 
-            BorderThickness="3,0,3,3"
+            BorderThickness="3,3,3,3"
             BorderBrush="Black"
             Source="{Binding CurrentIncomePagePath}"/>
 
