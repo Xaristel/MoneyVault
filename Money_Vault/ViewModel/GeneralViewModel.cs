@@ -19,6 +19,7 @@ namespace Money_Vault.ViewModel
 
         private bool _isRemoveIncomes;
         private bool _isRemoveExpenses;
+        private bool _isEnableComboBoxMonth;
 
         private int _incomesForecast;
         private int _expensesForecast;
@@ -236,6 +237,16 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public bool IsEnableComboBoxMonth
+        {
+            get => _isEnableComboBoxMonth;
+            set
+            {
+                _isEnableComboBoxMonth = value;
+                OnPropertyChanged("IsEnableComboBoxMonth");
+            }
+        }
+
         public GeneralViewModel()
         {
             _database = new DatabaseContext();
@@ -248,6 +259,7 @@ namespace Money_Vault.ViewModel
 
             CurrentMonth = MonthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
+            IsEnableComboBoxMonth = true;
 
             FillYearsList();
         }
@@ -257,9 +269,17 @@ namespace Money_Vault.ViewModel
             _minIncomesDate = GetMinDate(true);
             _minExpensesDate = GetMinDate(false);
 
-            if (CurrentYear == "Все годы" && CurrentMonth != "Полный год")
+            if (CurrentYear == "Все годы")
             {
-                CurrentMonth = "Полный год";
+                if (CurrentMonth != "Полный год")
+                {
+                    CurrentMonth = "Полный год";
+                }
+                IsEnableComboBoxMonth = false;
+            }
+            else
+            {
+                IsEnableComboBoxMonth = true;
             }
 
             if (IsRemoveExpenses && !IsRemoveIncomes)

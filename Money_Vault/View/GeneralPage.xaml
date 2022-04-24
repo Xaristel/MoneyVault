@@ -143,7 +143,7 @@
             Height="30"
             BorderThickness="3" 
             ItemsSource="{Binding YearsList, Mode=OneWay}"
-            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" SelectionChanged="ComboBox_Year_SelectionChanged"
+            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" 
             />
 
         <ComboBox 
@@ -161,7 +161,8 @@
             Height="30"
             BorderThickness="3"
             ItemsSource="{Binding MonthsList, Mode=OneWay}"
-            SelectedItem="{Binding CurrentMonth, Mode=TwoWay}">
+            SelectedItem="{Binding CurrentMonth, Mode=TwoWay}"
+            IsEnabled="{Binding IsEnableComboBoxMonth}">
         </ComboBox>
 
         <DataGrid 
