@@ -147,6 +147,7 @@
     <Compile Include="ViewModel\PlanningGoalViewModel.cs" />
     <Compile Include="ViewModel\PlanningMainViewModel.cs" />
     <Compile Include="ViewModel\PlanningNoteViewModel.cs" />
+    <Compile Include="ViewModel\AdditionalFunctions.cs" />
     <Compile Include="View\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
     </Compile>

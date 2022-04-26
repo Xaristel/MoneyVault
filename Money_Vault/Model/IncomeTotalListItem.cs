@@ -3,7 +3,7 @@
     public class IncomeTotalListItem
     {
         private string _typeName;
-        private string _totalAmount;
+        private double _totalAmount;
 
         public string TypeName
         {
@@ -13,7 +13,7 @@
                 _typeName = value;
             }
         }
-        public string TotalAmount
+        public double TotalAmount
         {
             get => _totalAmount;
             set

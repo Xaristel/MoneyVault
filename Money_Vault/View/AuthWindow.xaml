@@ -62,7 +62,9 @@
             Tag="Введите ваш логин..." 
             FontWeight="Normal" Text="{Binding Login}"/>
 
-        <Button x:Name="button_Auth" 
+        <Button 
+            x:Name="button_Auth" 
+            Style="{StaticResource Button_Common}"
             Content="Вход" 
             HorizontalAlignment="Center" 
             Margin="0,536,0,0" 
@@ -70,10 +72,7 @@
             Height="50" 
             Width="300" 
             FontSize="36" 
-            BorderThickness="3" 
-            Background="White" 
             ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
-            BorderBrush="Black"
             Command="{Binding AuthCommand}">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource multiConverter}">
@@ -118,16 +117,17 @@
             </CheckBox.LayoutTransform>
         </CheckBox>
 
-        <Button x:Name="button_Register" 
+        <Button 
+            x:Name="button_Register" 
+            Style="{StaticResource Button_Common}"
             Content="Регистрация" 
             HorizontalAlignment="Center" 
             Margin="0,605,0,0" 
             VerticalAlignment="Top" 
             Height="50" 
             Width="300" 
-            FontSize="36" BorderThickness="3" 
-            Background="White" ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
-            BorderBrush="Black"
+            FontSize="36" 
+            ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
             Command="{Binding RegisterCommand}"/>
 
     </Grid>

@@ -351,7 +351,7 @@ namespace Money_Vault.ViewModel
                     tempList.Add(new IncomeTotalListItem()
                     {
                         TypeName = Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
-                        TotalAmount = ConvertToCurrencyFormat(item.TotalAmount)
+                        TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
                     });
 
                     totalSum += item.TotalAmount;
@@ -361,7 +361,7 @@ namespace Money_Vault.ViewModel
             tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Итого",
-                TotalAmount = ConvertToCurrencyFormat(totalSum)
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
             });
 
             _incomesForecast = CalculateForecast(true);
@@ -369,13 +369,13 @@ namespace Money_Vault.ViewModel
             tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Прогноз",
-                TotalAmount = ConvertToCurrencyFormat(_incomesForecast)
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(_incomesForecast)
             });
 
             tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Разница",
-                TotalAmount = ConvertToCurrencyFormat(Math.Abs(totalSum - _incomesForecast))
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(Math.Abs(totalSum - _incomesForecast))
             });
 
             IncomesList = tempList;
@@ -407,7 +407,7 @@ namespace Money_Vault.ViewModel
                     tempList.Add(new IncomeTotalListItem()
                     {
                         TypeName = Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
-                        TotalAmount = ConvertToCurrencyFormat(item.TotalAmount)
+                        TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
                     });
 
                     totalSum += item.TotalAmount;
@@ -417,7 +417,7 @@ namespace Money_Vault.ViewModel
             tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Итого",
-                TotalAmount = ConvertToCurrencyFormat(totalSum)
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
             });
 
             _expensesForecast = CalculateForecast(false);
@@ -425,13 +425,13 @@ namespace Money_Vault.ViewModel
             tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Прогноз",
-                TotalAmount = ConvertToCurrencyFormat(_expensesForecast)
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(_expensesForecast)
             });
 
             tempList.Add(new IncomeTotalListItem()
             {
                 TypeName = "Разница",
-                TotalAmount = ConvertToCurrencyFormat(Math.Abs(totalSum - _expensesForecast))
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(Math.Abs(totalSum - _expensesForecast))
             });
 
             ExpensesList = tempList;
@@ -450,7 +450,7 @@ namespace Money_Vault.ViewModel
                     + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minIncomesDate.Split('.')[1]);
 
                     tempTotalAmount = (from income in Incomes
-                                       where FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                       where AdditionalFunctions.FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                        select income.Total_Amount).Sum();
                 }
                 else
@@ -459,7 +459,7 @@ namespace Money_Vault.ViewModel
                     + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minExpensesDate.Split('.')[1]);
 
                     tempTotalAmount = (from expense in Expenses
-                                       where FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                       where AdditionalFunctions.FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                        select expense.Total_Price).Sum();
                 }
             }
@@ -472,7 +472,7 @@ namespace Money_Vault.ViewModel
                         timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2]);
 
                         tempTotalAmount = (from income in Incomes
-                                           where FindLessDate(income.Date, $"01.01.{CurrentYear}")
+                                           where AdditionalFunctions.FindLessDate(income.Date, $"01.01.{CurrentYear}")
                                            select income.Total_Amount).Sum();
                     }
                     else
@@ -480,7 +480,7 @@ namespace Money_Vault.ViewModel
                         timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2]);
 
                         tempTotalAmount = (from expense in Expenses
-                                           where FindLessDate(expense.Date, $"01.01.{CurrentYear}")
+                                           where AdditionalFunctions.FindLessDate(expense.Date, $"01.01.{CurrentYear}")
                                            select expense.Total_Price).Sum();
                     }
                 }
@@ -518,36 +518,13 @@ namespace Money_Vault.ViewModel
 
             foreach (var date in tempDates)
             {
-                if (FindLessDate(date, minDate))
+                if (AdditionalFunctions.FindLessDate(date, minDate))
                 {
                     minDate = date;
                 }
             }
 
             return minDate;
-        }
-
-        private bool FindLessDate(string firstDate, string secondDate)
-        {
-            if (Convert.ToInt32(firstDate.Split('.')[2]) < Convert.ToInt32(secondDate.Split('.')[2])) //year
-            {
-                return true;
-            }
-            else if (Convert.ToInt32(firstDate.Split('.')[2]) == Convert.ToInt32(secondDate.Split('.')[2])) //year
-            {
-                if (Convert.ToInt32(firstDate.Split('.')[1]) < Convert.ToInt32(secondDate.Split('.')[1])) //month
-                {
-                    return true;
-                }
-                else if (Convert.ToInt32(firstDate.Split('.')[1]) == Convert.ToInt32(secondDate.Split('.')[1])) //month
-                {
-                    if (Convert.ToInt32(firstDate.Split('.')[0]) < Convert.ToInt32(secondDate.Split('.')[0])) //day
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         private void FillPieChartData()
@@ -592,7 +569,7 @@ namespace Money_Vault.ViewModel
                         Title = "Прогноз",
                         Values = new ChartValues<ObservableValue>
                         {
-                            new ObservableValue(Convert.ToDouble(ConvertToCurrencyFormat(_incomesForecast), provider))
+                            new ObservableValue(AdditionalFunctions.ConvertToCurrencyFormat(_incomesForecast))
                         },
                         DataLabels = false
                     });
@@ -645,7 +622,7 @@ namespace Money_Vault.ViewModel
                         Title = "Прогноз",
                         Values = new ChartValues<ObservableValue>
                         {
-                            new ObservableValue(Convert.ToDouble(ConvertToCurrencyFormat(_expensesForecast), provider))
+                            new ObservableValue(AdditionalFunctions.ConvertToCurrencyFormat(_expensesForecast))
                         },
                         DataLabels = false
                     });
@@ -683,18 +660,6 @@ namespace Money_Vault.ViewModel
             SeriesIncomes = tempCollectionIncomes;
             SeriesExpenses = tempCollectionExpenses;
             SeriesGeneral = tempCollectionGeneral;
-        }
-
-        private string ConvertToCurrencyFormat(int value)
-        {
-            if (value == 0)
-            {
-                return value.ToString().Insert(1, ".00");
-            }
-            else
-            {
-                return value.ToString().Insert(value.ToString().Length - 2, ".");
-            }
         }
     }
 }

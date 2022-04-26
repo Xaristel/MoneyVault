@@ -10,9 +10,12 @@ namespace Money_Vault.ViewModel
     {
         private DatabaseContext _database;
 
+        private RelayCommand _selectMonthCommand;
+
         private List<string> _yearsList;
         private string _currentYear;
         private string _currentMonth;
+        private bool _isEnableMonthsButtons;
 
         private List<string> _monthsList = new List<string>
         {
@@ -105,6 +108,27 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public RelayCommand SelectMonthCommand
+        {
+            get
+            {
+                return _selectMonthCommand ?? (_selectMonthCommand = new RelayCommand(obj =>
+                {
+                    CurrentMonth = obj as string;
+                }));
+            }
+        }
+
+        public bool IsEnableMonthsButtons
+        {
+            get => _isEnableMonthsButtons;
+            set
+            {
+                _isEnableMonthsButtons = value;
+                OnPropertyChanged("IsEnableMonthsButtons");
+            }
+        }
+
         public IncomeGeneralViewModel()
         {
             _database = new DatabaseContext();
@@ -114,18 +138,32 @@ namespace Money_Vault.ViewModel
 
             CurrentMonth = _monthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
+            IsEnableMonthsButtons = true;
 
             FillYearsList();
         }
 
         public void UpdateData()
         {
+            if (CurrentYear == "Все годы")
+            {
+                if (CurrentMonth != "Полный год")
+                {
+                    CurrentMonth = "Полный год";
+                }
+                IsEnableMonthsButtons = false;
+            }
+            else
+            {
+                IsEnableMonthsButtons = true;
+            }
+
             List<IncomeCommonListItem> tempList = new List<IncomeCommonListItem>();
 
             foreach (var item in Incomes)
             {
-                if (item.Date.Contains($".{CurrentMonth}.{CurrentYear}")
-                    || item.Date.Contains($".0{CurrentMonth}.{CurrentYear}")
+                if (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                    || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                     || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
                     || CurrentYear == "Все годы")
                 {
@@ -133,12 +171,11 @@ namespace Money_Vault.ViewModel
                     {
                         Id = item.Id,
                         TypeName = Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
-                        Amount = ConvertToCurrencyFormat(item.Total_Amount),
-                        Date = item.Date,
+                        Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
+                        Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
                         Note = item.Note
                     });
                 }
-
             }
 
             IncomesList = tempList;
@@ -164,41 +201,6 @@ namespace Money_Vault.ViewModel
 
             YearsList.Sort();
             YearsList.Add("Все годы");
-        }
-
-        private bool FindLessDate(string firstDate, string secondDate)
-        {
-            if (Convert.ToInt32(firstDate.Split('.')[2]) < Convert.ToInt32(secondDate.Split('.')[2])) //year
-            {
-                return true;
-            }
-            else if (Convert.ToInt32(firstDate.Split('.')[2]) == Convert.ToInt32(secondDate.Split('.')[2])) //year
-            {
-                if (Convert.ToInt32(firstDate.Split('.')[1]) < Convert.ToInt32(secondDate.Split('.')[1])) //month
-                {
-                    return true;
-                }
-                else if (Convert.ToInt32(firstDate.Split('.')[1]) == Convert.ToInt32(secondDate.Split('.')[1])) //month
-                {
-                    if (Convert.ToInt32(firstDate.Split('.')[0]) < Convert.ToInt32(secondDate.Split('.')[0])) //day
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        private string ConvertToCurrencyFormat(int value)
-        {
-            if (value == 0)
-            {
-                return value.ToString().Insert(1, ".00");
-            }
-            else
-            {
-                return value.ToString().Insert(value.ToString().Length - 2, ".");
-            }
         }
     }
 }

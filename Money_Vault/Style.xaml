@@ -286,6 +286,21 @@
 
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--Стиль для обычных Button-->
+    <Style 
+        x:Key="Button_Common" 
+        TargetType="{x:Type Button}" 
+        BasedOn="{StaticResource {x:Type Button}}">
+
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="Balsamiq Sans"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="Background" Value="White"/>
     </Style>
 
 </ResourceDictionary>

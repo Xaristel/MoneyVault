@@ -58,7 +58,9 @@
             FontWeight="Normal"
             Text="{Binding RegPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Button x:Name="button_CreateAccount" 
+        <Button 
+            x:Name="button_CreateAccount" 
+            Style="{StaticResource Button_Common}"
             Content="Создать аккаунт" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Top" 
@@ -66,10 +68,7 @@
             Width="300" 
             Margin="0,460,0,0"
             FontSize="36" 
-            BorderThickness="3" 
-            Background="White" 
             ToolTip="Нажмите, чтобы создать новый аккаунт и закрыть текущее окно." 
-            BorderBrush="Black"
             Command="{Binding RegisterNewUserCommand}"/>
 
         <TextBox 
