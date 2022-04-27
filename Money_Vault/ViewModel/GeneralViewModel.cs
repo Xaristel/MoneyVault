@@ -30,8 +30,8 @@ namespace Money_Vault.ViewModel
         private IEnumerable<Expense_Type> _expense_Types;
         private IEnumerable<Income> _incomes;
         private IEnumerable<Expense> _expenses;
-        private IEnumerable<IncomeTotalListItem> _incomesList;
-        private IEnumerable<IncomeTotalListItem> _expensesList;
+        private IEnumerable<TotalListItem> _incomesList;
+        private IEnumerable<TotalListItem> _expensesList;
         private SeriesCollection _seriesGeneral;
         private SeriesCollection _seriesIncomes;
         private SeriesCollection _seriesExpenses;
@@ -146,7 +146,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<IncomeTotalListItem> IncomesList
+        public IEnumerable<TotalListItem> IncomesList
         {
             get => _incomesList;
             set
@@ -156,7 +156,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<IncomeTotalListItem> ExpensesList
+        public IEnumerable<TotalListItem> ExpensesList
         {
             get => _expensesList;
             set
@@ -271,12 +271,12 @@ namespace Money_Vault.ViewModel
             if (IsRemoveExpenses && !IsRemoveIncomes)
             {
                 FillIncomesList();
-                ExpensesList = new List<IncomeTotalListItem>();
+                ExpensesList = new List<TotalListItem>();
             }
             else if (IsRemoveIncomes && !IsRemoveExpenses)
             {
                 FillExpensesList();
-                IncomesList = new List<IncomeTotalListItem>();
+                IncomesList = new List<TotalListItem>();
             }
             else if (!IsRemoveIncomes && !IsRemoveExpenses)
             {
@@ -285,8 +285,8 @@ namespace Money_Vault.ViewModel
             }
             else
             {
-                IncomesList = new List<IncomeTotalListItem>();
-                ExpensesList = new List<IncomeTotalListItem>();
+                IncomesList = new List<TotalListItem>();
+                ExpensesList = new List<TotalListItem>();
             }
 
             FillPieChartData();
@@ -340,7 +340,7 @@ namespace Money_Vault.ViewModel
                                            select item.Total_Amount).Sum()
                         };
 
-            List<IncomeTotalListItem> tempList = new List<IncomeTotalListItem>();
+            List<TotalListItem> tempList = new List<TotalListItem>();
 
             int totalSum = 0;
 
@@ -348,7 +348,7 @@ namespace Money_Vault.ViewModel
             {
                 if (item.TotalAmount != 0)
                 {
-                    tempList.Add(new IncomeTotalListItem()
+                    tempList.Add(new TotalListItem()
                     {
                         TypeName = Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                         TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
@@ -358,7 +358,7 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            tempList.Add(new IncomeTotalListItem()
+            tempList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
@@ -366,13 +366,13 @@ namespace Money_Vault.ViewModel
 
             _incomesForecast = CalculateForecast(true);
 
-            tempList.Add(new IncomeTotalListItem()
+            tempList.Add(new TotalListItem()
             {
                 TypeName = "Прогноз",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(_incomesForecast)
             });
 
-            tempList.Add(new IncomeTotalListItem()
+            tempList.Add(new TotalListItem()
             {
                 TypeName = "Разница",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(Math.Abs(totalSum - _incomesForecast))
@@ -396,7 +396,7 @@ namespace Money_Vault.ViewModel
                                            select item.Total_Price).Sum()
                         };
 
-            List<IncomeTotalListItem> tempList = new List<IncomeTotalListItem>();
+            List<TotalListItem> tempList = new List<TotalListItem>();
 
             int totalSum = 0;
 
@@ -404,7 +404,7 @@ namespace Money_Vault.ViewModel
             {
                 if (item.TotalAmount != 0)
                 {
-                    tempList.Add(new IncomeTotalListItem()
+                    tempList.Add(new TotalListItem()
                     {
                         TypeName = Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                         TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
@@ -414,7 +414,7 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            tempList.Add(new IncomeTotalListItem()
+            tempList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
@@ -422,13 +422,13 @@ namespace Money_Vault.ViewModel
 
             _expensesForecast = CalculateForecast(false);
 
-            tempList.Add(new IncomeTotalListItem()
+            tempList.Add(new TotalListItem()
             {
                 TypeName = "Прогноз",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(_expensesForecast)
             });
 
-            tempList.Add(new IncomeTotalListItem()
+            tempList.Add(new TotalListItem()
             {
                 TypeName = "Разница",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(Math.Abs(totalSum - _expensesForecast))

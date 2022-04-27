@@ -26,25 +26,9 @@
 
         <DataGrid 
             x:Name="dataGrid_Income" 
+            Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding IncomesList, Mode=OneWay}" 
-            AutoGenerateColumns="False"
-            Margin="180,10,22,25" 
-            Background="White" 
-            BorderBrush="Black" 
-            HorizontalContentAlignment="Center" 
-            VerticalContentAlignment="Center" 
-            FontFamily="Balsamiq Sans" 
-            FontWeight="Normal" 
-            FontSize="18" 
-            BorderThickness="3,3,3,3"
-            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
-            CanUserReorderColumns="True" 
-            CanUserResizeColumns="False"
-            CanUserSortColumns="True"
-            CanUserAddRows="False" 
-            CanUserDeleteRows="False" 
-            CanUserResizeRows="False"
-            HorizontalScrollBarVisibility="Disabled">
+            Margin="180,10,22,25">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Номер" 
@@ -68,7 +52,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Примечание" 
-                    Width="361"
+                    Width="343"
                     Binding="{Binding Note, Mode=OneWay}"
                     CanUserSort="False">
                 </DataGridTextColumn>
@@ -103,8 +87,7 @@
             Height="40"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}" 
-            IsEnabled="{Binding IsEnableMonthsButtons}"
-            >
+            IsEnabled="{Binding IsEnableMonthsButtons}">
             <Button.CommandParameter>
                 <Binding Path="Content" ElementName="Button_January"/>
             </Button.CommandParameter>

@@ -1,5 +1,4 @@
-﻿using Money_Vault.Database;
-using Money_Vault.Model;
+﻿using Money_Vault.Properties;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
@@ -7,8 +6,7 @@ namespace Money_Vault.ViewModel
     public class IncomeMainViewModel : BaseViewModel
     {
         private RelayCommand _showIncomeGeneralFrameCommand;
-        private RelayCommand _showIncomeStatisticFrameCommand;
-        private RelayCommand _showIncomeCategoryFrameCommand;
+        private RelayCommand _showCategoryFrameCommand;
         private RelayCommand _showIncomeReportFrameCommand;
 
         private RelayCommand _showAddFrameCommand;
@@ -43,23 +41,16 @@ namespace Money_Vault.ViewModel
                 }));
             }
         }
-        public RelayCommand ShowIncomeStatisticFrameCommand
+        public RelayCommand ShowCategoryFrameCommand
         {
             get
             {
-                return _showIncomeStatisticFrameCommand ?? (_showIncomeStatisticFrameCommand = new RelayCommand((args) =>
+                return _showCategoryFrameCommand ?? (_showCategoryFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentIncomePagePath = "/View/IncomeStatisticPage.xaml";
-                }));
-            }
-        }
-        public RelayCommand ShowIncomeCategoryFrameCommand
-        {
-            get
-            {
-                return _showIncomeCategoryFrameCommand ?? (_showIncomeCategoryFrameCommand = new RelayCommand((args) =>
-                {
-                    CurrentIncomePagePath = "/View/IncomeCategoryPage.xaml";
+                    Settings.Default["isIncomePage"] = true;
+                    Settings.Default.Save();
+
+                    CurrentIncomePagePath = "/View/CategoryPage.xaml";
                 }));
             }
         }
@@ -91,10 +82,10 @@ namespace Money_Vault.ViewModel
                                 _displayRootRegistry.ShowPresentation(incomeGeneralAddViewModel);
                                 break;
                             }
-                        case "/View/IncomeCategoryPage.xaml":
+                        case "/View/CategoryPage.xaml":
                             {
-                                var incomeCategoryAddViewModel = new IncomeCategoryAddViewModel();
-                                _displayRootRegistry.ShowPresentation(incomeCategoryAddViewModel);
+                                var categoryAddViewModel = new CategoryAddViewModel();
+                                _displayRootRegistry.ShowPresentation(categoryAddViewModel);
                                 break;
                             }
                         default:
@@ -119,10 +110,10 @@ namespace Money_Vault.ViewModel
                                 _displayRootRegistry.ShowPresentation(incomeGeneralEditViewModel);
                                 break;
                             }
-                        case "/View/IncomeCategoryPage.xaml":
+                        case "/View/CategoryPage.xaml":
                             {
-                                var incomeCategoryEditViewModel = new IncomeCategoryEditViewModel();
-                                _displayRootRegistry.ShowPresentation(incomeCategoryEditViewModel);
+                                var categoryEditViewModel = new CategoryEditViewModel();
+                                _displayRootRegistry.ShowPresentation(categoryEditViewModel);
                                 break;
                             }
                         default:

@@ -6,13 +6,13 @@ namespace Money_Vault.View
     /// <summary>
     /// Логика взаимодействия для IncomeCategoryEditWindow.xaml
     /// </summary>
-    public partial class IncomeCategoryEditWindow : Window
+    public partial class CategoryEditWindow : Window
     {
-        public IncomeCategoryEditWindow()
+        public CategoryEditWindow()
         {
             InitializeComponent();
 
-            DataContext = new IncomeCategoryEditViewModel();
+            DataContext = new CategoryEditViewModel();
         }
     }
 }

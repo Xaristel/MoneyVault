@@ -26,52 +26,40 @@
 
         <Button 
             x:Name="Button_Delete" 
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
             Content="Удалить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
             Width="150" 
-            BorderThickness="3" 
-            Background="White" 
             ToolTip="Нажмите, чтобы удалить выбранный элемент." 
-            BorderBrush="Black" 
             Margin="1266,25,0,0" 
             Command="{Binding ShowDeleteFrameCommand}"/>
 
         <Button 
+            Style="{StaticResource Button_Common}"
             x:Name="Button_Edit" 
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
+            FontSize="24" 
             Content="Изменить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
             Width="150" 
-            BorderThickness="3" 
-            Background="White" 
             ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
-            BorderBrush="Black" 
             Margin="1089,25,0,0" 
             Command="{Binding ShowEditFrameCommand}"/>
 
         <Button 
             x:Name="Button_Add" 
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
             Content="Добавить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
             Width="150" 
-            BorderThickness="3" 
-            Background="White" 
-            ToolTip="Нажмите, чтобы показать расширенную информацию." 
-            BorderBrush="Black" 
+            ToolTip="Нажмите, чтобы добавить новую строку." 
             Margin="911,25,0,0" 
             Command="{Binding ShowAddFrameCommand}"/>
 
@@ -95,73 +83,43 @@
 
         <Button 
             x:Name="Button_General" 
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="190" 
-            BorderThickness="3" 
-            Background="White" 
+            Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
-            BorderBrush="Black" 
             Margin="25,25,0,0"
             Command="{Binding ShowIncomeGeneralFrameCommand}">
             <TextBlock TextAlignment="Center">Общий<LineBreak/>список</TextBlock>
         </Button>
 
         <Button 
-            x:Name="Button_Statistic" 
-            Content="Статистика"
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="90" 
-            Width="190" 
-            BorderThickness="3" 
-            Background="White" 
-            ToolTip="Нажмите, чтобы открыть вкладку со статистикой доходов." 
-            BorderBrush="Black" 
-            Margin="247,25,0,0"
-            Command="{Binding ShowIncomeStatisticFrameCommand}">
-        </Button>
-
-        <Button 
             x:Name="Button_Category" 
+            Style="{StaticResource Button_Common}"
             Content="Категории"
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
+            FontSize="24" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="190" 
-            BorderThickness="3" 
-            Background="White" 
+            Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
-            BorderBrush="Black" 
-            Margin="468,25,0,0"
-            Command="{Binding ShowIncomeCategoryFrameCommand}">
+            Margin="328,25,0,0"
+            Command="{Binding ShowCategoryFrameCommand}">
         </Button>
 
         <Button 
             x:Name="Button_Report" 
+            Style="{StaticResource Button_Common}"
             Content="Отчёт"
-            FontFamily="Balsamiq Sans" 
-            FontSize="18" 
-            FontWeight="Bold"
+            FontSize="24" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="190" 
-            BorderThickness="3" 
-            Background="White" 
+            Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
-            BorderBrush="Black" 
-            Margin="690,25,0,0"
+            Margin="630,25,0,0"
             Command="{Binding ShowIncomeReportFrameCommand}">
         </Button>
 
@@ -172,6 +130,5 @@
             BorderThickness="3,3,3,3"
             BorderBrush="Black"
             Source="{Binding CurrentIncomePagePath}"/>
-
     </Grid>
 </Page>

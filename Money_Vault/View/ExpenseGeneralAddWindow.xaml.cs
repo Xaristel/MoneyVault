@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Money_Vault.View
 {
     /// <summary>
-    /// Логика взаимодействия для IncomeCategoryPage.xaml
+    /// Логика взаимодействия для ExpenseGeneralAddWindow.xaml
     /// </summary>
-    public partial class IncomeCategoryPage : Page
+    public partial class ExpenseGeneralAddWindow : Window
     {
-        public IncomeCategoryPage()
+        public ExpenseGeneralAddWindow()
         {
             InitializeComponent();
         }

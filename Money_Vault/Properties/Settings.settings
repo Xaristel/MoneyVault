@@ -8,5 +8,8 @@
     <Setting Name="keepLogin" Type="System.String" Scope="User">
       <Value Profile="(Default)">NoUser</Value>
     </Setting>
+    <Setting Name="isIncomePage" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

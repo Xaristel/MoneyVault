@@ -46,5 +46,17 @@ namespace Money_Vault.Properties {
                 this["keepLogin"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isIncomePage {
+            get {
+                return ((bool)(this["isIncomePage"]));
+            }
+            set {
+                this["isIncomePage"] = value;
+            }
+        }
     }
 }

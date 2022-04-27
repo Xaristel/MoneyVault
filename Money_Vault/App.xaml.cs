@@ -20,8 +20,8 @@ namespace Money_Vault
             displayRootRegistry.RegisterWindowType<MessageViewModel, MessageModalWindow>();
             displayRootRegistry.RegisterWindowType<IncomeGeneralAddViewModel, IncomeGeneralAddWindow>();
             displayRootRegistry.RegisterWindowType<IncomeGeneralEditViewModel, IncomeGeneralEditWindow>();
-            displayRootRegistry.RegisterWindowType<IncomeCategoryAddViewModel, IncomeCategoryAddWindow>();
-            displayRootRegistry.RegisterWindowType<IncomeCategoryEditViewModel, IncomeCategoryEditWindow>();
+            displayRootRegistry.RegisterWindowType<CategoryAddViewModel, CategoryAddWindow>();
+            displayRootRegistry.RegisterWindowType<CategoryEditViewModel, CategoryEditWindow>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

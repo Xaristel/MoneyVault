@@ -5,10 +5,130 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      Title="ExpenseMainPage" Width="1600" Height="900" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:ExpenseMainViewModel}"
+      Title="ExpenseMainPage" 
+      Background="White" 
+      Width="1439" 
+      Height="852" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Grid>
-        <Label Content="Expenses Page" HorizontalAlignment="Center" Margin="0,468,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Balsamiq Sans" FontWeight="Bold" FontSize="14"/>
+        <Rectangle 
+            Height="128" 
+            Stroke="Black" 
+            VerticalAlignment="Top" 
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            StrokeThickness="3" Panel.ZIndex="-1"
+            />
 
+        <Button 
+            x:Name="Button_Delete" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            Content="Удалить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы удалить выбранный элемент." 
+            Margin="1266,25,0,0" 
+            Command="{Binding ShowDeleteFrameCommand}"/>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            x:Name="Button_Edit" 
+            FontSize="24" 
+            Content="Изменить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
+            Margin="1089,25,0,0" 
+            Command="{Binding ShowEditFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_Add" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            Content="Добавить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы добавить новую строку." 
+            Margin="911,25,0,0" 
+            Command="{Binding ShowAddFrameCommand}"/>
+
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Height="125" Margin="894,0,0,0" 
+            Stroke="Black" 
+            VerticalAlignment="Top" 
+            Width="3" 
+            StrokeThickness="3" 
+            RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Button 
+            x:Name="Button_General" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="250" 
+            ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
+            Margin="25,25,0,0"
+            Command="{Binding ShowExpenseGeneralFrameCommand}">
+            <TextBlock TextAlignment="Center">Общий<LineBreak/>список</TextBlock>
+        </Button>
+
+        <Button 
+            x:Name="Button_Category" 
+            Style="{StaticResource Button_Common}"
+            Content="Категории"
+            FontSize="24" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="250" 
+            ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
+            Margin="328,25,0,0"
+            Command="{Binding ShowCategoryFrameCommand}">
+        </Button>
+
+        <Button 
+            x:Name="Button_Report" 
+            Style="{StaticResource Button_Common}"
+            Content="Отчёт"
+            FontSize="24" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="250" 
+            ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
+            Margin="630,25,0,0"
+            Command="{Binding ShowExpenseReportFrameCommand}">
+        </Button>
+
+        <Frame 
+            x:Name="Frame_IncomeMain" 
+            Margin="0,125,0,0" 
+            NavigationUIVisibility="Hidden" 
+            BorderThickness="3,3,3,3"
+            BorderBrush="Black"
+            Source="{Binding CurrentExpensePagePath}"/>
     </Grid>
 </Page>

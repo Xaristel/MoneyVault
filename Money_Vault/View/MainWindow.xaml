@@ -23,86 +23,105 @@
         WindowState="Normal" 
         WindowStyle="ThreeDBorderWindow" 
         BorderThickness="3">
+
     <Grid Margin="0,0,0,0">
-        <Button x:Name="button_GeneralPage" 
+        <Button 
+            x:Name="button_GeneralPage" 
+            Style="{StaticResource Button_Common}"
             HorizontalAlignment="Left" 
             Margin="10,10,0,0" 
             VerticalAlignment="Top" 
             Height="125" 
             Width="125" 
-            FontWeight="Bold" 
             FontSize="28"
-            BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White" BorderBrush="Black" ToolTip="Раздел общей сводки всех ваших финансов." Command="{Binding ShowGeneralFrameCommand, Mode=OneWay}">
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            ToolTip="Раздел общей сводки всех ваших финансов." 
+            Command="{Binding ShowGeneralFrameCommand, Mode=OneWay}">
             <TextBlock>
                 <Run Text="Общая"/><LineBreak/><Run Text="сводка"/>
             </TextBlock>
         </Button>
 
-        <Button x:Name="button_IncomePage" 
+        <Button 
+            x:Name="button_IncomePage" 
+            Style="{StaticResource Button_Common}"
             HorizontalAlignment="Left" 
             Margin="10,150,0,0" 
             VerticalAlignment="Top" 
             Height="126" 
             Width="125" 
-            FontWeight="Bold" 
             FontSize="28"
-            BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White" BorderBrush="Black" ToolTip="Раздел о ваших доходах (подробно)." Command="{Binding ShowIncomeFrameCommand, Mode=OneWay}">
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            ToolTip="Раздел о ваших доходах (подробно)." 
+            Command="{Binding ShowIncomeFrameCommand, Mode=OneWay}">
             <TextBlock>
                 <Run Text="Доходы"/>
             </TextBlock>
         </Button>
 
-        <Button x:Name="button_OutcomePage" 
+        <Button 
+            x:Name="button_OutcomePage" 
+            Style="{StaticResource Button_Common}"
             HorizontalAlignment="Left" 
             Margin="10,290,0,0" 
             VerticalAlignment="Top" 
             Height="125" 
             Width="125" 
-            FontWeight="Bold" 
             FontSize="28"
-            BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White" BorderBrush="Black" ToolTip="Раздел о ваших расходах (подробно)." Command="{Binding ShowExpenseFrameCommand, Mode=OneWay}">
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            ToolTip="Раздел о ваших расходах (подробно)."
+            Command="{Binding ShowExpenseFrameCommand, Mode=OneWay}">
             <TextBlock>
                 <Run Text="Расходы"/>
             </TextBlock>
         </Button>
 
-        <Button x:Name="button_PlanningPage" 
+        <Button 
+            x:Name="button_PlanningPage" 
+            Style="{StaticResource Button_Common}"
             HorizontalAlignment="Left" 
             Margin="10,430,0,0" 
             VerticalAlignment="Top" 
             Height="125" 
             Width="125" 
-            FontWeight="Bold" 
             FontSize="28"
-            BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White" BorderBrush="Black" ToolTip="Раздел с вашими планами, целями, счетами и заметками." Command="{Binding ShowPlanningFrameCommand, Mode=OneWay}">
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            ToolTip="Раздел с вашими планами, целями, счетами и заметками." 
+            Command="{Binding ShowPlanningFrameCommand, Mode=OneWay}">
             <TextBlock>
                 <Run Text="Планы"/>
             </TextBlock>
         </Button>
 
-        <Button x:Name="button_HelpPage" 
+        <Button 
+            x:Name="button_HelpPage" 
+            Style="{StaticResource Button_Common}"
             HorizontalAlignment="Left" 
             Margin="10,570,0,0" 
             VerticalAlignment="Top" 
             Height="124" 
             Width="125" 
-            FontWeight="Bold" 
             FontSize="28"
-            BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White" BorderBrush="Black" ToolTip="Раздел помощи и вопросов по программе." Command="{Binding ShowHelpFrameCommand, Mode=OneWay}">
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            ToolTip="Раздел помощи и вопросов по программе." 
+            Command="{Binding ShowHelpFrameCommand, Mode=OneWay}">
             <TextBlock>
                 <Run Text="Помощь"/>
             </TextBlock>
         </Button>
 
-        <Button x:Name="button_Exit" 
+        <Button 
+            x:Name="button_Exit" 
+            Style="{StaticResource Button_Common}"
             HorizontalAlignment="Left" 
             Margin="10,710,0,0" 
             VerticalAlignment="Top" 
             Height="125" 
             Width="125" 
-            FontWeight="Bold" 
             FontSize="28"
-            BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="White" BorderBrush="Black" ToolTip="Выход из программы." Command="{Binding ExitCommand, Mode=OneWay}">
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            ToolTip="Выход из программы." 
+            Command="{Binding ExitCommand, Mode=OneWay}">
             <TextBlock>
                 <Run Text="Выход"/>
             </TextBlock>

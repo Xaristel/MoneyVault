@@ -105,6 +105,7 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Account_Operation.cs" />
     <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\CategoryListItem.cs" />
     <Compile Include="Model\Expense.cs" />
     <Compile Include="Model\Expense_Type.cs" />
     <Compile Include="Model\Goal.cs" />
@@ -118,9 +119,11 @@
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
-    <Compile Include="Model\IncomeTotalListItem.cs" />
-    <Compile Include="ViewModel\IncomeCategoryAddViewModel.cs" />
-    <Compile Include="ViewModel\IncomeCategoryEditViewModel.cs" />
+    <Compile Include="Model\TotalListItem.cs" />
+    <Compile Include="ViewModel\CategoryAddViewModel.cs" />
+    <Compile Include="ViewModel\CategoryEditViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseGeneralAddViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseGeneralEditViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
@@ -129,19 +132,16 @@
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\AuthViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\ExpenseCategoryViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralViewModel.cs" />
     <Compile Include="ViewModel\ExpenseMainViewModel.cs" />
     <Compile Include="ViewModel\ExpensePriceViewModel.cs" />
     <Compile Include="ViewModel\ExpenseReportViewModel.cs" />
-    <Compile Include="ViewModel\ExpenseStatisticViewModel.cs" />
     <Compile Include="ViewModel\GeneralViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
-    <Compile Include="ViewModel\IncomeCategoryViewModel.cs" />
+    <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralViewModel.cs" />
     <Compile Include="ViewModel\IncomeMainViewModel.cs" />
     <Compile Include="ViewModel\IncomeReportViewModel.cs" />
-    <Compile Include="ViewModel\IncomeStatisticViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PlanningAccumulationViewModel.cs" />
     <Compile Include="ViewModel\PlanningGoalViewModel.cs" />
@@ -151,8 +151,11 @@
     <Compile Include="View\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ExpenseCategoryPage.xaml.cs">
-      <DependentUpon>ExpenseCategoryPage.xaml</DependentUpon>
+    <Compile Include="View\ExpenseGeneralAddWindow.xaml.cs">
+      <DependentUpon>ExpenseGeneralAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseGeneralEditWindow.xaml.cs">
+      <DependentUpon>ExpenseGeneralEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ExpenseGeneralPage.xaml.cs">
       <DependentUpon>ExpenseGeneralPage.xaml</DependentUpon>
@@ -166,23 +169,20 @@
     <Compile Include="View\ExpenseReportPage.xaml.cs">
       <DependentUpon>ExpenseReportPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ExpenseStatisticPage.xaml.cs">
-      <DependentUpon>ExpenseStatisticPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\GeneralPage.xaml.cs">
       <DependentUpon>GeneralPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\IncomeCategoryAddWindow.xaml.cs">
-      <DependentUpon>IncomeCategoryAddWindow.xaml</DependentUpon>
+    <Compile Include="View\CategoryAddWindow.xaml.cs">
+      <DependentUpon>CategoryAddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\IncomeCategoryEditWindow.xaml.cs">
-      <DependentUpon>IncomeCategoryEditWindow.xaml</DependentUpon>
+    <Compile Include="View\CategoryEditWindow.xaml.cs">
+      <DependentUpon>CategoryEditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\IncomeCategoryPage.xaml.cs">
-      <DependentUpon>IncomeCategoryPage.xaml</DependentUpon>
+    <Compile Include="View\CategoryPage.xaml.cs">
+      <DependentUpon>CategoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IncomeGeneralAddWindow.xaml.cs">
       <DependentUpon>IncomeGeneralAddWindow.xaml</DependentUpon>
@@ -198,9 +198,6 @@
     </Compile>
     <Compile Include="View\IncomeReportPage.xaml.cs">
       <DependentUpon>IncomeReportPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\IncomeStatisticPage.xaml.cs">
-      <DependentUpon>IncomeStatisticPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -235,7 +232,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ExpenseCategoryPage.xaml">
+    <Page Include="View\ExpenseGeneralAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseGeneralEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,10 +256,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ExpenseStatisticPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\GeneralPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -267,15 +264,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\IncomeCategoryAddWindow.xaml">
+    <Page Include="View\CategoryAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\IncomeCategoryEditWindow.xaml">
+    <Page Include="View\CategoryEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\IncomeCategoryPage.xaml">
+    <Page Include="View\CategoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,10 +293,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\IncomeReportPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\IncomeStatisticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

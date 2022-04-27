@@ -167,35 +167,20 @@
 
         <DataGrid 
             x:Name="dataGrid_Income" 
+            Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding IncomesList, Mode=OneWay}" 
-            AutoGenerateColumns="False"
             Margin="800,61,20,431" 
-            Background="White" 
-            BorderBrush="Black" 
-            HorizontalContentAlignment="Center" 
-            VerticalContentAlignment="Center" 
-            FontFamily="Balsamiq Sans" 
-            FontWeight="Normal" 
-            FontSize="18" 
             Height="360" 
-            BorderThickness="3,3,3,3"
-            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
-            CanUserReorderColumns="True" 
-            CanUserResizeColumns="False"
-            CanUserSortColumns="False"
-            CanUserAddRows="False" 
-            CanUserDeleteRows="False" 
-            CanUserResizeRows="False"
-            HorizontalScrollBarVisibility="Disabled">
+            CanUserSortColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Категория дохода" 
-                    Width="370"
+                    Width="330"
                     Binding="{Binding TypeName, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
-                    Width="289"
+                    Width="265"
                     Binding="{Binding TotalAmount, Mode=OneWay}">
                 </DataGridTextColumn>
             </DataGrid.Columns>
@@ -203,34 +188,20 @@
 
         <DataGrid 
             x:Name="dataGrid_Expense" 
+            Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding ExpensesList, Mode=OneWay}" 
-            AutoGenerateColumns="False"
-            Margin="800,466,20,26" Background="White" 
-            BorderBrush="Black" 
-            HorizontalContentAlignment="Center" 
-            VerticalContentAlignment="Center" 
-            FontFamily="Balsamiq Sans" 
-            FontWeight="Normal" 
-            FontSize="18" 
+            Margin="800,466,20,26" 
             Height="360" 
-            BorderThickness="3,3,3,3"
-            ColumnHeaderStyle="{StaticResource dataGridColumnHeader_Common}" 
-            CanUserReorderColumns="True" 
-            CanUserResizeColumns="False"
-            CanUserSortColumns="False"
-            CanUserAddRows="False" 
-            CanUserDeleteRows="False" 
-            CanUserResizeRows="False"
-            HorizontalScrollBarVisibility="Disabled">
+            CanUserSortColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Категория расхода" 
-                    Width="370"
+                    Width="330"
                     Binding="{Binding TypeName, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
-                    Width="289"
+                    Width="265"
                     Binding="{Binding TotalAmount, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
