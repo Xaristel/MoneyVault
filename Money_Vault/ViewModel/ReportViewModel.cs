@@ -1,4 +1,5 @@
-﻿using Money_Vault.Database;
+﻿using Microsoft.Win32;
+using Money_Vault.Database;
 using Money_Vault.Model;
 using Money_Vault.Properties;
 using System;
@@ -7,6 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Spire.Xls;
+using System.IO;
+using System.Windows.Controls;
+using System.Drawing.Printing;
+using System.Diagnostics;
 
 namespace Money_Vault.ViewModel
 {
@@ -26,6 +32,8 @@ namespace Money_Vault.ViewModel
         private Visibility _isVisibleDataGridExpense;
         private Visibility _isVisibleDataGridTotal;
         private bool _isEnableComboBoxMonth;
+        private bool _isEnableSaveButton;
+        private bool _isEnablePrintButton;
 
         private IEnumerable<string> _yearsList;
         private List<string> _operationsList = new List<string>
@@ -59,6 +67,10 @@ namespace Money_Vault.ViewModel
         "Декабрь",
         "Полный год"
         };
+
+        private Microsoft.Office.Interop.Excel.Application _application;
+        private Microsoft.Office.Interop.Excel.Workbook _workbook;
+        private Microsoft.Office.Interop.Excel.Worksheet _worksheet;
 
         public string CurrentYear
         {
@@ -223,12 +235,35 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public bool IsEnableSaveButton
+        {
+            get => _isEnableSaveButton;
+            set
+            {
+                _isEnableSaveButton = value;
+                OnPropertyChanged("IsEnableSaveButton");
+            }
+        }
+
+        public bool IsEnablePrintButton
+        {
+            get => _isEnablePrintButton;
+            set
+            {
+                _isEnablePrintButton = value;
+                OnPropertyChanged("IsEnablePrintButton");
+            }
+        }
+
         public RelayCommand CreateReportCommand
         {
             get
             {
                 return _createReportCommand ?? (_createReportCommand = new RelayCommand((args) =>
                 {
+                    IsEnablePrintButton = true;
+                    IsEnableSaveButton = true;
+
                     UpdateData();
                 }));
             }
@@ -239,7 +274,22 @@ namespace Money_Vault.ViewModel
             {
                 return _saveReportCommand ?? (_saveReportCommand = new RelayCommand((args) =>
                 {
-                    //UpdateData();
+                    string path = "";
+                    SaveFileDialog saveDialog = new SaveFileDialog
+                    {
+                        Filter = "Файл Excel (*.xlsx)|*.xlsx|Все файлы (*.*)|*.*",
+                        Title = "Сохранить отчёт как...",
+                        AddExtension = true,
+                        FileName = "Отчёт по " + CurrentOperationsType + " " + CurrentMonth + " " + CurrentYear
+                    };
+
+                    if (saveDialog.ShowDialog() == true)
+                    {
+                        path = saveDialog.FileName;
+                        FillExcelFile();
+                        _workbook.SaveAs(path);
+                    }
+                    _application.Quit();
                 }));
             }
         }
@@ -249,7 +299,20 @@ namespace Money_Vault.ViewModel
             {
                 return _printReportCommand ?? (_printReportCommand = new RelayCommand((args) =>
                 {
-                    //UpdateData();
+                    string tempPath = Path.GetTempPath() + "Отчёт по " + CurrentOperationsType + " " + CurrentMonth + " " + CurrentYear + ".xlsx";
+                    FillExcelFile();
+                    if (File.Exists(tempPath))
+                    {
+                        File.Delete(tempPath);
+                    }
+
+                    _workbook.SaveAs(tempPath);
+
+                    Process excel = new Process();
+                    excel.StartInfo.FileName = tempPath;
+                    excel.Start();
+
+                    _application.Quit();
                 }));
             }
         }
@@ -260,8 +323,71 @@ namespace Money_Vault.ViewModel
 
             CurrentMonth = _monthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
+
+            IsEnableSaveButton = false;
+            IsEnablePrintButton = false;
         }
 
+        private void FillExcelFile()
+        {
+            _application = new Microsoft.Office.Interop.Excel.Application();
+            _workbook = _application.Workbooks.Add();
+            _worksheet = _workbook.Worksheets.get_Item(1);
+
+            for (int i = 1; i < IncomeDataList.Count() + 1; i++)
+            {
+                _worksheet.Columns.ColumnWidth = 20;
+            }
+
+            if (IncomeDataList.Count() > 0)
+            {
+                _worksheet.Rows[1].Columns[1] = "Номер";
+                _worksheet.Rows[1].Columns[2] = "Категория";
+                _worksheet.Rows[1].Columns[3] = "Сумма (в руб)";
+                _worksheet.Rows[1].Columns[4] = "Дата";
+                _worksheet.Rows[1].Columns[5] = "Заметка";
+
+
+                for (int i = 2; i < IncomeDataList.Count() + 2; i++)
+                {
+                    _worksheet.Rows[i].Columns[1] = IncomeDataList.ToList()[i - 2].Id;
+                    _worksheet.Rows[i].Columns[2] = IncomeDataList.ToList()[i - 2].TypeName;
+                    _worksheet.Rows[i].Columns[3] = IncomeDataList.ToList()[i - 2].Amount;
+                    _worksheet.Rows[i].Columns[4] = IncomeDataList.ToList()[i - 2].Date;
+                    _worksheet.Rows[i].Columns[5] = IncomeDataList.ToList()[i - 2].Note;
+                }
+            }
+            else if (ExpenseDataList.Count() > 0)
+            {
+                _worksheet.Rows[1].Columns[1] = "Номер";
+                _worksheet.Rows[1].Columns[2] = "Категория";
+                _worksheet.Rows[1].Columns[3] = "Сумма (в руб)";
+                _worksheet.Rows[1].Columns[4] = "Магазин";
+                _worksheet.Rows[1].Columns[5] = "Дата";
+                _worksheet.Rows[1].Columns[6] = "Заметка";
+
+                for (int i = 2; i < ExpenseDataList.Count() + 2; i++)
+                {
+                    _worksheet.Rows[i].Columns[1] = ExpenseDataList.ToList()[i - 2].Id;
+                    _worksheet.Rows[i].Columns[2] = ExpenseDataList.ToList()[i - 2].TypeName;
+                    _worksheet.Rows[i].Columns[3] = ExpenseDataList.ToList()[i - 2].Amount;
+                    _worksheet.Rows[i].Columns[4] = ExpenseDataList.ToList()[i - 2].ShopName;
+                    _worksheet.Rows[i].Columns[5] = ExpenseDataList.ToList()[i - 2].Date;
+                    _worksheet.Rows[i].Columns[6] = ExpenseDataList.ToList()[i - 2].Note;
+                }
+            }
+            else
+            {
+                _worksheet.Rows[1].Columns[1] = "Категория";
+                _worksheet.Rows[1].Columns[2] = "Сумма (в руб)";
+
+                for (int i = 2; i < IncomeDataList.Count() + 2; i++)
+                {
+                    _worksheet.Rows[i].Columns[1] = TotalDataList.ToList()[i - 2].TypeName;
+                    _worksheet.Rows[i].Columns[2] = TotalDataList.ToList()[i - 2].TotalAmount;
+                }
+            }
+        }
         private void FillYearsList()
         {
             List<string> years = new List<string>
@@ -328,14 +454,20 @@ namespace Money_Vault.ViewModel
 
                                     foreach (var item in _database.Incomes.ToList())
                                     {
-                                        listIncomes.Add(new IncomeCommonListItem()
+                                        if (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                           || CurrentYear == "Все годы")
                                         {
-                                            Id = item.Id,
-                                            TypeName = _database.Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
-                                            Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
-                                            Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
-                                            Note = item.Note
-                                        });
+                                            listIncomes.Add(new IncomeCommonListItem()
+                                            {
+                                                Id = item.Id,
+                                                TypeName = _database.Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
+                                                Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
+                                                Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
+                                                Note = item.Note
+                                            });
+                                        }
                                     }
                                     break;
                                 }
@@ -345,9 +477,7 @@ namespace Money_Vault.ViewModel
                                     IsVisibleDataGridExpense = Visibility.Hidden;
                                     IsVisibleDataGridTotal = Visibility.Visible;
 
-                                    //GeneralViewModel generalViewModel = new GeneralViewModel();
-
-                                    //listTotal = generalViewModel.FillIncomesTotalList();
+                                    listTotal = FillIncomesTotalList();
                                     break;
                                 }
                             default:
@@ -368,15 +498,21 @@ namespace Money_Vault.ViewModel
 
                                     foreach (var item in _database.Expenses.ToList())
                                     {
-                                        listExpenses.Add(new ExpenseCommonListItem()
+                                        if (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                           || CurrentYear == "Все годы")
                                         {
-                                            Id = item.Id,
-                                            TypeName = _database.Expense_Types.ToList().Find(x => x.Id == item.Expense_Type_Id).Name,
-                                            Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Price),
-                                            ShopName = _database.Shops.ToList().Find(x => x.Id == item.Shop_Id).Name,
-                                            Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
-                                            Note = item.Note
-                                        });
+                                            listExpenses.Add(new ExpenseCommonListItem()
+                                            {
+                                                Id = item.Id,
+                                                TypeName = _database.Expense_Types.ToList().Find(x => x.Id == item.Expense_Type_Id).Name,
+                                                Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Price),
+                                                ShopName = _database.Shops.ToList().Find(x => x.Id == item.Shop_Id).Name,
+                                                Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
+                                                Note = item.Note
+                                            });
+                                        }
                                     }
                                     break;
                                 }
@@ -386,9 +522,7 @@ namespace Money_Vault.ViewModel
                                     IsVisibleDataGridExpense = Visibility.Hidden;
                                     IsVisibleDataGridTotal = Visibility.Visible;
 
-                                    //GeneralViewModel generalViewModel = new GeneralViewModel();
-
-                                    //listTotal = generalViewModel.FillExpensesTotalList();
+                                    listTotal = FillExpensesTotalList();
                                     break;
                                 }
                             default:
@@ -403,6 +537,90 @@ namespace Money_Vault.ViewModel
             ExpenseDataList = listExpenses;
             IncomeDataList = listIncomes;
             TotalDataList = listTotal;
+        }
+
+        private List<TotalListItem> FillIncomesTotalList()
+        {
+            var query = from income in _database.Incomes.ToList()
+                        group income by income.Income_Type_Id into incomeListItem
+                        select new
+                        {
+                            TypeId = incomeListItem.Key,
+                            TotalAmount = (from item in incomeListItem
+                                           where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                           || CurrentYear == "Все годы"
+                                           select item.Total_Amount).Sum()
+                        };
+
+            List<TotalListItem> tempList = new List<TotalListItem>();
+
+            int totalSum = 0;
+
+            foreach (var item in query)
+            {
+                if (item.TotalAmount != 0)
+                {
+                    tempList.Add(new TotalListItem()
+                    {
+                        TypeName = _database.Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                        TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
+                    });
+
+                    totalSum += item.TotalAmount;
+                }
+            }
+
+            tempList.Add(new TotalListItem()
+            {
+                TypeName = "Итого",
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
+            });
+
+            return tempList;
+        }
+
+        private List<TotalListItem> FillExpensesTotalList()
+        {
+            var query = from expense in _database.Expenses.ToList()
+                        group expense by expense.Expense_Type_Id into expenseListItem
+                        select new
+                        {
+                            TypeId = expenseListItem.Key,
+                            TotalAmount = (from item in expenseListItem
+                                           where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                           || CurrentYear == "Все годы"
+                                           select item.Total_Price).Sum()
+                        };
+
+            List<TotalListItem> tempList = new List<TotalListItem>();
+
+            int totalSum = 0;
+
+            foreach (var item in query)
+            {
+                if (item.TotalAmount != 0)
+                {
+                    tempList.Add(new TotalListItem()
+                    {
+                        TypeName = _database.Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                        TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
+                    });
+
+                    totalSum += item.TotalAmount;
+                }
+            }
+
+            tempList.Add(new TotalListItem()
+            {
+                TypeName = "Итого",
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
+            });
+
+            return tempList;
         }
     }
 }

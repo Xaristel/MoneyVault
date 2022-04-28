@@ -31,8 +31,9 @@
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding IncomeDataList, Mode=OneWay}" 
             Visibility="{Binding IsVisibleDataGridIncome}"
-            Margin="410,30,410,337" 
-            Height="360" 
+            Margin="180,10,25,25" 
+            Width="1234"
+            Height="692"
             CanUserSortColumns="False"
             CanUserReorderColumns="False"
             IsReadOnly="True"
@@ -72,8 +73,9 @@
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding ExpenseDataList, Mode=OneWay}" 
             Visibility="{Binding IsVisibleDataGridExpense}"
-            Margin="410,30,410,337" 
-            Height="360" 
+            Margin="180,10,25,25" 
+            Width="1234"
+            Height="692"
             CanUserSortColumns="False"
             CanUserReorderColumns="False"
             IsReadOnly="True"
@@ -118,8 +120,9 @@
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding TotalDataList, Mode=OneWay}" 
             Visibility="{Binding IsVisibleDataGridTotal}"
-            Margin="410,30,410,337" 
-            Height="360" 
+            Margin="180,10,25,25" 
+            Width="1234"
+            Height="692"
             CanUserSortColumns="False"
             CanUserReorderColumns="False"
             IsReadOnly="True"
@@ -149,7 +152,7 @@
             FontFamily="Balsamiq Sans" 
             FontWeight="Bold" 
             FontSize="18" 
-            ToolTip="Выберите год для отображения результата отчёта." 
+            ToolTip="Выберите год." 
             Height="40"
             BorderThickness="3" 
             ItemsSource="{Binding YearsList, Mode=OneWay}"
@@ -170,6 +173,7 @@
             FontSize="18" 
             Height="40"
             BorderThickness="3"
+            ToolTip="Выберите месяц."
             ItemsSource="{Binding MonthsList, Mode=OneWay}"
             SelectedItem="{Binding CurrentMonth, Mode=TwoWay}"
             IsEnabled="{Binding IsEnableComboBoxMonth}"/>
@@ -188,6 +192,7 @@
             FontSize="18" 
             Height="40"
             BorderThickness="3"
+            ToolTip="Выберите тип отчёта (по операциям или по категориям)."
             ItemsSource="{Binding ReportTypesList, Mode=OneWay}"
             SelectedItem="{Binding CurrentReportType, Mode=TwoWay}">
         </ComboBox>
@@ -206,6 +211,7 @@
             FontSize="18" 
             Height="40"
             BorderThickness="3"
+            ToolTip="Выберите тип операций для отчёта."
             ItemsSource="{Binding OperationsList, Mode=OneWay}"
             SelectedItem="{Binding CurrentOperationsType, Mode=TwoWay}">
         </ComboBox>
@@ -218,6 +224,7 @@
             VerticalAlignment="Top" 
             Width="131" 
             Height="40"
+            ToolTip="Нажмите, чтобы создать отчёт."
             Style="{StaticResource Button_Common}"
             Command="{Binding CreateReportCommand}"/>
 
@@ -229,8 +236,10 @@
             VerticalAlignment="Top" 
             Width="131" 
             Height="40"
+            ToolTip="Нажмите, чтобы сохранить созданный отчёт в файл."
             Style="{StaticResource Button_Common}"
-            Command="{Binding SaveReportCommand}"/>
+            Command="{Binding SaveReportCommand}"
+            IsEnabled="{Binding IsEnableSaveButton}"/>
 
         <Button 
             x:Name="Button_Print"
@@ -240,8 +249,10 @@
             VerticalAlignment="Top" 
             Width="131" 
             Height="40"
+            ToolTip="Нажмите, чтобы распечатать созданный отчёт."
             Style="{StaticResource Button_Common}"
-            Command="{Binding PrintReportCommand}"/>
+            Command="{Binding PrintReportCommand}"
+            IsEnabled="{Binding IsEnablePrintButton}"/>
 
     </Grid>
 </Page>

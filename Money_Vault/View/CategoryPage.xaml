@@ -20,7 +20,7 @@
             x:Name="DataGrid_Categories" 
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}" 
-            Margin="30,10,22,25">
+            Margin="25,10,22,25">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Номер" 

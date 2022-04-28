@@ -270,18 +270,18 @@ namespace Money_Vault.ViewModel
 
             if (IsRemoveExpenses && !IsRemoveIncomes)
             {
-                FillIncomesList();
+                FillIncomesTotalList();
                 ExpensesList = new List<TotalListItem>();
             }
             else if (IsRemoveIncomes && !IsRemoveExpenses)
             {
-                FillExpensesList();
+                FillExpensesTotalList();
                 IncomesList = new List<TotalListItem>();
             }
             else if (!IsRemoveIncomes && !IsRemoveExpenses)
             {
-                FillIncomesList();
-                FillExpensesList();
+                FillIncomesTotalList();
+                FillExpensesTotalList();
             }
             else
             {
@@ -325,7 +325,7 @@ namespace Money_Vault.ViewModel
             YearsList.Add("Все годы");
         }
 
-        private void FillIncomesList()
+        private void FillIncomesTotalList()
         {
             var query = from income in Incomes
                         group income by income.Income_Type_Id into incomeListItem
@@ -381,7 +381,7 @@ namespace Money_Vault.ViewModel
             IncomesList = tempList;
         }
 
-        private void FillExpensesList()
+        private void FillExpensesTotalList()
         {
             var query = from expense in Expenses
                         group expense by expense.Expense_Type_Id into expenseListItem
