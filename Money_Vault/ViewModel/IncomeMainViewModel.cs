@@ -60,7 +60,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showIncomeReportFrameCommand ?? (_showIncomeReportFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentIncomePagePath = "/View/IncomeReportPage.xaml";
+                    CurrentIncomePagePath = "/View/ReportPage.xaml";
                 }));
             }
         }

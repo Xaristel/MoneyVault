@@ -185,7 +185,7 @@ namespace Money_Vault.ViewModel
         {
             YearsList = new List<string>
             {
-                _currentYear
+                CurrentYear
             };
 
             foreach (var item in Incomes)

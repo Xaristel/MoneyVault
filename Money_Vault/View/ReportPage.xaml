@@ -1,0 +1,247 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Money_Vault.View" 
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      xmlns:System="clr-namespace:System;assembly=mscorlib" 
+      x:Class="Money_Vault.View.ReportPage"
+      mc:Ignorable="d" 
+      d:DataContext="{d:DesignInstance Type={x:Type viewmodel:ReportViewModel}}"
+      Title="ReportPage" 
+      Background="White" 
+      Width="1439" 
+      Height="727" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+    <Grid Width="1439">
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Height="734" 
+            Stroke="Black" 
+            VerticalAlignment="Center" 
+            Width="169" 
+            StrokeThickness="3"/>
+
+        <DataGrid 
+            x:Name="DataGrid_Income" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding IncomeDataList, Mode=OneWay}" 
+            Visibility="{Binding IsVisibleDataGridIncome}"
+            Margin="410,30,410,337" 
+            Height="360" 
+            CanUserSortColumns="False"
+            CanUserReorderColumns="False"
+            IsReadOnly="True"
+            ToolTip="Таблица, которая будет сохранена в файл отчёта.">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Номер" 
+                    Width="100"
+                    Binding="{Binding Id, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Категория" 
+                    Width="300"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="250"
+                    Binding="{Binding Amount, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Дата" 
+                    Width="220"
+                    Binding="{Binding Date, Mode=OneWay, StringFormat=\{0:dd.MM.yyyy\}}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Примечание" 
+                    Width="343"
+                    Binding="{Binding Note, Mode=OneWay}"
+                    CanUserSort="False">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            x:Name="DataGrid_Expense" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding ExpenseDataList, Mode=OneWay}" 
+            Visibility="{Binding IsVisibleDataGridExpense}"
+            Margin="410,30,410,337" 
+            Height="360" 
+            CanUserSortColumns="False"
+            CanUserReorderColumns="False"
+            IsReadOnly="True"
+            ToolTip="Таблица, которая будет сохранена в файл отчёта.">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Номер" 
+                    Width="100"
+                    Binding="{Binding Id, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Категория" 
+                    Width="300"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="250"
+                    Binding="{Binding Amount, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Магазин" 
+                    Width="250"
+                    Binding="{Binding ShopName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Дата" 
+                    Width="200"
+                    Binding="{Binding Date, Mode=OneWay, StringFormat=\{0:dd.MM.yyyy\}}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Примечание" 
+                    Width="300"
+                    Binding="{Binding Note, Mode=OneWay}"
+                    CanUserSort="False">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            x:Name="DataGrid_Total" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding TotalDataList, Mode=OneWay}" 
+            Visibility="{Binding IsVisibleDataGridTotal}"
+            Margin="410,30,410,337" 
+            Height="360" 
+            CanUserSortColumns="False"
+            CanUserReorderColumns="False"
+            IsReadOnly="True"
+            ToolTip="Таблица, которая будет сохранена в файл отчёта.">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Категория" 
+                    Width="330"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="265"
+                    Binding="{Binding TotalAmount, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}"
+            x:Name="СomboBox_Year" 
+            HorizontalAlignment="Left" 
+            Margin="25,120,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            ToolTip="Выберите год для отображения результата отчёта." 
+            Height="40"
+            BorderThickness="3" 
+            ItemsSource="{Binding YearsList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" 
+            />
+
+        <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}" 
+            x:Name="comboBox_Month" 
+            HorizontalAlignment="Left" 
+            Margin="25,175,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Height="40"
+            BorderThickness="3"
+            ItemsSource="{Binding MonthsList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentMonth, Mode=TwoWay}"
+            IsEnabled="{Binding IsEnableComboBoxMonth}"/>
+
+        <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}" 
+            x:Name="comboBox_ReportType" 
+            HorizontalAlignment="Left" 
+            Margin="25,10,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Height="40"
+            BorderThickness="3"
+            ItemsSource="{Binding ReportTypesList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentReportType, Mode=TwoWay}">
+        </ComboBox>
+
+        <ComboBox 
+            Template="{DynamicResource ComboBoxTemplateCommon}" 
+            x:Name="comboBox_OperationsType" 
+            HorizontalAlignment="Left" 
+            Margin="25,65,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            FontFamily="Balsamiq Sans" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Height="40"
+            BorderThickness="3"
+            ItemsSource="{Binding OperationsList, Mode=OneWay}"
+            SelectedItem="{Binding CurrentOperationsType, Mode=TwoWay}">
+        </ComboBox>
+
+        <Button 
+            x:Name="Button_Create"
+            Content="Создать" 
+            HorizontalAlignment="Left" 
+            Margin="25,230,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            Height="40"
+            Style="{StaticResource Button_Common}"
+            Command="{Binding CreateReportCommand}"/>
+
+        <Button 
+            x:Name="Button_Save"
+            Content="Сохранить" 
+            HorizontalAlignment="Left" 
+            Margin="25,285,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            Height="40"
+            Style="{StaticResource Button_Common}"
+            Command="{Binding SaveReportCommand}"/>
+
+        <Button 
+            x:Name="Button_Print"
+            Content="Печать" 
+            HorizontalAlignment="Left" 
+            Margin="25,340,0,0" 
+            VerticalAlignment="Top" 
+            Width="131" 
+            Height="40"
+            Style="{StaticResource Button_Common}"
+            Command="{Binding PrintReportCommand}"/>
+
+    </Grid>
+</Page>

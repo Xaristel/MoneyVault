@@ -75,8 +75,7 @@
             Height="40"
             BorderThickness="3" 
             ItemsSource="{Binding YearsList, Mode=OneWay}"
-            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" 
-            />
+            SelectedItem="{Binding CurrentYear, Mode=TwoWay}" />
 
         <Button 
             x:Name="Button_January" 
