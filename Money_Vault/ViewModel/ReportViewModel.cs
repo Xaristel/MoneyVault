@@ -326,6 +326,9 @@ namespace Money_Vault.ViewModel
 
             IsEnableSaveButton = false;
             IsEnablePrintButton = false;
+            IsVisibleDataGridExpense = Visibility.Hidden;
+            IsVisibleDataGridIncome = Visibility.Hidden;
+            IsVisibleDataGridTotal = Visibility.Hidden;
 
             CurrentReportType = ReportTypesList[0];
             CurrentOperationsType = OperationsList[0];
