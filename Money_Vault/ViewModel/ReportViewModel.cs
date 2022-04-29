@@ -299,7 +299,7 @@ namespace Money_Vault.ViewModel
             {
                 return _printReportCommand ?? (_printReportCommand = new RelayCommand((args) =>
                 {
-                    string tempPath = Path.GetTempPath() + "Отчёт по " + CurrentOperationsType + " " + CurrentMonth + " " + CurrentYear + ".xlsx";
+                    string tempPath = Path.GetTempPath() + "Отчёт.xlsx";
                     FillExcelFile();
                     if (File.Exists(tempPath))
                     {
@@ -326,6 +326,9 @@ namespace Money_Vault.ViewModel
 
             IsEnableSaveButton = false;
             IsEnablePrintButton = false;
+
+            CurrentReportType = ReportTypesList[0];
+            CurrentOperationsType = OperationsList[0];
         }
 
         private void FillExcelFile()
