@@ -102,6 +102,9 @@ namespace Money_Vault.ViewModel
 
                         if (result.Count() != 0)
                         {
+                            Settings.Default["currentUserId"] = result.ToList()[0].Id;
+                            Settings.Default.Save();
+
                             var displayRootRegistry = (Application.Current as App).displayRootRegistry;
                             var mainViewModel = new MainViewModel();
 

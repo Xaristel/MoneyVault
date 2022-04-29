@@ -60,7 +60,8 @@
             ToolTip="Введите ваш логин."
             Style="{StaticResource placeHolder_common}" 
             Tag="Введите ваш логин..." 
-            FontWeight="Normal" Text="{Binding Login}"/>
+            FontWeight="Normal" 
+            Text="{Binding Login}"/>
 
         <Button 
             x:Name="button_Auth" 

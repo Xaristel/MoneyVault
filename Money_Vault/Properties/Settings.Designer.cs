@@ -58,5 +58,17 @@ namespace Money_Vault.Properties {
                 this["isIncomePage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int currentUserId {
+            get {
+                return ((int)(this["currentUserId"]));
+            }
+            set {
+                this["currentUserId"] = value;
+            }
+        }
     }
 }

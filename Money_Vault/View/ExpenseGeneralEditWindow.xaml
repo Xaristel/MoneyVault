@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Money_Vault.View"
         mc:Ignorable="d"
-        Title="ExpenseGeneralEditWindow" Height="450" Width="800">
+        Title="ExpenseGeneralEditWindow" 
+        Height="450" 
+        Width="800" 
+        Icon="/Icon/icon_chest_fill.png" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterOwner">
     <Grid>
-        
+
     </Grid>
 </Window>
