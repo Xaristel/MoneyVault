@@ -8,8 +8,6 @@ namespace Money_Vault.ViewModel
 {
     public class IncomeGeneralViewModel : BaseViewModel
     {
-        private DatabaseContext _database;
-
         private RelayCommand _selectMonthCommand;
 
         private List<string> _yearsList;
@@ -34,8 +32,6 @@ namespace Money_Vault.ViewModel
         "Полный год"
         };
 
-        private IEnumerable<Income_Type> _income_Types;
-        private IEnumerable<Income> _incomes;
         private IEnumerable<IncomeCommonListItem> _incomesList;
 
         public string CurrentYear
@@ -65,26 +61,6 @@ namespace Money_Vault.ViewModel
                 {
                     UpdateData();
                 }
-            }
-        }
-
-        public IEnumerable<Income_Type> Income_Types
-        {
-            get => _income_Types;
-            set
-            {
-                _income_Types = value;
-                OnPropertyChanged("Income_Types");
-            }
-        }
-
-        public IEnumerable<Income> Incomes
-        {
-            get => _incomes;
-            set
-            {
-                _incomes = value;
-                OnPropertyChanged("Incomes");
             }
         }
 
@@ -131,11 +107,6 @@ namespace Money_Vault.ViewModel
 
         public IncomeGeneralViewModel()
         {
-            _database = new DatabaseContext();
-
-            Income_Types = _database.Income_Types.ToList();
-            Incomes = _database.Incomes.ToList();
-
             CurrentMonth = _monthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
             IsEnableMonthsButtons = true;
@@ -158,27 +129,29 @@ namespace Money_Vault.ViewModel
                 IsEnableMonthsButtons = true;
             }
 
-            List<IncomeCommonListItem> tempList = new List<IncomeCommonListItem>();
-
-            foreach (var item in Incomes)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                if (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                    || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                    || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                    || CurrentYear == "Все годы")
-                {
-                    tempList.Add(new IncomeCommonListItem()
-                    {
-                        Id = item.Id,
-                        TypeName = Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
-                        Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
-                        Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
-                        Note = item.Note
-                    });
-                }
-            }
+                List<IncomeCommonListItem> tempList = new List<IncomeCommonListItem>();
 
-            IncomesList = tempList;
+                foreach (var item in database.Incomes.ToList())
+                {
+                    if (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                        || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                        || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                        || CurrentYear == "Все годы")
+                    {
+                        tempList.Add(new IncomeCommonListItem()
+                        {
+                            Id = item.Id,
+                            TypeName = database.Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
+                            Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
+                            Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
+                            Note = item.Note
+                        });
+                    }
+                }
+                IncomesList = tempList;
+            }
         }
 
         private void FillYearsList()
@@ -188,14 +161,17 @@ namespace Money_Vault.ViewModel
                 CurrentYear
             };
 
-            foreach (var item in Incomes)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                //try to get year from date (14.05.2022 -> 2022)
-                string tempYear = item.Date.Split('.')[2];
-
-                if (!YearsList.Contains(tempYear))
+                foreach (var item in database.Incomes.ToList())
                 {
-                    YearsList.Add(tempYear);
+                    //try to get year from date (14.05.2022 -> 2022)
+                    string tempYear = item.Date.Split('.')[2];
+
+                    if (!YearsList.Contains(tempYear))
+                    {
+                        YearsList.Add(tempYear);
+                    }
                 }
             }
 

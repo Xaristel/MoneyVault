@@ -10,8 +10,6 @@ namespace Money_Vault.ViewModel
 {
     public class ExpenseGeneralViewModel : BaseViewModel
     {
-        private DatabaseContext _database;
-
         private RelayCommand _selectMonthCommand;
 
         private List<string> _yearsList;
@@ -36,10 +34,7 @@ namespace Money_Vault.ViewModel
         "Полный год"
         };
 
-        private IEnumerable<Expense_Type> _expense_Type;
-        private IEnumerable<Expense> _expenses;
         private IEnumerable<ExpenseCommonListItem> _expensesList;
-        private IEnumerable<Shop> _shopsList;
 
         public string CurrentYear
         {
@@ -68,36 +63,6 @@ namespace Money_Vault.ViewModel
                 {
                     UpdateData();
                 }
-            }
-        }
-
-        public IEnumerable<Expense_Type> Expense_Types
-        {
-            get => _expense_Type;
-            set
-            {
-                _expense_Type = value;
-                OnPropertyChanged("Expense_Types");
-            }
-        }
-
-        public IEnumerable<Shop> ShopsList
-        {
-            get => _shopsList;
-            set
-            {
-                _shopsList = value;
-                OnPropertyChanged("ShopsList");
-            }
-        }
-
-        public IEnumerable<Expense> Expenses
-        {
-            get => _expenses;
-            set
-            {
-                _expenses = value;
-                OnPropertyChanged("Expenses");
             }
         }
 
@@ -144,12 +109,6 @@ namespace Money_Vault.ViewModel
 
         public ExpenseGeneralViewModel()
         {
-            _database = new DatabaseContext();
-
-            Expense_Types = _database.Expense_Types.ToList();
-            Expenses = _database.Expenses.ToList();
-            ShopsList = _database.Shops.ToList();
-
             CurrentMonth = _monthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
             IsEnableMonthsButtons = true;
@@ -172,28 +131,31 @@ namespace Money_Vault.ViewModel
                 IsEnableMonthsButtons = true;
             }
 
-            List<ExpenseCommonListItem> tempList = new List<ExpenseCommonListItem>();
-
-            foreach (var item in Expenses)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                if (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                    || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                    || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                    || CurrentYear == "Все годы")
-                {
-                    tempList.Add(new ExpenseCommonListItem()
-                    {
-                        Id = item.Id,
-                        TypeName = Expense_Types.ToList().Find(x => x.Id == item.Expense_Type_Id).Name,
-                        Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Price),
-                        ShopName = ShopsList.ToList().Find(x => x.Id == item.Shop_Id).Name,
-                        Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
-                        Note = item.Note
-                    });
-                }
-            }
+                List<ExpenseCommonListItem> tempList = new List<ExpenseCommonListItem>();
 
-            ExpensesList = tempList;
+                foreach (var item in database.Expenses.ToList())
+                {
+                    if (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                        || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                        || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                        || CurrentYear == "Все годы")
+                    {
+                        tempList.Add(new ExpenseCommonListItem()
+                        {
+                            Id = item.Id,
+                            TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.Expense_Type_Id).Name,
+                            Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Price),
+                            ShopName = database.Shops.ToList().Find(x => x.Id == item.Shop_Id).Name,
+                            Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
+                            Note = item.Note
+                        });
+                    }
+                }
+
+                ExpensesList = tempList;
+            }
         }
 
         private void FillYearsList()
@@ -203,14 +165,17 @@ namespace Money_Vault.ViewModel
                 CurrentYear
             };
 
-            foreach (var item in Expenses)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                //try to get year from date (14.05.2022 -> 2022)
-                string tempYear = item.Date.Split('.')[2];
-
-                if (!YearsList.Contains(tempYear))
+                foreach (var item in database.Expenses.ToList())
                 {
-                    YearsList.Add(tempYear);
+                    //try to get year from date (14.05.2022 -> 2022)
+                    string tempYear = item.Date.Split('.')[2];
+
+                    if (!YearsList.Contains(tempYear))
+                    {
+                        YearsList.Add(tempYear);
+                    }
                 }
             }
 

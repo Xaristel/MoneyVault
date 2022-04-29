@@ -12,8 +12,6 @@ namespace Money_Vault.ViewModel
 {
     public class IncomeGeneralAddViewModel : BaseViewModel
     {
-        private DatabaseContext _database;
-
         private string _category;
         private string _amount;
         private DateTime _date;
@@ -84,16 +82,19 @@ namespace Money_Vault.ViewModel
             {
                 return _addCommand ?? (_addCommand = new RelayCommand((args) =>
                 {
-                    _database.Incomes.Add(new Income()
+                    using (DatabaseContext database = new DatabaseContext())
                     {
-                        User_Id = Convert.ToInt32(Settings.Default["currentUserId"]),
-                        Income_Type_Id = _database.Income_Types.ToList().Find(x => x.Name == Category).Id,
-                        Total_Amount = Convert.ToInt32(Amount.Replace(".", String.Empty).Replace(",", String.Empty)),
-                        Date = Date.ToString("dd.MM.yyyy"),
-                        Note = Note
-                    });
+                        database.Incomes.Add(new Income()
+                        {
+                            User_Id = Convert.ToInt32(Settings.Default["currentUserId"]),
+                            Income_Type_Id = database.Income_Types.ToList().Find(x => x.Name == Category).Id,
+                            Total_Amount = Convert.ToInt32(Amount.Replace(".", String.Empty).Replace(",", String.Empty)),
+                            Date = Date.ToString("dd.MM.yyyy"),
+                            Note = Note
+                        });
 
-                    _database.SaveChanges();
+                        database.SaveChanges();
+                    }
 
                     var displayRootRegistry = (Application.Current as App).displayRootRegistry;
                     displayRootRegistry.HidePresentation(this);
@@ -125,10 +126,11 @@ namespace Money_Vault.ViewModel
 
         public IncomeGeneralAddViewModel()
         {
-            _database = new DatabaseContext();
-
-            CategoriesList = from item in _database.Income_Types.ToList()
-                             select item.Name;
+            using (DatabaseContext database = new DatabaseContext())
+            {
+                CategoriesList = from item in database.Income_Types.ToList()
+                                 select item.Name;
+            }
 
             Date = System.DateTime.Now;
         }

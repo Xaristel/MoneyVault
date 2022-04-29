@@ -80,6 +80,7 @@ namespace Money_Vault.ViewModel
                             {
                                 var incomeGeneralAddViewModel = new IncomeGeneralAddViewModel();
                                 _displayRootRegistry.ShowPresentation(incomeGeneralAddViewModel);
+
                                 break;
                             }
                         case "/View/CategoryPage.xaml":

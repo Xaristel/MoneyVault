@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using Money_Vault.Database;
-using Money_Vault.Model;
 using Money_Vault.Properties;
 
 namespace Money_Vault.ViewModel
 {
     public class AuthViewModel : BaseViewModel
     {
-        private DatabaseContext _database;
-
         private string _login;
         private bool _isKeepLogin;
 
         private RelayCommand _registerCommand;
         private RelayCommand _authCommand;
-
-        private IEnumerable<User> _users;
 
         public string Login
         {
@@ -41,21 +35,8 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<User> Users
-        {
-            get => _users;
-            set
-            {
-                _users = value;
-                OnPropertyChanged("Users");
-            }
-        }
-
         public AuthViewModel()
         {
-            _database = new DatabaseContext();
-
-            Users = _database.Users.ToList();
             IsKeepLogin = Convert.ToBoolean(Settings.Default["isKeepLogin"]);
 
             if (IsKeepLogin)
@@ -94,9 +75,9 @@ namespace Money_Vault.ViewModel
                     Settings.Default["keepLogin"] = login;
                     Settings.Default.Save();
 
-                    try
+                    using (DatabaseContext database = new DatabaseContext())
                     {
-                        var result = from item in _database.Users.ToList()
+                        var result = from item in database.Users.ToList()
                                      where item.Login == login && item.Password == secretPassword
                                      select item;
 
@@ -120,10 +101,6 @@ namespace Money_Vault.ViewModel
                                 "Пользователя не существует или были введены неверные данные.");
                             await displayRootRegistry.ShowModalPresentation(messageViewModel);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Ошибка при выполнении SQL-запроса к БД.", ex);
                     }
                 }));
             }

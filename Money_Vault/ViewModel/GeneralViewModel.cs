@@ -13,8 +13,6 @@ namespace Money_Vault.ViewModel
 {
     public class GeneralViewModel : BaseViewModel
     {
-        private DatabaseContext _database;
-
         private RelayCommand _removeTypeCommand;
 
         private bool _isRemoveIncomes;
@@ -26,10 +24,6 @@ namespace Money_Vault.ViewModel
         private string _minIncomesDate;
         private string _minExpensesDate;
 
-        private IEnumerable<Income_Type> _income_Types;
-        private IEnumerable<Expense_Type> _expense_Types;
-        private IEnumerable<Income> _incomes;
-        private IEnumerable<Expense> _expenses;
         private IEnumerable<TotalListItem> _incomesList;
         private IEnumerable<TotalListItem> _expensesList;
         private SeriesCollection _seriesGeneral;
@@ -83,46 +77,6 @@ namespace Money_Vault.ViewModel
                 {
                     UpdateData();
                 }
-            }
-        }
-
-        public IEnumerable<Income_Type> Income_Types
-        {
-            get => _income_Types;
-            set
-            {
-                _income_Types = value;
-                OnPropertyChanged("Income_Types");
-            }
-        }
-
-        public IEnumerable<Expense_Type> Expense_Types
-        {
-            get => _expense_Types;
-            set
-            {
-                _expense_Types = value;
-                OnPropertyChanged("Expense_Types");
-            }
-        }
-
-        public IEnumerable<Income> Incomes
-        {
-            get => _incomes;
-            set
-            {
-                _incomes = value;
-                OnPropertyChanged("Incomes");
-            }
-        }
-
-        public IEnumerable<Expense> Expenses
-        {
-            get => _expenses;
-            set
-            {
-                _expenses = value;
-                OnPropertyChanged("Expenses");
             }
         }
 
@@ -186,6 +140,7 @@ namespace Money_Vault.ViewModel
                 OnPropertyChanged("IsRemoveIncomes");
             }
         }
+
         public bool IsRemoveExpenses
         {
             get => _isRemoveExpenses;
@@ -236,13 +191,6 @@ namespace Money_Vault.ViewModel
 
         public GeneralViewModel()
         {
-            _database = new DatabaseContext();
-
-            Income_Types = _database.Income_Types.ToList();
-            Expense_Types = _database.Expense_Types.ToList();
-            Incomes = _database.Incomes.ToList();
-            Expenses = _database.Expenses.ToList();
-
             CurrentMonth = MonthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
             IsEnableComboBoxMonth = true;
@@ -299,27 +247,31 @@ namespace Money_Vault.ViewModel
                 _currentYear
             };
 
-            foreach (var item in Incomes)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                //try to get year from date (14.05.2022 -> 2022)
-                string tempYear = item.Date.Split('.')[2];
-
-                if (!YearsList.Contains(tempYear))
+                foreach (var item in database.Incomes.ToList())
                 {
-                    YearsList.Add(tempYear);
+                    //try to get year from date (14.05.2022 -> 2022)
+                    string tempYear = item.Date.Split('.')[2];
+
+                    if (!YearsList.Contains(tempYear))
+                    {
+                        YearsList.Add(tempYear);
+                    }
+                }
+
+                foreach (var item in database.Expenses.ToList())
+                {
+                    //try to get year from date (14.05.2022 -> 2022)
+                    string tempYear = item.Date.Split('.')[2];
+
+                    if (!YearsList.Contains(tempYear))
+                    {
+                        YearsList.Add(tempYear);
+                    }
                 }
             }
 
-            foreach (var item in Expenses)
-            {
-                //try to get year from date (14.05.2022 -> 2022)
-                string tempYear = item.Date.Split('.')[2];
-
-                if (!YearsList.Contains(tempYear))
-                {
-                    YearsList.Add(tempYear);
-                }
-            }
 
             YearsList.Sort();
             YearsList.Add("Все годы");
@@ -327,34 +279,36 @@ namespace Money_Vault.ViewModel
 
         private void FillIncomesTotalList()
         {
-            var query = from income in Incomes
-                        group income by income.Income_Type_Id into incomeListItem
-                        select new
-                        {
-                            TypeId = incomeListItem.Key,
-                            TotalAmount = (from item in incomeListItem
-                                           where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                           || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                           || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                                           || CurrentYear == "Все годы"
-                                           select item.Total_Amount).Sum()
-                        };
-
             List<TotalListItem> tempList = new List<TotalListItem>();
-
             int totalSum = 0;
 
-            foreach (var item in query)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                if (item.TotalAmount != 0)
-                {
-                    tempList.Add(new TotalListItem()
-                    {
-                        TypeName = Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
-                        TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
-                    });
+                var query = from income in database.Incomes.ToList()
+                            group income by income.Income_Type_Id into incomeListItem
+                            select new
+                            {
+                                TypeId = incomeListItem.Key,
+                                TotalAmount = (from item in incomeListItem
+                                               where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                               || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                               || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                               || CurrentYear == "Все годы"
+                                               select item.Total_Amount).Sum()
+                            };
 
-                    totalSum += item.TotalAmount;
+                foreach (var item in query)
+                {
+                    if (item.TotalAmount != 0)
+                    {
+                        tempList.Add(new TotalListItem()
+                        {
+                            TypeName = database.Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                            TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
+                        });
+
+                        totalSum += item.TotalAmount;
+                    }
                 }
             }
 
@@ -383,34 +337,36 @@ namespace Money_Vault.ViewModel
 
         private void FillExpensesTotalList()
         {
-            var query = from expense in Expenses
-                        group expense by expense.Expense_Type_Id into expenseListItem
-                        select new
-                        {
-                            TypeId = expenseListItem.Key,
-                            TotalAmount = (from item in expenseListItem
-                                           where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                           || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                           || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                                           || CurrentYear == "Все годы"
-                                           select item.Total_Price).Sum()
-                        };
-
             List<TotalListItem> tempList = new List<TotalListItem>();
-
             int totalSum = 0;
 
-            foreach (var item in query)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                if (item.TotalAmount != 0)
-                {
-                    tempList.Add(new TotalListItem()
-                    {
-                        TypeName = Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
-                        TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
-                    });
+                var query = from expense in database.Expenses.ToList()
+                            group expense by expense.Expense_Type_Id into expenseListItem
+                            select new
+                            {
+                                TypeId = expenseListItem.Key,
+                                TotalAmount = (from item in expenseListItem
+                                               where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                               || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                               || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                               || CurrentYear == "Все годы"
+                                               select item.Total_Price).Sum()
+                            };
 
-                    totalSum += item.TotalAmount;
+                foreach (var item in query)
+                {
+                    if (item.TotalAmount != 0)
+                    {
+                        tempList.Add(new TotalListItem()
+                        {
+                            TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                            TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
+                        });
+
+                        totalSum += item.TotalAmount;
+                    }
                 }
             }
 
@@ -442,52 +398,55 @@ namespace Money_Vault.ViewModel
             int timeDiff = 0;
             int tempTotalAmount = 0;
 
-            if (CurrentMonth != "Полный год")
+            using (DatabaseContext database = new DatabaseContext())
             {
-                if (isIncomeForecast)
-                {
-                    timeDiff = (Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2])) * 12
-                    + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minIncomesDate.Split('.')[1]);
-
-                    tempTotalAmount = (from income in Incomes
-                                       where AdditionalFunctions.FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                       select income.Total_Amount).Sum();
-                }
-                else
-                {
-                    timeDiff = (Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2])) * 12
-                    + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minExpensesDate.Split('.')[1]);
-
-                    tempTotalAmount = (from expense in Expenses
-                                       where AdditionalFunctions.FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                       select expense.Total_Price).Sum();
-                }
-            }
-            else
-            {
-                if (CurrentYear != "Все годы")
+                if (CurrentMonth != "Полный год")
                 {
                     if (isIncomeForecast)
                     {
-                        timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2]);
+                        timeDiff = (Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2])) * 12
+                        + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minIncomesDate.Split('.')[1]);
 
-                        tempTotalAmount = (from income in Incomes
-                                           where AdditionalFunctions.FindLessDate(income.Date, $"01.01.{CurrentYear}")
+                        tempTotalAmount = (from income in database.Incomes.ToList()
+                                           where AdditionalFunctions.FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                            select income.Total_Amount).Sum();
                     }
                     else
                     {
-                        timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2]);
+                        timeDiff = (Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2])) * 12
+                        + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minExpensesDate.Split('.')[1]);
 
-                        tempTotalAmount = (from expense in Expenses
-                                           where AdditionalFunctions.FindLessDate(expense.Date, $"01.01.{CurrentYear}")
+                        tempTotalAmount = (from expense in database.Expenses.ToList()
+                                           where AdditionalFunctions.FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                            select expense.Total_Price).Sum();
                     }
                 }
                 else
                 {
-                    timeDiff = 0;
-                    tempTotalAmount = 0;
+                    if (CurrentYear != "Все годы")
+                    {
+                        if (isIncomeForecast)
+                        {
+                            timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2]);
+
+                            tempTotalAmount = (from income in database.Incomes.ToList()
+                                               where AdditionalFunctions.FindLessDate(income.Date, $"01.01.{CurrentYear}")
+                                               select income.Total_Amount).Sum();
+                        }
+                        else
+                        {
+                            timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2]);
+
+                            tempTotalAmount = (from expense in database.Expenses.ToList()
+                                               where AdditionalFunctions.FindLessDate(expense.Date, $"01.01.{CurrentYear}")
+                                               select expense.Total_Price).Sum();
+                        }
+                    }
+                    else
+                    {
+                        timeDiff = 0;
+                        tempTotalAmount = 0;
+                    }
                 }
             }
 
@@ -505,15 +464,18 @@ namespace Money_Vault.ViewModel
 
             IEnumerable<string> tempDates = new List<string>();
 
-            if (isIncomesList)
+            using (DatabaseContext database = new DatabaseContext())
             {
-                tempDates = from income in Incomes
-                            select income.Date;
-            }
-            else
-            {
-                tempDates = from expense in Expenses
-                            select expense.Date;
+                if (isIncomesList)
+                {
+                    tempDates = from income in database.Incomes.ToList()
+                                select income.Date;
+                }
+                else
+                {
+                    tempDates = from expense in database.Expenses.ToList()
+                                select expense.Date;
+                }
             }
 
             foreach (var date in tempDates)
