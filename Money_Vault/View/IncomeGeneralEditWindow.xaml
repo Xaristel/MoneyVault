@@ -7,8 +7,149 @@
         xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
         d:DataContext="{d:DesignInstance Type=viewmodel:IncomeGeneralEditViewModel}"
         mc:Ignorable="d"
-        Title="IncomeGeneralEditWindow" Height="450" Width="800">
-    <Grid>
+        Title="Money Vault v2.01" 
+        Height="480" 
+        Width="700" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,-6">
+        <Label 
+            x:Name="LabelHeader" 
+            Content="Добавление новой записи" 
+            VerticalAlignment="Top" 
+            FontSize="50" 
+            FontFamily="Balsamiq Sans"
+            FontWeight="Bold"
+            Height="61" 
+            ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+            VerticalContentAlignment="Center" 
+            HorizontalContentAlignment="Center" Margin="25,0,25,0"  
+            />
 
+        <Button 
+            x:Name="button_Edit" 
+            Style="{StaticResource Button_Common}"
+            Content="Добавить" 
+            HorizontalAlignment="Left" 
+            Margin="25,370,0,0" 
+            VerticalAlignment="Top" 
+            Width="230" 
+            Height="50" 
+            FontSize="28" 
+            ToolTip="Нажмите, чтобы добавить новую запись и закрыть окно."
+            Command="{Binding EditCommand}"/>
+
+        <Button 
+            x:Name="button_Cancel" 
+            Style="{StaticResource Button_Common}"
+            Content="Отмена" 
+            Margin="445,370,25,0" 
+            VerticalAlignment="Top" 
+            Height="50" 
+            FontSize="28" 
+            ToolTip="Нажмите, чтобы закрыть окно." 
+            IsCancel="True"
+            Command="{Binding CancelCommand}"/>
+
+        <Label 
+            Content="Категория:" 
+            HorizontalAlignment="Left" 
+            Margin="25,85,0,0" 
+            VerticalAlignment="Top" 
+            FontFamily="Balsamiq Sans" 
+            FontSize="22" 
+            RenderTransformOrigin="0.748,0.571"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Сумма:" 
+            HorizontalAlignment="Left" 
+            Margin="25,150,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            RenderTransformOrigin="0.748,0.571"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Дата:" 
+            HorizontalAlignment="Left" 
+            Margin="25,215,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            RenderTransformOrigin="0.748,0.571"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Примечание:" 
+            HorizontalAlignment="Left" 
+            Margin="25,280,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            RenderTransformOrigin="0.748,0.571"/>
+
+        <ComboBox 
+            Template="{StaticResource ComboBoxTemplateCommon}"
+            x:Name="ComboBox_Category" 
+            Margin="185,85,25,0" 
+            VerticalAlignment="Top" 
+            FontSize="22"
+            BorderThickness="3"
+            ItemsSource="{Binding CategoriesList, Mode=OneWay}"
+            SelectedItem="{Binding Category, Mode=TwoWay}" Height="35"/>
+
+        <Label 
+            x:Name="LabelPlaceHolderCategory"
+            Style="{StaticResource Label_Common}"
+            Content="Выберите категорию...*"
+            HorizontalAlignment="Left" 
+            Margin="185,85,0,0" 
+            VerticalAlignment="Top" 
+            Width="505" 
+            Panel.ZIndex="-1" 
+            FontSize="22" 
+            Foreground="DarkGray"
+            Height="35"
+            Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}">
+        </Label>
+
+        <TextBox 
+            x:Name="TextBox_Amount"
+            Style="{StaticResource placeHolder_common}"
+            Tag="Введите сумму...*" 
+            Margin="185,151,25,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            FontSize="22"
+            Text="{Binding Amount, Mode=TwoWay}" Height="35"/>
+
+        <DatePicker 
+            Margin="185,212,25,0" 
+            VerticalAlignment="Top" 
+            FontFamily="Balsamiq Sans" 
+            FontSize="14"
+            BorderThickness="2,2,2,2"
+            BorderBrush="Black"
+            SelectedDate="{Binding Date, Mode=TwoWay}" 
+            FirstDayOfWeek="Monday" >
+            <DatePicker.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.45" ScaleY="1.45"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </DatePicker.LayoutTransform>
+        </DatePicker>
+
+        <TextBox 
+            x:Name="TextBox_Note"
+            Style="{StaticResource placeHolder_common}"
+            Tag="Введите примечание... (необязательно)" 
+            Margin="185,280,25,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            Height="65"
+            Text="{Binding Note, Mode=TwoWay}"/>
     </Grid>
 </Window>
