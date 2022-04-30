@@ -38,5 +38,37 @@ namespace Money_Vault.ViewModel
                 return Convert.ToDouble(value.ToString().Insert(value.ToString().Length - 2, ","));
             }
         }
+
+        public static int ConvertFromCurrencyFormat(string value)
+        {
+            if (value.Contains(",") || value.Contains("."))
+            {
+                return Convert.ToInt32(value.ToString().Replace(".", string.Empty).Replace(",", string.Empty));
+            }
+            else
+            {
+                return Convert.ToInt32(value.ToString().Insert(value.ToString().Length, "00"));
+            }
+        }
+
+        public static bool CheckAmountFormat(string amount)
+        {
+            if (int.TryParse(amount.Replace(".", string.Empty).Replace(",", string.Empty), out int result) && result > 0)
+            {
+                if (amount.Contains(",") || amount.Contains("."))
+                {
+                    if (amount.Replace(",", ".").IndexOf('.') == amount.Length - 3)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

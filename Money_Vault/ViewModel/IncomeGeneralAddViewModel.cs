@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Money_Vault.ViewModel
 {
@@ -80,24 +81,37 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _addCommand ?? (_addCommand = new RelayCommand((args) =>
+                return _addCommand ?? (_addCommand = new RelayCommand(async (args) =>
                 {
-                    using (DatabaseContext database = new DatabaseContext())
+                    if (AdditionalFunctions.CheckAmountFormat(Amount)
+                    && Category != null
+                    && Date.ToString() != "")
                     {
-                        database.Incomes.Add(new Income()
+                        using (DatabaseContext database = new DatabaseContext())
                         {
-                            User_Id = Convert.ToInt32(Settings.Default["currentUserId"]),
-                            Income_Type_Id = database.Income_Types.ToList().Find(x => x.Name == Category).Id,
-                            Total_Amount = Convert.ToInt32(Amount.Replace(".", String.Empty).Replace(",", String.Empty)),
-                            Date = Date.ToString("dd.MM.yyyy"),
-                            Note = Note
-                        });
+                            database.Incomes.Add(new Income()
+                            {
+                                User_Id = Convert.ToInt32(Settings.Default["currentUserId"]),
+                                Income_Type_Id = database.Income_Types.ToList().Find(x => x.Name == Category).Id,
+                                Total_Amount = AdditionalFunctions.ConvertFromCurrencyFormat(Amount),
+                                Date = Date.ToString("dd.MM.yyyy"),
+                                Note = Note
+                            });
 
-                        database.SaveChanges();
+                            database.SaveChanges();
+                        }
+
+                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        displayRootRegistry.HidePresentation(this);
                     }
-
-                    var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                    displayRootRegistry.HidePresentation(this);
+                    else
+                    {
+                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        var messageViewModel = new MessageViewModel(
+                            "Ошибка",
+                            "Заполнены не все поля или введены некорректные значения.");
+                        await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                    }
                 }));
             }
         }
@@ -133,6 +147,7 @@ namespace Money_Vault.ViewModel
             }
 
             Date = System.DateTime.Now;
+            Amount = "";
         }
     }
 }

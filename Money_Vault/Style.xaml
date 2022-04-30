@@ -27,6 +27,8 @@
                         <TextBox 
                             Text="{TemplateBinding Tag}" 
                             Background="{TemplateBinding Background}" 
+                            FontFamily="Balsamiq Sans"
+                            FontWeight="Normal"
                             Panel.ZIndex="1">
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}">

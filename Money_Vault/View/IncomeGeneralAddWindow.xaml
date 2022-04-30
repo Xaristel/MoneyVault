@@ -103,13 +103,13 @@
             Style="{StaticResource Label_Common}"
             Content="Выберите категорию..."
             HorizontalAlignment="Left" 
-            Margin="185,87,0,0" 
+            Margin="185,85,0,0" 
             VerticalAlignment="Top" 
             Width="505" 
             Panel.ZIndex="-1" 
             FontSize="22" 
             Foreground="DarkGray"
-            Height="34"
+            Height="35"
             Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}">
         </Label>
 

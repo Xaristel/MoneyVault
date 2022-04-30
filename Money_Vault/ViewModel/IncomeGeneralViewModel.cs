@@ -3,6 +3,7 @@ using Money_Vault.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace Money_Vault.ViewModel
 {
@@ -112,6 +113,29 @@ namespace Money_Vault.ViewModel
             IsEnableMonthsButtons = true;
 
             FillYearsList();
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Tick += new EventHandler(CheckChangesInDB);
+            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Start();
+        }
+
+        private void CheckChangesInDB(object sender, EventArgs e)
+        {
+            using (DatabaseContext database = new DatabaseContext())
+            {
+                int actualSize = (from item in database.Incomes.ToList()
+                                  where item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                  || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                  || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                                  || CurrentYear == "Все годы"
+                                  select item).Count();
+
+                if (actualSize > IncomesList.Count())
+                {
+                    UpdateData();
+                }
+            }
         }
 
         public void UpdateData()
