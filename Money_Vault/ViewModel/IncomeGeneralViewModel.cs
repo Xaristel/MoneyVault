@@ -2,10 +2,8 @@
 using Money_Vault.Model;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Money_Vault.ViewModel
 {

@@ -15,7 +15,6 @@ namespace Money_Vault.ViewModel
         private string _amount;
         private DateTime _date;
         private string _note;
-        private bool _result;
 
         private Visibility _isVisibleLabelPlaceHolderCategory;
 
@@ -62,16 +61,6 @@ namespace Money_Vault.ViewModel
             {
                 _note = value;
                 OnPropertyChanged("Note");
-            }
-        }
-
-        public bool Result
-        {
-            get => _result;
-            set
-            {
-                _result = value;
-                OnPropertyChanged("Result");
             }
         }
 

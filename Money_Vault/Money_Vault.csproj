@@ -152,8 +152,8 @@
     <Compile Include="Model\TotalListItem.cs" />
     <Compile Include="ViewModel\CategoryAddViewModel.cs" />
     <Compile Include="ViewModel\CategoryEditViewModel.cs" />
-    <Compile Include="ViewModel\ExpenseGeneralAddViewModel.cs" />
-    <Compile Include="ViewModel\ExpenseGeneralEditViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseGeneralShortAddViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseGeneralShortEditViewModel.cs" />
     <Compile Include="ViewModel\IClosable.cs" />
     <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
@@ -181,11 +181,11 @@
     <Compile Include="View\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ExpenseGeneralAddWindow.xaml.cs">
-      <DependentUpon>ExpenseGeneralAddWindow.xaml</DependentUpon>
+    <Compile Include="View\ExpenseGeneralShortAddModalWindow.xaml.cs">
+      <DependentUpon>ExpenseGeneralShortAddModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ExpenseGeneralEditWindow.xaml.cs">
-      <DependentUpon>ExpenseGeneralEditWindow.xaml</DependentUpon>
+    <Compile Include="View\ExpenseGeneralShortEditModalWindow.xaml.cs">
+      <DependentUpon>ExpenseGeneralShortEditModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ExpenseGeneralPage.xaml.cs">
       <DependentUpon>ExpenseGeneralPage.xaml</DependentUpon>
@@ -259,11 +259,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ExpenseGeneralAddWindow.xaml">
+    <Page Include="View\ExpenseGeneralShortAddModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ExpenseGeneralEditWindow.xaml">
+    <Page Include="View\ExpenseGeneralShortEditModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,13 +6,13 @@ namespace Money_Vault.View
     /// <summary>
     /// Логика взаимодействия для ExpenseGeneralAddWindow.xaml
     /// </summary>
-    public partial class ExpenseGeneralAddWindow : Window
+    public partial class ExpenseGeneralShortAddModalWindow : Window, IClosable
     {
-        public ExpenseGeneralAddWindow()
+        public ExpenseGeneralShortAddModalWindow()
         {
             InitializeComponent();
 
-            DataContext = new ExpenseGeneralAddViewModel();
+            DataContext = new ExpenseGeneralShortAddViewModel();
         }
     }
 }

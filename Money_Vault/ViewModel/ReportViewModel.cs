@@ -1,17 +1,11 @@
 ﻿using Microsoft.Win32;
 using Money_Vault.Database;
 using Money_Vault.Model;
-using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using Spire.Xls;
 using System.IO;
-using System.Windows.Controls;
-using System.Drawing.Printing;
 using System.Diagnostics;
 
 namespace Money_Vault.ViewModel

@@ -67,6 +67,7 @@
             x:Name="dataGrid_Expense" 
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding ExpensesList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
             Margin="185,133,25,25">
             <DataGrid.Columns>
                 <DataGridTextColumn 

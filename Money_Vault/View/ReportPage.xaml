@@ -44,7 +44,7 @@
             Width="150" 
             ToolTip="Нажмите, чтобы удалить выбранный элемент." 
             Margin="1264,24,0,0" 
-            Command="{Binding ShowDeleteFrameCommand}"/>
+            IsEnabled="False"/>
 
         <Button 
             Style="{StaticResource Button_Common}"
@@ -57,7 +57,7 @@
             Width="150" 
             ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
             Margin="1087,24,0,0" 
-            Command="{Binding ShowEditFrameCommand}"/>
+            IsEnabled="False"/>
 
         <Button 
             x:Name="Button_Add" 
@@ -70,7 +70,7 @@
             Width="150" 
             ToolTip="Нажмите, чтобы добавить новую строку." 
             Margin="909,24,0,0" 
-            Command="{Binding ShowAddFrameCommand}"/>
+            IsEnabled="False"/>
 
         <DataGrid 
             x:Name="DataGrid_Income" 

@@ -5,21 +5,27 @@ using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
 {
-    public class IncomeGeneralAddViewModel : BaseViewModel
+    public class ExpenseGeneralShortEditViewModel : BaseViewModel
     {
+        private int _id;
         private string _category;
         private string _amount;
+        private string _shop;
         private DateTime _date;
         private string _note;
         private Visibility _isVisibleLabelPlaceHolderCategory;
+        private Visibility _isVisibleLabelPlaceHolderShop;
 
         private RelayCommand<IClosable> _addCommand;
 
         private IEnumerable<string> _categoriesList;
+        private IEnumerable<string> _shopsList;
 
         public string Category
         {
@@ -40,6 +46,18 @@ namespace Money_Vault.ViewModel
             {
                 _amount = value;
                 OnPropertyChanged("Amount");
+            }
+        }
+
+        public string Shop
+        {
+            get => _shop;
+            set
+            {
+                _shop = value;
+                OnPropertyChanged("Shop");
+
+                IsVisibleLabelPlaceHolderShop = Visibility.Hidden;
             }
         }
 
@@ -73,6 +91,36 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public Visibility IsVisibleLabelPlaceHolderShop
+        {
+            get => _isVisibleLabelPlaceHolderShop;
+            set
+            {
+                _isVisibleLabelPlaceHolderShop = value;
+                OnPropertyChanged("IsVisibleLabelPlaceHolderShop");
+            }
+        }
+
+        public IEnumerable<string> CategoriesList
+        {
+            get => _categoriesList;
+            set
+            {
+                _categoriesList = value;
+                OnPropertyChanged("CategoriesList");
+            }
+        }
+
+        public IEnumerable<string> ShopsList
+        {
+            get => _shopsList;
+            set
+            {
+                _shopsList = value;
+                OnPropertyChanged("ShopsList");
+            }
+        }
+
         public RelayCommand<IClosable> AddCommand
         {
             get
@@ -81,18 +129,19 @@ namespace Money_Vault.ViewModel
                 {
                     if (AdditionalFunctions.CheckAmountFormat(Amount)
                     && Category != null
-                    && Date.ToString() != "")
+                    && Date.ToString() != ""
+                    && Shop != null)
                     {
                         using (DatabaseContext database = new DatabaseContext())
                         {
-                            database.Incomes.Add(new Income()
-                            {
-                                User_Id = Convert.ToInt32(Settings.Default["currentUserId"]),
-                                Income_Type_Id = database.Income_Types.ToList().Find(x => x.Name == Category).Id,
-                                Total_Amount = AdditionalFunctions.ConvertFromCurrencyFormat(Amount),
-                                Date = Date.ToString("dd.MM.yyyy"),
-                                Note = Note
-                            });
+                            Expense currentExpense = database.Expenses.ToList().Find(x => x.Id == _id);
+
+                            currentExpense.User_Id = Convert.ToInt32(Settings.Default["currentUserId"]);
+                            currentExpense.Expense_Type_Id = database.Expense_Types.ToList().Find(x => x.Name == Category).Id;
+                            currentExpense.Total_Price = AdditionalFunctions.ConvertFromCurrencyFormat(Amount);
+                            currentExpense.Shop_Id = database.Shops.ToList().Find(x => x.Name == Shop).Id;
+                            currentExpense.Date = Date.ToString("dd.MM.yyyy");
+                            currentExpense.Note = Note;
 
                             database.SaveChanges();
                         }
@@ -114,26 +163,41 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<string> CategoriesList
-        {
-            get => _categoriesList;
-            set
-            {
-                _categoriesList = value;
-                OnPropertyChanged("CategoriesList");
-            }
-        }
-
-        public IncomeGeneralAddViewModel()
+        public ExpenseGeneralShortEditViewModel()
         {
             using (DatabaseContext database = new DatabaseContext())
             {
-                CategoriesList = from item in database.Income_Types.ToList()
+                CategoriesList = from item in database.Expense_Types.ToList()
                                  select item.Name;
+
+                ShopsList = from item in database.Shops.ToList()
+                            select item.Name;
             }
 
             Date = System.DateTime.Now;
             Amount = "";
+        }
+
+        public ExpenseGeneralShortEditViewModel(int id, string category, string amount, string shop, string date, string note)
+        {
+            using (DatabaseContext database = new DatabaseContext())
+            {
+                CategoriesList = from item in database.Expense_Types.ToList()
+                                 select item.Name;
+
+                ShopsList = from item in database.Shops.ToList()
+                            select item.Name;
+            }
+
+            _id = id;
+            Date = new DateTime(
+                Convert.ToInt32(date.Split('.')[2]),
+                Convert.ToInt32(date.Split('.')[1]),
+                Convert.ToInt32(date.Split('.')[0]));
+            Amount = amount;
+            Category = category;
+            Note = note;
+            Shop = shop;
         }
     }
 }

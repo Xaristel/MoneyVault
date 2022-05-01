@@ -37,7 +37,18 @@ namespace Money_Vault.ViewModel
         "Полный год"
         };
 
+        private ExpenseCommonListItem _selectedItem;
         private IEnumerable<ExpenseCommonListItem> _expensesList;
+
+        public ExpenseCommonListItem SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
+        }
 
         public string CurrentYear
         {
@@ -114,12 +125,14 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand((args) =>
+                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand(async (args) =>
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var expenseGeneralAddViewModel = new ExpenseGeneralAddViewModel();
-                    _displayRootRegistry.ShowPresentation(expenseGeneralAddViewModel);
+                    var expenseGeneralAddViewModel = new ExpenseGeneralShortAddViewModel();
+                    await _displayRootRegistry.ShowModalPresentation(expenseGeneralAddViewModel);
+
+                    UpdateData();
                 }));
             }
         }
@@ -127,13 +140,21 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand((args) =>
+                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand(async (args) =>
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var expenseGeneralEditViewModel = new ExpenseGeneralEditViewModel();
-                    _displayRootRegistry.ShowPresentation(expenseGeneralEditViewModel);
+                    var expenseGeneralEditViewModel = new ExpenseGeneralShortEditViewModel(
+                        SelectedItem.Id,
+                        SelectedItem.TypeName,
+                        SelectedItem.Amount.ToString(),
+                        SelectedItem.ShopName,
+                        SelectedItem.Date.ToString("dd.MM.yyyy"),
+                        SelectedItem.Note);
 
+                    await _displayRootRegistry.ShowModalPresentation(expenseGeneralEditViewModel);
+
+                    UpdateData();
                 }));
             }
         }
@@ -151,9 +172,15 @@ namespace Money_Vault.ViewModel
 
                     await _displayRootRegistry.ShowModalPresentation(messageViewModel);
 
-                    if (messageViewModel.Result)
+                    if (messageViewModel.Result && SelectedItem != null)
                     {
-                        //
+                        using (DatabaseContext database = new DatabaseContext())
+                        {
+                            Expense item = database.Expenses.ToList().Find(x => x.Id == SelectedItem.Id);
+                            database.Expenses.Remove(item);
+                            database.SaveChanges();
+                        }
+                        UpdateData();
                     }
                 }));
             }

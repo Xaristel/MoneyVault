@@ -16,6 +16,8 @@ namespace Money_Vault.ViewModel
         private RelayCommand _showEditFrameCommand;
         private RelayCommand _showDeleteFrameCommand;
 
+        private CategoryListItem _selectedItem;
+
         public IEnumerable<CategoryListItem> CategoriesList
         {
             get => _categoriesList;
@@ -26,24 +28,32 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public CategoryListItem SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
+        }
+
         public RelayCommand ShowAddFrameCommand
         {
             get
             {
-                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand((args) =>
+                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand(async (args) =>
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
                     if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                     {
-                        //var categoryAddViewModel = new CategoryAddViewModel();
-                        //_displayRootRegistry.ShowPresentation(categoryAddViewModel);
+                        var categoryAddViewModel = new CategoryAddViewModel();
+                        await _displayRootRegistry.ShowModalPresentation(categoryAddViewModel);
+
+                        UpdateData();
                     }
-                    else
-                    {
-                        //var categoryAddViewModel = new CategoryAddViewModel();
-                        //_displayRootRegistry.ShowPresentation(categoryAddViewModel);
-                    }
+
                 }));
             }
         }
@@ -51,20 +61,14 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand((args) =>
+                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand(async (args) =>
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
-                    {
-                        //var categoryAddViewModel = new CategoryAddViewModel();
-                        //_displayRootRegistry.ShowPresentation(categoryAddViewModel);
-                    }
-                    else
-                    {
-                        //var categoryAddViewModel = new CategoryAddViewModel();
-                        //_displayRootRegistry.ShowPresentation(categoryAddViewModel);
-                    }
+                    var categoryEditViewModel = new CategoryEditViewModel();
+                    await _displayRootRegistry.ShowModalPresentation(categoryEditViewModel);
+
+                    UpdateData();
                 }));
             }
         }
@@ -78,13 +82,28 @@ namespace Money_Vault.ViewModel
 
                     var messageViewModel = new MessageViewModel(
                         "Внимание",
-                        "Вы действительно хотите удалить данную категорию?");
+                        "Вы действительно хотите удалить данную запись?");
 
                     await _displayRootRegistry.ShowModalPresentation(messageViewModel);
 
-                    if (messageViewModel.Result)
+                    if (messageViewModel.Result && SelectedItem != null)
                     {
-                        //
+                        using (DatabaseContext database = new DatabaseContext())
+                        {
+                            if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
+                            {
+                                Income_Type item = database.Income_Types.ToList().Find(x => x.Id == SelectedItem.Id);
+                                database.Income_Types.Remove(item);
+                                database.SaveChanges();
+                            }
+                            else
+                            {
+                                Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == SelectedItem.Id);
+                                database.Expense_Types.Remove(item);
+                                database.SaveChanges();
+                            }
+                        }
+                        UpdateData();
                     }
                 }));
             }
