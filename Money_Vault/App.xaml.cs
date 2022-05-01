@@ -18,8 +18,8 @@ namespace Money_Vault
             displayRootRegistry.RegisterWindowType<MainViewModel, MainWindow>();
             displayRootRegistry.RegisterWindowType<RegistrationViewModel, RegistrationModalWindow>();
             displayRootRegistry.RegisterWindowType<MessageViewModel, MessageModalWindow>();
-            displayRootRegistry.RegisterWindowType<IncomeGeneralAddViewModel, IncomeGeneralAddWindow>();
-            displayRootRegistry.RegisterWindowType<IncomeGeneralEditViewModel, IncomeGeneralEditWindow>();
+            displayRootRegistry.RegisterWindowType<IncomeGeneralAddViewModel, IncomeGeneralAddModalWindow>();
+            displayRootRegistry.RegisterWindowType<IncomeGeneralEditViewModel, IncomeGeneralEditModalWindow>();
             displayRootRegistry.RegisterWindowType<CategoryAddViewModel, CategoryAddWindow>();
             displayRootRegistry.RegisterWindowType<CategoryEditViewModel, CategoryEditWindow>();
         }

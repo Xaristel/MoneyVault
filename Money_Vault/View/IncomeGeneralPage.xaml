@@ -61,6 +61,7 @@
             x:Name="dataGrid_Income" 
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding IncomesList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
             Margin="185,133,25,25">
             <DataGrid.Columns>
                 <DataGridTextColumn 

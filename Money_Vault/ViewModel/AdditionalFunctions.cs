@@ -43,7 +43,15 @@ namespace Money_Vault.ViewModel
         {
             if (value.Contains(",") || value.Contains("."))
             {
-                return Convert.ToInt32(value.ToString().Replace(".", string.Empty).Replace(",", string.Empty));
+                if (value.Replace(",", ".").IndexOf('.') == value.Length - 3)
+                {
+                    return Convert.ToInt32(value.ToString().Replace(".", string.Empty).Replace(",", string.Empty));
+                }
+                else
+                {
+                    string tempValue = value.ToString().Replace(".", string.Empty).Replace(",", string.Empty);
+                    return Convert.ToInt32(tempValue.Insert(tempValue.ToString().Length, "0"));
+                }
             }
             else
             {
@@ -57,7 +65,7 @@ namespace Money_Vault.ViewModel
             {
                 if (amount.Contains(",") || amount.Contains("."))
                 {
-                    if (amount.Replace(",", ".").IndexOf('.') == amount.Length - 3)
+                    if (amount.Replace(",", ".").IndexOf('.') == amount.Length - 3 || amount.Replace(",", ".").IndexOf('.') == amount.Length - 2)
                     {
                         return true;
                     }

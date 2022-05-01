@@ -6,9 +6,9 @@ namespace Money_Vault.View
     /// <summary>
     /// Логика взаимодействия для IncomeGeneralEditWindow.xaml
     /// </summary>
-    public partial class IncomeGeneralEditWindow : Window
+    public partial class IncomeGeneralEditModalWindow : Window, IClosable
     {
-        public IncomeGeneralEditWindow()
+        public IncomeGeneralEditModalWindow()
         {
             InitializeComponent();
 

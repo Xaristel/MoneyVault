@@ -2,6 +2,7 @@
 using Money_Vault.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -20,6 +21,8 @@ namespace Money_Vault.ViewModel
         private string _currentYear;
         private string _currentMonth;
         private bool _isEnableMonthsButtons;
+        private IncomeCommonListItem _selectedItem;
+        private IEnumerable<IncomeCommonListItem> _incomesList;
 
         private List<string> _monthsList = new List<string>
         {
@@ -38,7 +41,15 @@ namespace Money_Vault.ViewModel
         "Полный год"
         };
 
-        private IEnumerable<IncomeCommonListItem> _incomesList;
+        public IncomeCommonListItem SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
+        }
 
         public string CurrentYear
         {
@@ -115,13 +126,15 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand((args) =>
-                {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand(async (args) =>
+               {
+                   var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var incomeGeneralAddViewModel = new IncomeGeneralAddViewModel();
-                    _displayRootRegistry.ShowPresentation(incomeGeneralAddViewModel);
-                }));
+                   var incomeGeneralAddViewModel = new IncomeGeneralAddViewModel();
+                   await _displayRootRegistry.ShowModalPresentation(incomeGeneralAddViewModel);
+
+                   UpdateData();
+               }));
             }
         }
 
@@ -129,12 +142,20 @@ namespace Money_Vault.ViewModel
         {
             get
             {
-                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand((args) =>
+                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand(async (args) =>
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var incomeGeneralEditViewModel = new IncomeGeneralEditViewModel();
-                    _displayRootRegistry.ShowPresentation(incomeGeneralEditViewModel);
+                    var incomeGeneralEditViewModel = new IncomeGeneralEditViewModel(
+                        SelectedItem.Id,
+                        SelectedItem.TypeName,
+                        SelectedItem.Amount.ToString(),
+                        SelectedItem.Date.ToString("dd.MM.yyyy"),
+                        SelectedItem.Note);
+
+                    await _displayRootRegistry.ShowModalPresentation(incomeGeneralEditViewModel);
+
+                    UpdateData();
                 }));
             }
         }
@@ -153,9 +174,15 @@ namespace Money_Vault.ViewModel
 
                     await _displayRootRegistry.ShowModalPresentation(messageViewModel);
 
-                    if (messageViewModel.Result)
+                    if (messageViewModel.Result && SelectedItem != null)
                     {
-                        //
+                        using (DatabaseContext database = new DatabaseContext())
+                        {
+                            Income item = database.Incomes.ToList().Find(x => x.Id == SelectedItem.Id);
+                            database.Incomes.Remove(item);
+                            database.SaveChanges();
+                        }
+                        UpdateData();
                     }
                 }));
             }
@@ -168,29 +195,6 @@ namespace Money_Vault.ViewModel
             IsEnableMonthsButtons = true;
 
             FillYearsList();
-
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += new EventHandler(CheckChangesInDB);
-            timer.Interval = new TimeSpan(0, 0, 3);
-            timer.Start();
-        }
-
-        private void CheckChangesInDB(object sender, EventArgs e)
-        {
-            using (DatabaseContext database = new DatabaseContext())
-            {
-                int actualSize = (from item in database.Incomes.ToList()
-                                  where item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                  || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                  || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                                  || CurrentYear == "Все годы"
-                                  select item).Count();
-
-                if (actualSize > IncomesList.Count())
-                {
-                    UpdateData();
-                }
-            }
         }
 
         public void UpdateData()

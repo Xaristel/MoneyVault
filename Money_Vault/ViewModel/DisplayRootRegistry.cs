@@ -10,7 +10,7 @@ namespace Money_Vault.ViewModel
     public class DisplayRootRegistry
     {
         Dictionary<Type, Type> vmToWindowMapping = new Dictionary<Type, Type>();
-        Dictionary<object, Window> openWindows = new Dictionary<object, Window>();
+        public Dictionary<object, Window> openWindows = new Dictionary<object, Window>();
 
         public void RegisterWindowType<VM, Win>() where Win : Window, new() where VM : class
         {

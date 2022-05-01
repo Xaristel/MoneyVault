@@ -56,11 +56,23 @@
     <ApplicationIcon>icon_money_fill.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
@@ -97,6 +109,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -139,6 +154,7 @@
     <Compile Include="ViewModel\CategoryEditViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralAddViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralEditViewModel.cs" />
+    <Compile Include="ViewModel\IClosable.cs" />
     <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
@@ -195,11 +211,11 @@
     <Compile Include="View\CategoryPage.xaml.cs">
       <DependentUpon>CategoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\IncomeGeneralAddWindow.xaml.cs">
-      <DependentUpon>IncomeGeneralAddWindow.xaml</DependentUpon>
+    <Compile Include="View\IncomeGeneralAddModalWindow.xaml.cs">
+      <DependentUpon>IncomeGeneralAddModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\IncomeGeneralEditWindow.xaml.cs">
-      <DependentUpon>IncomeGeneralEditWindow.xaml</DependentUpon>
+    <Compile Include="View\IncomeGeneralEditModalWindow.xaml.cs">
+      <DependentUpon>IncomeGeneralEditModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IncomeGeneralPage.xaml.cs">
       <DependentUpon>IncomeGeneralPage.xaml</DependentUpon>
@@ -283,11 +299,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\IncomeGeneralAddWindow.xaml">
+    <Page Include="View\IncomeGeneralAddModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\IncomeGeneralEditWindow.xaml">
+    <Page Include="View\IncomeGeneralEditModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

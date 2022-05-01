@@ -1,13 +1,11 @@
-﻿using Money_Vault.Database;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using Money_Vault.Database;
 using Money_Vault.Model;
 using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Money_Vault.ViewModel
 {
@@ -17,11 +15,10 @@ namespace Money_Vault.ViewModel
         private string _amount;
         private DateTime _date;
         private string _note;
-
+        private bool _result;
         private Visibility _isVisibleLabelPlaceHolderCategory;
 
-        private RelayCommand _addCommand;
-        private RelayCommand _cancelCommand;
+        private RelayCommand<IClosable> _addCommand;
 
         private IEnumerable<string> _categoriesList;
 
@@ -67,6 +64,16 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public bool Result
+        {
+            get => _result;
+            set
+            {
+                _result = value;
+                OnPropertyChanged("Result");
+            }
+        }
+
         public Visibility IsVisibleLabelPlaceHolderCategory
         {
             get => _isVisibleLabelPlaceHolderCategory;
@@ -77,11 +84,11 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public RelayCommand AddCommand
+        public RelayCommand<IClosable> AddCommand
         {
             get
             {
-                return _addCommand ?? (_addCommand = new RelayCommand(async (args) =>
+                return _addCommand ?? (_addCommand = new RelayCommand<IClosable>(async (window) =>
                 {
                     if (AdditionalFunctions.CheckAmountFormat(Amount)
                     && Category != null
@@ -101,8 +108,10 @@ namespace Money_Vault.ViewModel
                             database.SaveChanges();
                         }
 
-                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        displayRootRegistry.HidePresentation(this);
+                        if (window != null)
+                        {
+                            window.Close();
+                        }
                     }
                     else
                     {
@@ -112,18 +121,6 @@ namespace Money_Vault.ViewModel
                             "Заполнены не все поля или введены некорректные значения.");
                         await displayRootRegistry.ShowModalPresentation(messageViewModel);
                     }
-                }));
-            }
-        }
-
-        public RelayCommand CancelCommand
-        {
-            get
-            {
-                return _cancelCommand ?? (_cancelCommand = new RelayCommand((args) =>
-                {
-                    var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                    displayRootRegistry.HidePresentation(this);
                 }));
             }
         }
