@@ -46,14 +46,10 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
-                    {
-                        var categoryAddViewModel = new CategoryAddViewModel();
-                        await _displayRootRegistry.ShowModalPresentation(categoryAddViewModel);
+                    var categoryAddViewModel = new CategoryAddViewModel();
+                    await _displayRootRegistry.ShowModalPresentation(categoryAddViewModel);
 
-                        UpdateData();
-                    }
-
+                    UpdateData();
                 }));
             }
         }
@@ -65,7 +61,7 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var categoryEditViewModel = new CategoryEditViewModel();
+                    var categoryEditViewModel = new CategoryEditViewModel(SelectedItem.Id, SelectedItem.Name, SelectedItem.Note);
                     await _displayRootRegistry.ShowModalPresentation(categoryEditViewModel);
 
                     UpdateData();
