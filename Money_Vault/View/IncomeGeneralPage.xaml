@@ -10,7 +10,7 @@
       Title="IncomeGeneralPage" 
       Background="White" 
       Width="1439" 
-      Height="727" 
+      Height="850" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -18,17 +18,50 @@
     <Grid Width="1439">
         <Rectangle 
             HorizontalAlignment="Left" 
-            Height="734" 
             Stroke="Black" 
-            VerticalAlignment="Center" 
-            Width="169" 
-            StrokeThickness="3"/>
+            Width="3" 
+            StrokeThickness="3" 
+            Margin="168,124,0,0">
+        </Rectangle>
+
+        <Button 
+            x:Name="Button_Delete" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            Content="Удалить" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            ToolTip="Нажмите, чтобы удалить выбранный элемент." 
+            Margin="1264,24,25,0" 
+            Command="{Binding ShowDeleteFrameCommand}"/>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            x:Name="Button_Edit" 
+            FontSize="24" 
+            Content="Изменить" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
+            Margin="1087,24,202,0" 
+            Command="{Binding ShowEditFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_Add" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            Content="Добавить" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            ToolTip="Нажмите, чтобы добавить новую строку." 
+            Margin="909,24,380,0" 
+            Command="{Binding ShowAddFrameCommand}"/>
 
         <DataGrid 
             x:Name="dataGrid_Income" 
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding IncomesList, Mode=OneWay}" 
-            Margin="180,10,22,25">
+            Margin="185,133,25,25">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Номер" 
@@ -63,7 +96,7 @@
             Template="{DynamicResource ComboBoxTemplateCommon}"
             x:Name="СomboBox_Year" 
             HorizontalAlignment="Left" 
-            Margin="25,10,0,0" 
+            Margin="25,133,0,0" 
             VerticalAlignment="Top" 
             Width="131" 
             HorizontalContentAlignment="Center" 
@@ -81,9 +114,8 @@
             x:Name="Button_January" 
             Style="{StaticResource Button_Common}"
             Content="Январь" 
-            Margin="25,60,1283,627" 
+            Margin="25,184,1283,626" 
             Width="131"
-            Height="40"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}" 
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -96,9 +128,8 @@
             x:Name="Button_February" 
             Style="{StaticResource Button_Common}"
             Content="Февраль" 
-            Margin="25,113,1283,574" 
-            Width="131" 
-            Height="40"
+            Margin="25,232,1283,578" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -111,9 +142,8 @@
             x:Name="Button_March" 
             Style="{StaticResource Button_Common}"
             Content="Март" 
-            Margin="25,163,1283,524" 
-            Width="131" 
-            Height="40"
+            Margin="25,282,1283,527" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -126,9 +156,8 @@
             x:Name="Button_April" 
             Style="{StaticResource Button_Common}"
             Content="Апрель" 
-            Margin="25,213,1283,474" 
-            Width="131" 
-            Height="40"
+            Margin="25,333,1283,477" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -141,9 +170,8 @@
             x:Name="Button_May" 
             Style="{StaticResource Button_Common}"
             Content="Май" 
-            Margin="25,263,1283,424" 
-            Width="131" 
-            Height="40"
+            Margin="25,383,1283,427" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -156,9 +184,8 @@
             x:Name="Button_June" 
             Style="{StaticResource Button_Common}"
             Content="Июнь" 
-            Margin="25,313,1283,374" 
-            Width="131" 
-            Height="40"
+            Margin="25,433,1283,377" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -171,9 +198,8 @@
             x:Name="Button_July" 
             Style="{StaticResource Button_Common}"
             Content="Июль" 
-            Margin="25,363,1283,324" 
-            Width="131" 
-            Height="40"
+            Margin="25,483,1283,326" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -186,9 +212,8 @@
             x:Name="Button_August" 
             Style="{StaticResource Button_Common}"
             Content="Август" 
-            Margin="25,413,1283,274" 
-            Width="131" 
-            Height="40"
+            Margin="25,534,1283,276" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -201,9 +226,8 @@
             x:Name="Button_September" 
             Style="{StaticResource Button_Common}"
             Content="Сентябрь" 
-            Margin="25,463,1283,224" 
-            Width="131" 
-            Height="40"
+            Margin="25,584,1283,226" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -216,9 +240,8 @@
             x:Name="Button_October" 
             Style="{StaticResource Button_Common}"
             Content="Октябрь" 
-            Margin="25,513,1283,174" 
-            Width="131" 
-            Height="40"
+            Margin="25,634,1283,176" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -231,9 +254,8 @@
             x:Name="Button_November" 
             Style="{StaticResource Button_Common}"
             Content="Ноябрь" 
-            Margin="25,563,1283,124" 
-            Width="131" 
-            Height="40"
+            Margin="25,684,1283,125" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -246,9 +268,8 @@
             x:Name="Button_December" 
             Style="{StaticResource Button_Common}"
             Content="Декабрь" 
-            Margin="25,613,1283,74" 
-            Width="131" 
-            Height="40"
+            Margin="25,735,1283,75" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">
@@ -261,9 +282,8 @@
             x:Name="Button_AllYear" 
             Style="{StaticResource Button_Common}"
             Content="Полный год" 
-            Margin="25,662,1283,25" 
-            Width="131" 
-            Height="40"
+            Margin="25,785,1283,25" 
+            Width="131"
             ToolTip="Нажмите, чтобы выбрать месяц для отображения данных." 
             Command="{Binding SelectMonthCommand}"
             IsEnabled="{Binding IsEnableMonthsButtons}">

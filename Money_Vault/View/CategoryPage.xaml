@@ -10,17 +10,56 @@
       Title="IncomeCategoryPage" 
       Background="White" 
       Width="1439" 
-      Height="727" 
+      Height="850" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Grid Width="1439">
+        <Button 
+            x:Name="Button_Delete" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            Content="Удалить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы удалить выбранный элемент." 
+            Margin="1264,24,0,0" 
+            Command="{Binding ShowDeleteFrameCommand}"/>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            x:Name="Button_Edit" 
+            FontSize="24" 
+            Content="Изменить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
+            Margin="1087,24,0,0" 
+            Command="{Binding ShowEditFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_Add" 
+            Style="{StaticResource Button_Common}"
+            FontSize="24" 
+            Content="Добавить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы добавить новую строку." 
+            Margin="909,24,0,0" 
+            Command="{Binding ShowAddFrameCommand}"/>
+
         <DataGrid 
             x:Name="DataGrid_Categories" 
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}" 
-            Margin="25,10,22,25">
+            Margin="25,135,25,25">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Номер" 

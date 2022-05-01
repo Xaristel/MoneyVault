@@ -73,7 +73,6 @@ namespace Money_Vault.ViewModel
                     string secretPassword = Convert.ToString(login.GetHashCode() + password.GetHashCode());
                     Settings.Default["isKeepLogin"] = IsKeepLogin;
                     Settings.Default["keepLogin"] = login;
-                    Settings.Default.Save();
 
                     using (DatabaseContext database = new DatabaseContext())
                     {

@@ -130,6 +130,5 @@
             FontSize="36" 
             ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
             Command="{Binding RegisterCommand}"/>
-
     </Grid>
 </Window>

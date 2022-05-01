@@ -3,14 +3,17 @@ using Money_Vault.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace Money_Vault.ViewModel
 {
     public class ExpenseGeneralViewModel : BaseViewModel
     {
         private RelayCommand _selectMonthCommand;
+
+        private RelayCommand _showAddFrameCommand;
+        private RelayCommand _showEditFrameCommand;
+        private RelayCommand _showDeleteFrameCommand;
 
         private List<string> _yearsList;
         private string _currentYear;
@@ -104,6 +107,55 @@ namespace Money_Vault.ViewModel
             {
                 _isEnableMonthsButtons = value;
                 OnPropertyChanged("IsEnableMonthsButtons");
+            }
+        }
+
+        public RelayCommand ShowAddFrameCommand
+        {
+            get
+            {
+                return _showAddFrameCommand ?? (_showAddFrameCommand = new RelayCommand((args) =>
+                {
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                    var expenseGeneralAddViewModel = new ExpenseGeneralAddViewModel();
+                    _displayRootRegistry.ShowPresentation(expenseGeneralAddViewModel);
+                }));
+            }
+        }
+        public RelayCommand ShowEditFrameCommand
+        {
+            get
+            {
+                return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand((args) =>
+                {
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                    var expenseGeneralEditViewModel = new ExpenseGeneralEditViewModel();
+                    _displayRootRegistry.ShowPresentation(expenseGeneralEditViewModel);
+
+                }));
+            }
+        }
+        public RelayCommand ShowDeleteFrameCommand
+        {
+            get
+            {
+                return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
+                {
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                    var messageViewModel = new MessageViewModel(
+                        "Внимание",
+                        "Вы действительно хотите удалить данную запись?");
+
+                    await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                    if (messageViewModel.Result)
+                    {
+                        //
+                    }
+                }));
             }
         }
 

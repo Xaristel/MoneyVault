@@ -21,47 +21,8 @@
             Stroke="Black" 
             VerticalAlignment="Top" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-            StrokeThickness="3" Panel.ZIndex="-1"
+            StrokeThickness="3" Panel.ZIndex="1"
             />
-
-        <Button 
-            x:Name="Button_Delete" 
-            Style="{StaticResource Button_Common}"
-            FontSize="24" 
-            Content="Удалить" 
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="90" 
-            Width="150" 
-            ToolTip="Нажмите, чтобы удалить выбранный элемент." 
-            Margin="1266,25,0,0" 
-            Command="{Binding ShowDeleteFrameCommand}"/>
-
-        <Button 
-            Style="{StaticResource Button_Common}"
-            x:Name="Button_Edit" 
-            FontSize="24" 
-            Content="Изменить" 
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="90" 
-            Width="150" 
-            ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
-            Margin="1089,25,0,0" 
-            Command="{Binding ShowEditFrameCommand}"/>
-
-        <Button 
-            x:Name="Button_Add" 
-            Style="{StaticResource Button_Common}"
-            FontSize="24" 
-            Content="Добавить" 
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="90" 
-            Width="150" 
-            ToolTip="Нажмите, чтобы добавить новую строку." 
-            Margin="911,25,0,0" 
-            Command="{Binding ShowAddFrameCommand}"/>
 
         <Rectangle 
             HorizontalAlignment="Left" 
@@ -70,15 +31,7 @@
             VerticalAlignment="Top" 
             Width="3" 
             StrokeThickness="3" 
-            RenderTransformOrigin="0.5,0.5">
-            <Rectangle.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Rectangle.RenderTransform>
+            Panel.ZIndex="1">
         </Rectangle>
 
         <Button 
@@ -91,7 +44,7 @@
             Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
             Margin="25,25,0,0"
-            Command="{Binding ShowIncomeGeneralFrameCommand}">
+            Command="{Binding ShowIncomeGeneralFrameCommand}" Panel.ZIndex="1">
             <TextBlock TextAlignment="Center">Общий<LineBreak/>список</TextBlock>
         </Button>
 
@@ -106,7 +59,7 @@
             Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
             Margin="328,25,0,0"
-            Command="{Binding ShowCategoryFrameCommand}">
+            Command="{Binding ShowCategoryFrameCommand}" Panel.ZIndex="1">
         </Button>
 
         <Button 
@@ -120,12 +73,11 @@
             Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
             Margin="630,25,0,0"
-            Command="{Binding ShowIncomeReportFrameCommand}">
+            Command="{Binding ShowIncomeReportFrameCommand}" Panel.ZIndex="1">
         </Button>
 
         <Frame 
             x:Name="Frame_IncomeMain" 
-            Margin="0,125,0,0" 
             NavigationUIVisibility="Hidden" 
             BorderThickness="3,3,3,3"
             BorderBrush="Black"
