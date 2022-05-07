@@ -70,5 +70,17 @@ namespace Money_Vault.Properties {
                 this["currentUserId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool currentExpenseMode {
+            get {
+                return ((bool)(this["currentExpenseMode"]));
+            }
+            set {
+                this["currentExpenseMode"] = value;
+            }
+        }
     }
 }

@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Money_Vault.Model
 {
-    [Table("Product_Lists")]
-    public partial class Product_List : BaseModel
+    [Table("Expense_Items")]
+    public partial class Expense_Item : BaseModel
     {
         private int _id;
         private int _expense_Id;

@@ -27,7 +27,7 @@
 
         <Rectangle 
             HorizontalAlignment="Left" 
-            Height="125" Margin="894,0,0,0" 
+            Height="125" Margin="710,0,0,0" 
             Stroke="Black" 
             VerticalAlignment="Top" 
             Width="3" 
@@ -38,11 +38,11 @@
         <Button 
             x:Name="Button_General" 
             Style="{StaticResource Button_Common}"
-            FontSize="24" 
+            FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="250" 
+            Width="150" 
             ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
             Margin="25,25,0,0"
             Command="{Binding ShowExpenseGeneralFrameCommand}"
@@ -54,28 +54,43 @@
             x:Name="Button_Category" 
             Style="{StaticResource Button_Common}"
             Content="Категории"
-            FontSize="24" 
+            FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="250" 
+            Width="150" 
             ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
-            Margin="328,25,0,0"
+            Margin="375,25,0,0"
             Command="{Binding ShowCategoryFrameCommand}"
+            Panel.ZIndex="1"/>
+
+        <Button 
+            x:Name="Button_Price" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="150" 
+            ToolTip="Нажмите, чтобы открыть вкладку с 
+            информацией об изменении цен на купленные товары." 
+            Margin="200,25,0,0"
+            Command="{Binding ShowExpensePriceFrameCommand}"
             Panel.ZIndex="1">
+            <TextBlock TextAlignment="Center">Изменение<LineBreak/>цен</TextBlock>
         </Button>
 
         <Button 
             x:Name="Button_Report" 
             Style="{StaticResource Button_Common}"
             Content="Отчёт"
-            FontSize="24" 
+            FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="250" 
+            Width="150" 
             ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
-            Margin="630,25,0,0"
+            Margin="550,25,0,0"
             Command="{Binding ShowExpenseReportFrameCommand}"
             Panel.ZIndex="1">
         </Button>

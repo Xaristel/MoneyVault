@@ -12,7 +12,7 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="expenseGeneralAddModalWindow">
+        Name="expenseGeneralShortAddModalWindow">
     <Grid Margin="0,0,0,-6">
         <Label 
             x:Name="LabelHeader" 
@@ -37,7 +37,9 @@
             FontSize="28" 
             ToolTip="Нажмите, чтобы добавить новую запись и закрыть окно."
             Command="{Binding AddCommand}"
-            CommandParameter="{Binding ElementName=expenseGeneralAddModalWindow}" Height="50" VerticalAlignment="Top"/>
+            CommandParameter="{Binding ElementName=expenseGeneralShortAddModalWindow}" 
+            Height="50" 
+            VerticalAlignment="Top"/>
 
         <Button 
             x:Name="button_Cancel" 

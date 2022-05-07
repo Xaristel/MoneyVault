@@ -19,7 +19,7 @@
         <Button 
             x:Name="Button_Delete" 
             Style="{StaticResource Button_Common}"
-            FontSize="24" 
+            FontSize="22" 
             Content="Удалить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -32,7 +32,7 @@
         <Button 
             Style="{StaticResource Button_Common}"
             x:Name="Button_Edit" 
-            FontSize="24" 
+            FontSize="22" 
             Content="Изменить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -45,7 +45,7 @@
         <Button 
             x:Name="Button_Add" 
             Style="{StaticResource Button_Common}"
-            FontSize="24" 
+            FontSize="22" 
             Content="Добавить" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 

@@ -1,5 +1,6 @@
 ﻿using Money_Vault.Database;
 using Money_Vault.Model;
+using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,15 @@ namespace Money_Vault.ViewModel
         private RelayCommand _showAddFrameCommand;
         private RelayCommand _showEditFrameCommand;
         private RelayCommand _showDeleteFrameCommand;
+        private RelayCommand _showInfoFrameCommand;
+        private RelayCommand _changeExpenseMode;
 
         private List<string> _yearsList;
         private string _currentYear;
         private string _currentMonth;
         private bool _isEnableMonthsButtons;
+        private bool _currentMode;
+        private string _buttonContentCurrentMode;
 
         private List<string> _monthsList = new List<string>
         {
@@ -80,6 +85,28 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        //True -> full mode
+        //False -> short mode
+        public bool CurrentMode
+        {
+            get => _currentMode;
+            set
+            {
+                _currentMode = value;
+                OnPropertyChanged("CurrentMode");
+            }
+        }
+
+        public string ButtonContentCurrentMode
+        {
+            get => _buttonContentCurrentMode;
+            set
+            {
+                _buttonContentCurrentMode = value;
+                OnPropertyChanged("ButtonContentCurrentMode");
+            }
+        }
+
         public List<string> YearsList
         {
             get => _yearsList;
@@ -129,8 +156,16 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var expenseGeneralAddViewModel = new ExpenseGeneralShortAddViewModel();
-                    await _displayRootRegistry.ShowModalPresentation(expenseGeneralAddViewModel);
+                    if (CurrentMode) //full
+                    {
+                        var expenseGeneralFullAddViewModel = new ExpenseGeneralFullAddViewModel();
+                        await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullAddViewModel);
+                    }
+                    else //short
+                    {
+                        var expenseGeneralShortAddViewModel = new ExpenseGeneralShortAddViewModel();
+                        await _displayRootRegistry.ShowModalPresentation(expenseGeneralShortAddViewModel);
+                    }
 
                     UpdateData();
                 }));
@@ -144,15 +179,27 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var expenseGeneralEditViewModel = new ExpenseGeneralShortEditViewModel(
-                        SelectedItem.Id,
-                        SelectedItem.TypeName,
-                        SelectedItem.Amount.ToString(),
-                        SelectedItem.ShopName,
-                        SelectedItem.Date.ToString("dd.MM.yyyy"),
-                        SelectedItem.Note);
+                    if (SelectedItem != null)
+                    {
+                        if (CurrentMode) //full
+                        {
+                            var expenseGeneralFullEditViewModel = new ExpenseGeneralFullEditViewModel();
+                            //args
+                            await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullEditViewModel);
+                        }
+                        else //short
+                        {
+                            var expenseGeneralShortEditViewModel = new ExpenseGeneralShortEditViewModel(
+                                SelectedItem.Id,
+                                SelectedItem.TypeName,
+                                SelectedItem.Amount.ToString(),
+                                SelectedItem.ShopName,
+                                SelectedItem.Date.ToString("dd.MM.yyyy"),
+                                SelectedItem.Note);
 
-                    await _displayRootRegistry.ShowModalPresentation(expenseGeneralEditViewModel);
+                            await _displayRootRegistry.ShowModalPresentation(expenseGeneralShortEditViewModel);
+                        }
+                    }
 
                     UpdateData();
                 }));
@@ -186,11 +233,59 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public RelayCommand ShowInfoFrameCommand
+        {
+            get
+            {
+                return _showInfoFrameCommand ?? (_showInfoFrameCommand = new RelayCommand(async (args) =>
+                {
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                    var expenseGeneralFullInfoViewModel = new ExpenseGeneralFullInfoViewModel();
+                    //args
+                    await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullInfoViewModel);
+                }));
+            }
+        }
+
+        public RelayCommand ChangeExpenseMode
+        {
+            get
+            {
+                return _changeExpenseMode ?? (_changeExpenseMode = new RelayCommand((args) =>
+                {
+                    if (CurrentMode)
+                    {
+                        CurrentMode = false;
+                        Settings.Default["currentExpenseMode"] = CurrentMode;
+                        ButtonContentCurrentMode = "Сменить\nрежим на\nПолный";
+                    }
+                    else
+                    {
+                        CurrentMode = true;
+                        Settings.Default["currentExpenseMode"] = CurrentMode;
+                        ButtonContentCurrentMode = "Сменить\nрежим на\nКраткий";
+                    }
+                    Settings.Default.Save();
+                }));
+            }
+        }
+
         public ExpenseGeneralViewModel()
         {
             CurrentMonth = _monthsList.ToList()[System.DateTime.Now.Month - 1];
             CurrentYear = Convert.ToString(System.DateTime.Now.Year);
             IsEnableMonthsButtons = true;
+            CurrentMode = Convert.ToBoolean(Settings.Default["currentExpenseMode"]);
+
+            if (CurrentMode)
+            {
+                ButtonContentCurrentMode = "Сменить\nрежим на\nКраткий";
+            }
+            else
+            {
+                ButtonContentCurrentMode = "Сменить\nрежим на\nПолный";
+            }
 
             FillYearsList();
         }

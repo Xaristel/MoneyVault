@@ -6,6 +6,7 @@ namespace Money_Vault.ViewModel
     public class ExpenseMainViewModel : BaseViewModel
     {
         private RelayCommand _showExpenseGeneralFrameCommand;
+        private RelayCommand _showExpensePriceFrameCommand;
         private RelayCommand _showCategoryFrameCommand;
         private RelayCommand _showExpenseReportFrameCommand;
 
@@ -36,6 +37,18 @@ namespace Money_Vault.ViewModel
                 }));
             }
         }
+
+        public RelayCommand ShowExpensePriceFrameCommand
+        {
+            get
+            {
+                return _showExpensePriceFrameCommand ?? (_showExpensePriceFrameCommand = new RelayCommand((args) =>
+                {
+                    CurrentExpensePagePath = "/View/ExpensePricePage.xaml";
+                }));
+            }
+        }
+
         public RelayCommand ShowCategoryFrameCommand
         {
             get

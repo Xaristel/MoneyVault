@@ -24,6 +24,9 @@ namespace Money_Vault
             displayRootRegistry.RegisterWindowType<ExpenseGeneralShortEditViewModel, ExpenseGeneralShortEditModalWindow>();
             displayRootRegistry.RegisterWindowType<CategoryAddViewModel, CategoryAddWindow>();
             displayRootRegistry.RegisterWindowType<CategoryEditViewModel, CategoryEditWindow>();
+            displayRootRegistry.RegisterWindowType<ExpenseGeneralFullInfoViewModel, ExpenseGeneralFullInfoModalWindow>();
+            displayRootRegistry.RegisterWindowType<ExpenseGeneralFullAddViewModel, ExpenseGeneralFullAddModalWindow>();
+            displayRootRegistry.RegisterWindowType<ExpenseGeneralFullEditViewModel, ExpenseGeneralFullEditModalWindow>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
