@@ -283,7 +283,11 @@ namespace Money_Vault.ViewModel
                         FillExcelFile();
                         _workbook.SaveAs(path);
                     }
-                    _application.Quit();
+
+                    if (_application != null)
+                    {
+                        _application.Quit();
+                    }
                 }));
             }
         }
@@ -295,6 +299,7 @@ namespace Money_Vault.ViewModel
                 {
                     string tempPath = Path.GetTempPath() + "Отчёт.xlsx";
                     FillExcelFile();
+
                     if (File.Exists(tempPath))
                     {
                         File.Delete(tempPath);
@@ -306,7 +311,10 @@ namespace Money_Vault.ViewModel
                     excel.StartInfo.FileName = tempPath;
                     excel.Start();
 
-                    _application.Quit();
+                    if (_application != null)
+                    {
+                        _application.Quit();
+                    }
                 }));
             }
         }
