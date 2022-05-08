@@ -18,9 +18,8 @@ namespace Money_Vault.Database
         public virtual DbSet<Income> Incomes { get; set; }
         public virtual DbSet<Income_Type> Income_Types { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Expense_Item> Product_Lists { get; set; }
-        public virtual DbSet<Product_Type> Product_Types { get; set; }
+        public virtual DbSet<Expense_Subtype> Product_Types { get; set; }
         public virtual DbSet<Shop> Shops { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

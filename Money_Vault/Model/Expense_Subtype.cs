@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Money_Vault.Model
 {
-    [Table("Products")]
-    public partial class Product : BaseModel
+    [Table("Expense_Subtypes")]
+    public partial class Expense_Subtype : BaseModel
     {
         private int _id;
-        private int _type_Id;
         private string _name;
-        private int _price;
 
         public int Id
         {
@@ -22,17 +20,6 @@ namespace Money_Vault.Model
         }
 
         [Required]
-        public int Type_Id
-        {
-            get => _type_Id;
-            set
-            {
-                _type_Id = value;
-                OnPropertyChanged("Type_Id");
-            }
-        }
-
-        [Required]
         public string Name
         {
             get => _name;
@@ -40,17 +27,6 @@ namespace Money_Vault.Model
             {
                 _name = value;
                 OnPropertyChanged("Name");
-            }
-        }
-
-        [Required]
-        public int Price
-        {
-            get => _price;
-            set
-            {
-                _price = value;
-                OnPropertyChanged("Price");
             }
         }
     }

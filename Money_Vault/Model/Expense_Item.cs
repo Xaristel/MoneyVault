@@ -8,8 +8,7 @@ namespace Money_Vault.Model
     {
         private int _id;
         private int _expense_Id;
-        private int _product_Id;
-        private int _quantity;
+        private int _expense_Subtype_Id;
         private int _price;
 
         public int Id
@@ -34,24 +33,13 @@ namespace Money_Vault.Model
         }
 
         [Required]
-        public int Product_Id
+        public int Expense_Subtype_Id
         {
-            get => _product_Id;
+            get => _expense_Subtype_Id;
             set
             {
-                _product_Id = value;
-                OnPropertyChanged("Product_Id");
-            }
-        }
-
-        [Required]
-        public int Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
-                OnPropertyChanged("Quantity");
+                _expense_Subtype_Id = value;
+                OnPropertyChanged("Expense_Subtype_Id");
             }
         }
 

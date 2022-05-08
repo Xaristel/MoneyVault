@@ -143,9 +143,8 @@
     <Compile Include="Model\IncomeCommonListItem.cs" />
     <Compile Include="Model\Income_Type.cs" />
     <Compile Include="Model\Note.cs" />
-    <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Expense_Item.cs" />
-    <Compile Include="Model\Product_Type.cs" />
+    <Compile Include="Model\Expense_Subtype.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
