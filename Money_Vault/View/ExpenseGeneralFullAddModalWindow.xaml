@@ -107,7 +107,7 @@
 
         <TextBox 
             x:Name="TextBox_Note"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание..." 
             HorizontalAlignment="Left" 
             Margin="918,292,0,0" 

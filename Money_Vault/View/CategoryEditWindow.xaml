@@ -72,7 +72,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
         <TextBox 
             x:Name="TextBox_Category"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Common}"
             Tag="Введите название категории...*" 
             Margin="185,85,25,0" 
             TextWrapping="Wrap" 
@@ -82,14 +82,15 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
         <TextBox 
             x:Name="TextBox_Note"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание... (необязательно)" 
             Margin="185,140,25,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             FontSize="22" 
             Height="65"
-            Text="{Binding Note, Mode=TwoWay}"/>
+            Text="{Binding Note, Mode=TwoWay}"
+            Width="490"/>
     </Grid>
 </Window>
 

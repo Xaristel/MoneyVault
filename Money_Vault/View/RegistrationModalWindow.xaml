@@ -39,7 +39,7 @@
             FontSize="36" 
             SelectionOpacity="1" 
             ToolTip="Введите логин."
-            Style="{StaticResource placeHolder_common}" 
+            Style="{StaticResource TextBox_Common}" 
             Tag="Введите логин...*" 
             FontWeight="Normal"
             Text="{Binding RegLogin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -53,7 +53,7 @@
             FontSize="36" 
             SelectionOpacity="1" 
             ToolTip="Введите пароль." 
-            Style="{StaticResource placeHolder_password}" 
+            Style="{StaticResource TextBox_Password}" 
             Tag="Введите пароль...*" 
             FontWeight="Normal"
             Text="{Binding RegPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -81,7 +81,7 @@
             FontSize="36" 
             SelectionOpacity="1" 
             ToolTip="Введите имя... (необязательно)"
-            Style="{StaticResource placeHolder_common}" 
+            Style="{StaticResource TextBox_Common}" 
             Tag="Введите имя..." 
             FontWeight="Normal"
             Text="{Binding RegName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -95,7 +95,7 @@
             FontSize="36" 
             SelectionOpacity="1" 
             ToolTip="Введите фамилию... (необязательно)" 
-            Style="{StaticResource placeHolder_common}" 
+            Style="{StaticResource TextBox_Common}" 
             Tag="Введите фамилию..." 
             FontWeight="Normal"
             Text="{Binding RegSurname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

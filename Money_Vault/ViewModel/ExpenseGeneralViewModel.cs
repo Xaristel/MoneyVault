@@ -189,15 +189,18 @@ namespace Money_Vault.ViewModel
                         }
                         else //short
                         {
-                            var expenseGeneralShortEditViewModel = new ExpenseGeneralShortEditViewModel(
-                                SelectedItem.Id,
-                                SelectedItem.TypeName,
-                                SelectedItem.Amount.ToString(),
-                                SelectedItem.ShopName,
-                                SelectedItem.Date.ToString("dd.MM.yyyy"),
-                                SelectedItem.Note);
+                            if (SelectedItem != null)
+                            {
+                                var expenseGeneralShortEditViewModel = new ExpenseGeneralShortEditViewModel(
+                                    SelectedItem.Id,
+                                    SelectedItem.TypeName,
+                                    SelectedItem.Amount.ToString(),
+                                    SelectedItem.ShopName,
+                                    SelectedItem.Date.ToString("dd.MM.yyyy"),
+                                    SelectedItem.Note);
 
-                            await _displayRootRegistry.ShowModalPresentation(expenseGeneralShortEditViewModel);
+                                await _displayRootRegistry.ShowModalPresentation(expenseGeneralShortEditViewModel);
+                            }
                         }
                     }
 

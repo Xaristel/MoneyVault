@@ -94,8 +94,8 @@
             Margin="185,85,25,0" 
             VerticalAlignment="Top" 
             FontSize="22"
-            BorderThickness="3"
             FontFamily="Balsamiq Sans"
+            BorderThickness="3"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}"
             SelectedItem="{Binding Category, Mode=TwoWay}" Height="35"/>
 
@@ -116,7 +116,7 @@
 
         <TextBox 
             x:Name="TextBox_Amount"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Common}"
             Tag="Введите сумму...*" 
             Margin="185,151,25,0" 
             TextWrapping="Wrap" 
@@ -145,7 +145,7 @@
 
         <TextBox 
             x:Name="TextBox_Note"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание... (необязательно)" 
             Margin="185,280,25,0" 
             TextWrapping="Wrap" 

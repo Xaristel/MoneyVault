@@ -4,7 +4,7 @@
 
     <!--Стиль для обычных textBox с реализацией placeHolderText-->
     <Style 
-        x:Key="placeHolder_common" 
+        x:Key="TextBox_Common" 
         TargetType="{x:Type TextBox}" 
         BasedOn="{StaticResource {x:Type TextBox}}">
 
@@ -49,7 +49,7 @@
 
     <!--Стиль для textBox с паролем и реализацией placeHolderText и отключением копирования-->
     <Style 
-        x:Key="placeHolder_password" 
+        x:Key="TextBox_Password" 
         TargetType="{x:Type TextBox}" 
         BasedOn="{StaticResource {x:Type TextBox}}">
 
@@ -85,6 +85,56 @@
                         <TextBox Text="{TemplateBinding Tag}" 
                                  Background="{TemplateBinding Background}" 
                                  Panel.ZIndex="1">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Foreground" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                            <Setter Property="Foreground" Value="DarkGray"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Стиль для multiline textBox с реализацией placeHolderText-->
+    <Style 
+        x:Key="TextBox_Multiline" 
+        TargetType="{x:Type TextBox}" 
+        BasedOn="{StaticResource {x:Type TextBox}}">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent},
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource"
+                                 Background="Transparent"
+                                 Panel.ZIndex="2" 
+                                 BorderBrush="Black" 
+                                 BorderThickness="3" 
+                                 FontFamily="Balsamiq Sans"
+                                 FontWeight="Normal"
+                                 VerticalScrollBarVisibility="Visible"
+                                 HorizontalScrollBarVisibility="Disabled" 
+                                 AcceptsTab="True" 
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap" 
+                                 />
+                        <TextBox 
+                            Text="{TemplateBinding Tag}" 
+                            Background="{TemplateBinding Background}" 
+                            FontFamily="Balsamiq Sans"
+                            FontWeight="Normal"
+                            Panel.ZIndex="1">
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}">
                                     <Setter Property="Foreground" Value="Transparent"/>
@@ -300,6 +350,7 @@
                 Background="{TemplateBinding Background}" 
                 BorderBrush="{TemplateBinding BorderBrush}" 
                 BorderThickness="{TemplateBinding BorderThickness}" 
+                FontFamily="Balsamiq Sans"
                 Grid.ColumnSpan="2" 
                 IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                 Style="{StaticResource ComboBoxToggleButton}"/>

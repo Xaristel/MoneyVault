@@ -58,7 +58,7 @@
             FontSize="36" 
             SelectionOpacity="1" 
             ToolTip="Введите ваш логин."
-            Style="{StaticResource placeHolder_common}" 
+            Style="{StaticResource TextBox_Common}" 
             Tag="Введите ваш логин..." 
             FontWeight="Normal" 
             Text="{Binding Login}"/>
@@ -93,7 +93,7 @@
             FontSize="36" 
             SelectionOpacity="1" 
             ToolTip="Введите ваш пароль." 
-            Style="{StaticResource placeHolder_password}" 
+            Style="{StaticResource TextBox_Password}" 
             Tag="Введите ваш пароль..." 
             FontWeight="Normal"/>
 

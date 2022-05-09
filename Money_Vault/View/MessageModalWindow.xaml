@@ -58,7 +58,7 @@
             Height="187" 
             Width="500" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-            TextAlignment="Left"/>
+            TextAlignment="Center"/>
 
         <Button 
             x:Name="button_Cancel" 

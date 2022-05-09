@@ -74,7 +74,7 @@
 
         <TextBox 
             x:Name="TextBox_Category"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Common}"
             Tag="Введите название категории...*" 
             Margin="185,130,25,0" 
             TextWrapping="Wrap" 
@@ -84,14 +84,13 @@
 
         <TextBox 
             x:Name="TextBox_Note"
-            Style="{StaticResource placeHolder_common}"
+            Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание... (необязательно)" 
             Margin="185,185,25,0" 
-            TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             FontSize="22" 
             Height="65"
-            Text="{Binding Note, Mode=TwoWay}"/>
+            Text="{Binding Note, Mode=TwoWay}" />
 
         <Label 
             Content="Тип записи:" 
@@ -104,15 +103,15 @@
 
         <ComboBox 
             Template="{StaticResource ComboBoxTemplateCommon}"
-            x:Name="ComboBox_Category" 
+            x:Name="ComboBox_Type" 
             Margin="185,76,25,0" 
             VerticalAlignment="Top" 
             FontSize="22"
+            FontFamily="Balsamiq Sans"
             BorderThickness="3"
             ItemsSource="{Binding TypesList, Mode=OneWay}"
             SelectedItem="{Binding Type, Mode=TwoWay}" 
-            Height="35" 
-            FontFamily="Balsamiq Sans"/>
+            Height="35"/>
 
         <Label 
             x:Name="LabelPlaceHolderType"
