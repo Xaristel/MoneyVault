@@ -11,12 +11,22 @@ namespace Money_Vault.ViewModel
     public class CategoryViewModel : BaseViewModel
     {
         private IEnumerable<CategoryListItem> _categoriesList;
+        private IEnumerable<CategoryListItem> _subcategoriesList;
 
         private RelayCommand _showAddFrameCommand;
         private RelayCommand _showEditFrameCommand;
         private RelayCommand _showDeleteFrameCommand;
 
         private CategoryListItem _selectedItem;
+
+        private string _buttonContentCurrentMode;
+
+        private Visibility _isVisibleExpenseSubMenu;
+        private Visibility _isVisibleIncomeSubMenu;
+
+        private int _widthMainDataGrid;
+        private int _heightMainDataGrid;
+        private Visibility _isVisibleSubcategoriesDataGrid;
 
         public IEnumerable<CategoryListItem> CategoriesList
         {
@@ -25,6 +35,76 @@ namespace Money_Vault.ViewModel
             {
                 _categoriesList = value;
                 OnPropertyChanged("CategoriesList");
+            }
+        }
+
+        public IEnumerable<CategoryListItem> SubcategoriesList
+        {
+            get => _subcategoriesList;
+            set
+            {
+                _subcategoriesList = value;
+                OnPropertyChanged("SubcategoriesList");
+            }
+        }
+
+        public string ButtonContentCurrentMode
+        {
+            get => _buttonContentCurrentMode;
+            set
+            {
+                _buttonContentCurrentMode = value;
+                OnPropertyChanged("ButtonContentCurrentMode");
+            }
+        }
+
+        public Visibility IsVisibleExpenseSubMenu
+        {
+            get => _isVisibleExpenseSubMenu;
+            set
+            {
+                _isVisibleExpenseSubMenu = value;
+                OnPropertyChanged("IsVisibleExpenseSubMenu");
+            }
+        }
+
+        public Visibility IsVisibleIncomeSubMenu
+        {
+            get => _isVisibleIncomeSubMenu;
+            set
+            {
+                _isVisibleIncomeSubMenu = value;
+                OnPropertyChanged("IsVisibleIncomeSubMenu");
+            }
+        }
+
+        public int WidthMainDataGrid
+        {
+            get => _widthMainDataGrid;
+            set
+            {
+                _widthMainDataGrid = value;
+                OnPropertyChanged("WidthMainDataGrid");
+            }
+        }
+
+        public int HeightMainDataGrid
+        {
+            get => _heightMainDataGrid;
+            set
+            {
+                _heightMainDataGrid = value;
+                OnPropertyChanged("HeightMainDataGrid");
+            }
+        }
+
+        public Visibility IsVisibleSubcategoriesDataGrid
+        {
+            get => _isVisibleSubcategoriesDataGrid;
+            set
+            {
+                _isVisibleSubcategoriesDataGrid = value;
+                OnPropertyChanged("IsVisibleSubcategoriesDataGrid");
             }
         }
 
@@ -37,6 +117,7 @@ namespace Money_Vault.ViewModel
                 OnPropertyChanged("SelectedItem");
             }
         }
+
 
         public RelayCommand ShowAddFrameCommand
         {
@@ -97,8 +178,17 @@ namespace Money_Vault.ViewModel
                             }
                             else
                             {
-                                Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == SelectedItem.Id);
-                                database.Expense_Types.Remove(item);
+                                if (database.Expense_Types.ToList().Find(x => (x.Name == SelectedItem.Name)) != null)
+                                {
+                                    Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == SelectedItem.Id);
+                                    database.Expense_Types.Remove(item);
+                                }
+                                else
+                                {
+                                    Expense_Subtype item = database.Expense_Subtypes.ToList().Find(x => x.Id == SelectedItem.Id);
+                                    database.Expense_Subtypes.Remove(item);
+                                }
+
                                 database.SaveChanges();
                             }
                         }
@@ -110,6 +200,34 @@ namespace Money_Vault.ViewModel
 
         public CategoryViewModel()
         {
+            if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
+            {
+                IsVisibleIncomeSubMenu = Visibility.Visible;
+                IsVisibleExpenseSubMenu = Visibility.Hidden;
+
+                IsVisibleSubcategoriesDataGrid = Visibility.Hidden;
+                WidthMainDataGrid = 1389;
+                HeightMainDataGrid = 690;
+            }
+            else
+            {
+                if (Convert.ToBoolean(Settings.Default["currentExpenseMode"]))
+                {
+                    ButtonContentCurrentMode = "Сменить\nрежим на\nКраткий";
+                }
+                else
+                {
+                    ButtonContentCurrentMode = "Сменить\nрежим на\nПолный";
+                }
+
+                IsVisibleIncomeSubMenu = Visibility.Hidden;
+                IsVisibleExpenseSubMenu = Visibility.Visible;
+
+                IsVisibleSubcategoriesDataGrid = Visibility.Visible;
+                WidthMainDataGrid = 685;
+                HeightMainDataGrid = 650;
+            }
+
             UpdateData();
         }
 
@@ -121,7 +239,6 @@ namespace Money_Vault.ViewModel
 
                 if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                 {
-
                     foreach (var item in database.Income_Types.ToList())
                     {
                         categories.Add(new CategoryListItem()
@@ -134,6 +251,8 @@ namespace Money_Vault.ViewModel
                 }
                 else
                 {
+                    List<CategoryListItem> subcategories = new List<CategoryListItem>();
+
                     foreach (var item in database.Expense_Types.ToList())
                     {
                         categories.Add(new CategoryListItem()
@@ -143,6 +262,18 @@ namespace Money_Vault.ViewModel
                             Note = item.Note
                         });
                     }
+
+                    foreach (var item in database.Expense_Subtypes.ToList())
+                    {
+                        subcategories.Add(new CategoryListItem()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Note = item.Note
+                        });
+                    }
+
+                    SubcategoriesList = subcategories;
                 }
 
                 CategoriesList = categories;

@@ -3,9 +3,7 @@ using Money_Vault.Database;
 using Money_Vault.Model;
 using Money_Vault.Properties;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -15,6 +13,7 @@ namespace Money_Vault.ViewModel
     {
         private int _id;
         private string _category;
+        private string _initialCategory;
         private string _note;
 
         private RelayCommand<IClosable> _editCommand;
@@ -51,34 +50,66 @@ namespace Money_Vault.ViewModel
                         {
                             if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                             {
-                                Income_Type item = database.Income_Types.ToList().Find(x => x.Id == _id);
+                                if (database.Income_Types.ToList().Find(x => x.Name == Category) == null)
+                                {
+                                    Income_Type item = database.Income_Types.ToList().Find(x => x.Id == _id);
 
-                                item.Name = Category;
-                                item.Note = Note;
+                                    item.Name = Category;
+                                    item.Note = Note;
+                                    database.SaveChanges();
+
+                                    if (window != null)
+                                    {
+                                        window.Close();
+                                    }
+                                }
+                                else
+                                {
+                                    await CallErrorMessage("Такое название категории уже существует!");
+                                }
                             }
                             else
                             {
-                                Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == _id);
+                                if (database.Expense_Types.ToList().Find(x => x.Name == Category) == null
+                                && database.Expense_Subtypes.ToList().Find(x => x.Name == Category) == null)
+                                {
+                                    if (database.Expense_Types.ToList().Find(x => x.Name == _initialCategory) != null)
+                                    {
+                                        Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == _id);
 
-                                item.Name = Category;
-                                item.Note = Note;
+                                        item.Name = Category;
+                                        item.Note = Note;
+                                        database.SaveChanges();
+
+                                        if (window != null)
+                                        {
+                                            window.Close();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Expense_Subtype item = database.Expense_Subtypes.ToList().Find(x => x.Id == _id);
+
+                                        item.Name = Category;
+                                        item.Note = Note;
+                                        database.SaveChanges();
+
+                                        if (window != null)
+                                        {
+                                            window.Close();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    await CallErrorMessage("Такое название категории или подкатегории уже существует!");
+                                }
                             }
-
-                            database.SaveChanges();
-                        }
-
-                        if (window != null)
-                        {
-                            window.Close();
                         }
                     }
                     else
                     {
-                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        var messageViewModel = new MessageViewModel(
-                            "Ошибка",
-                            "Заполнены не все поля или введены некорректные значения.");
-                        await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await CallErrorMessage("Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }
@@ -90,7 +121,17 @@ namespace Money_Vault.ViewModel
         {
             _id = id;
             Category = category;
+            _initialCategory = category;
             Note = note;
+        }
+
+        private async Task CallErrorMessage(string message)
+        {
+            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+            var messageViewModel = new MessageViewModel(
+                "Ошибка",
+                message);
+            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }

@@ -3,16 +3,44 @@ using Money_Vault.Database;
 using Money_Vault.Model;
 using Money_Vault.Properties;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
 {
     public class CategoryAddViewModel : BaseViewModel
     {
+        private string _type;
         private string _category;
         private string _note;
 
         private RelayCommand<IClosable> _addCommand;
+        private Visibility _isVisibleLabelPlaceHolderType;
+        private IEnumerable<string> _typesList;
+
+        public string Type
+        {
+            get => _type;
+            set
+            {
+                _type = value;
+                OnPropertyChanged("Type");
+
+                IsVisibleLabelPlaceHolderType = Visibility.Hidden;
+            }
+        }
+
+        public IEnumerable<string> TypesList
+        {
+            get => _typesList;
+            set
+            {
+                _typesList = value;
+                OnPropertyChanged("TypesList");
+            }
+        }
 
         public string Category
         {
@@ -34,6 +62,16 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public Visibility IsVisibleLabelPlaceHolderType
+        {
+            get => _isVisibleLabelPlaceHolderType;
+            set
+            {
+                _isVisibleLabelPlaceHolderType = value;
+                OnPropertyChanged("IsVisibleLabelPlaceHolderType");
+            }
+        }
+
         public RelayCommand<IClosable> AddCommand
         {
             get
@@ -46,39 +84,95 @@ namespace Money_Vault.ViewModel
                         {
                             if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                             {
-                                database.Income_Types.Add(new Income_Type()
+                                if (database.Income_Types.ToList().Find(x => x.Name == Category) == null)
                                 {
-                                    Name = Category,
-                                    Note = Note
-                                });
+                                    database.Income_Types.Add(new Income_Type()
+                                    {
+                                        Name = Category,
+                                        Note = Note
+                                    });
+                                    database.SaveChanges();
+
+                                    if (window != null)
+                                    {
+                                        window.Close();
+                                    }
+                                }
+                                else
+                                {
+                                    await CallErrorMessage("Такое название категории уже существует!");
+                                }
                             }
                             else
                             {
-                                database.Expense_Types.Add(new Expense_Type()
+                                if (database.Expense_Types.ToList().Find(x => x.Name == Category) == null
+                                && database.Expense_Subtypes.ToList().Find(x => x.Name == Category) == null)
                                 {
-                                    Name = Category,
-                                    Note = Note
-                                });
+                                    if (Type == "Категория")
+                                    {
+                                        database.Expense_Types.Add(new Expense_Type()
+                                        {
+                                            Name = Category,
+                                            Note = Note
+                                        });
+                                        database.SaveChanges();
+
+                                        if (window != null)
+                                        {
+                                            window.Close();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        database.Expense_Subtypes.Add(new Expense_Subtype()
+                                        {
+                                            Name = Category,
+                                            Note = Note
+                                        });
+                                        database.SaveChanges();
+
+                                        if (window != null)
+                                        {
+                                            window.Close();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    await CallErrorMessage("Такое название подкатегории или категории уже существует!");
+                                }
                             }
-
-                            database.SaveChanges();
-                        }
-
-                        if (window != null)
-                        {
-                            window.Close();
                         }
                     }
                     else
                     {
-                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        var messageViewModel = new MessageViewModel(
-                            "Ошибка",
-                            "Заполнены не все поля или введены некорректные значения.");
-                        await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await CallErrorMessage("Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }
+        }
+
+        public CategoryAddViewModel()
+        {
+            if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
+            {
+                TypesList = new List<string>() { "Категория" };
+            }
+            else
+            {
+                TypesList = new List<string>() { "Категория", "Подкатегория" };
+            }
+
+            IsVisibleLabelPlaceHolderType = Visibility.Visible;
+        }
+
+        private async Task CallErrorMessage(string message)
+        {
+            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+            var messageViewModel = new MessageViewModel(
+                "Ошибка",
+                message);
+            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }

@@ -8,7 +8,7 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:CategoryAddViewModel}"
         mc:Ignorable="d"
         Title="Money Vault v2.01" 
-        Height="340" 
+        Height="380" 
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
@@ -34,7 +34,7 @@
             Style="{StaticResource Button_Common}"
             Content="Добавить" 
             HorizontalAlignment="Left" 
-            Margin="25,230,0,0" 
+            Margin="25,270,0,0" 
             Width="230" 
             FontSize="28" 
             ToolTip="Нажмите, чтобы добавить новую запись и закрыть окно."
@@ -47,25 +47,27 @@
             x:Name="button_Cancel" 
             Style="{StaticResource Button_Common}"
             Content="Отмена" 
-            Margin="445,230,25,0" 
+            Margin="445,270,25,0" 
             FontSize="28" 
             ToolTip="Нажмите, чтобы закрыть окно." 
-            IsCancel="True" Height="50" VerticalAlignment="Top"/>
+            IsCancel="True" 
+            Height="50" 
+            VerticalAlignment="Top"/>
 
         <Label 
             Content="Категория:" 
             HorizontalAlignment="Left" 
-            Margin="25,85,0,0" 
+            Margin="25,130,0,0" 
             VerticalAlignment="Top" 
             FontFamily="Balsamiq Sans" 
             FontSize="22" 
-            RenderTransformOrigin="0.748,0.571"/>
+            RenderTransformOrigin="0.748,0.571" Width="144"/>
 
         <Label 
             Style="{StaticResource Label_Common}"
             Content="Примечание:" 
             HorizontalAlignment="Left" 
-            Margin="25,140,0,0" 
+            Margin="25,185,0,0" 
             VerticalAlignment="Top" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571"/>
@@ -74,7 +76,7 @@
             x:Name="TextBox_Category"
             Style="{StaticResource placeHolder_common}"
             Tag="Введите название категории...*" 
-            Margin="185,85,25,0" 
+            Margin="185,130,25,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             FontSize="22"
@@ -84,12 +86,48 @@
             x:Name="TextBox_Note"
             Style="{StaticResource placeHolder_common}"
             Tag="Введите примечание... (необязательно)" 
-            Margin="185,140,25,0" 
+            Margin="185,185,25,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             FontSize="22" 
             Height="65"
             Text="{Binding Note, Mode=TwoWay}"/>
+
+        <Label 
+            Content="Тип записи:" 
+            HorizontalAlignment="Left" 
+            Margin="25,76,0,0" 
+            VerticalAlignment="Top" 
+            FontFamily="Balsamiq Sans" 
+            FontSize="22" 
+            RenderTransformOrigin="0.748,0.571" Width="144"/>
+
+        <ComboBox 
+            Template="{StaticResource ComboBoxTemplateCommon}"
+            x:Name="ComboBox_Category" 
+            Margin="185,76,25,0" 
+            VerticalAlignment="Top" 
+            FontSize="22"
+            BorderThickness="3"
+            ItemsSource="{Binding TypesList, Mode=OneWay}"
+            SelectedItem="{Binding Type, Mode=TwoWay}" 
+            Height="35" 
+            FontFamily="Balsamiq Sans"/>
+
+        <Label 
+            x:Name="LabelPlaceHolderType"
+            Style="{StaticResource Label_Common}"
+            Content="Выберите тип записи...*"
+            HorizontalAlignment="Left" 
+            Margin="183,72,0,0" 
+            VerticalAlignment="Top" 
+            Width="492" 
+            Panel.ZIndex="-1" 
+            FontSize="22" 
+            Foreground="DarkGray"
+            Height="40"
+            Visibility="{Binding IsVisibleLabelPlaceHolderType, Mode=TwoWay}">
+        </Label>
     </Grid>
 </Window>
 

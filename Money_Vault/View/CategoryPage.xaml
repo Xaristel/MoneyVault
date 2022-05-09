@@ -16,8 +16,9 @@
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Grid Width="1439">
+        <!--Income subbuttons-->
         <Button 
-            x:Name="Button_Delete" 
+            x:Name="Button_IncomeDelete" 
             Style="{StaticResource Button_Common}"
             FontSize="22" 
             Content="Удалить" 
@@ -27,11 +28,12 @@
             Width="150" 
             ToolTip="Нажмите, чтобы удалить выбранный элемент." 
             Margin="1264,24,0,0" 
-            Command="{Binding ShowDeleteFrameCommand}"/>
+            Command="{Binding ShowDeleteFrameCommand}"
+            Visibility="{Binding IsVisibleIncomeSubMenu}"/>
 
         <Button 
             Style="{StaticResource Button_Common}"
-            x:Name="Button_Edit" 
+            x:Name="Button_IncomeEdit" 
             FontSize="22" 
             Content="Изменить" 
             HorizontalAlignment="Left" 
@@ -40,10 +42,11 @@
             Width="150" 
             ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
             Margin="1087,24,0,0" 
-            Command="{Binding ShowEditFrameCommand}"/>
+            Command="{Binding ShowEditFrameCommand}"
+            Visibility="{Binding IsVisibleIncomeSubMenu}"/>
 
         <Button 
-            x:Name="Button_Add" 
+            x:Name="Button_IncomeAdd" 
             Style="{StaticResource Button_Common}"
             FontSize="22" 
             Content="Добавить" 
@@ -53,32 +56,165 @@
             Width="150" 
             ToolTip="Нажмите, чтобы добавить новую строку." 
             Margin="909,24,0,0" 
-            Command="{Binding ShowAddFrameCommand}"/>
+            Command="{Binding ShowAddFrameCommand}"
+            Visibility="{Binding IsVisibleIncomeSubMenu}"/>
+
+        <!--Expense subbuttons-->
+
+        <Button 
+            x:Name="Button_ExpenseDelete" 
+            Style="{StaticResource Button_Common}"
+            Command="{Binding ShowDeleteFrameCommand}"
+            FontSize="22" 
+            Content="Удалить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы удалить выбранный элемент." 
+            Margin="1002,24,0,0" 
+            Visibility="{Binding IsVisibleExpenseSubMenu}"/>
+        <Button 
+            Style="{StaticResource Button_Common}"
+            Command="{Binding ShowEditFrameCommand}"
+            x:Name="Button_ExpenseEdit" 
+            FontSize="22" 
+            Content="Изменить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
+            Margin="863,24,0,0" 
+            Visibility="{Binding IsVisibleExpenseSubMenu}"/>
+
+        <Button 
+            x:Name="Button_ExpenseAdd" 
+            Style="{StaticResource Button_Common}"
+            Command="{Binding ShowAddFrameCommand}"
+            FontSize="22" 
+            Content="Добавить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы добавить новую строку." 
+            Margin="725,24,0,0" 
+            Visibility="{Binding IsVisibleExpenseSubMenu}"/>
+
+        <Button 
+            x:Name="Button_ExpenseInfo" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Подробнее" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы открыть окно с подробной информацией о записи." 
+            Margin="1140,24,0,0" 
+            IsEnabled="False"
+            Visibility="{Binding IsVisibleExpenseSubMenu}"/>
+
+        <Button 
+            x:Name="Button_ChangeExpenseMode" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="{Binding ButtonContentCurrentMode}"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы сменить режим отображения расходов. Существует полный и краткий режимы." 
+            Margin="1289,24,0,0"
+            IsEnabled="False"
+            Visibility="{Binding IsVisibleExpenseSubMenu}"/>
+
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Stroke="Black" 
+            Width="3" 
+            StrokeThickness="3" 
+            Margin="1275,0,0,726"
+            Visibility="{Binding IsVisibleExpenseSubMenu}"/>
 
         <DataGrid 
             x:Name="DataGrid_Categories" 
             Style="{StaticResource DataGridView_Common}"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}" 
             SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-            Margin="25,135,25,25">
+            Margin="25,0,0,25"
+            Width="{Binding WidthMainDataGrid, Mode=OneWay}" 
+            Height="{Binding HeightMainDataGrid, Mode=OneWay}"
+            HorizontalAlignment="Left"  
+            VerticalAlignment="Bottom">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Номер" 
-                    Width="150"
+                    Width="1*"
                     Binding="{Binding Id, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Категория" 
-                    Width="550"
+                    Width="4*"
                     Binding="{Binding Name, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Примечание" 
-                    Width="663"
+                    Width="5*"
                     Binding="{Binding Note, Mode=OneWay}"
                     CanUserSort="False">
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <DataGrid 
+            x:Name="DataGrid_Subcategories" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding SubcategoriesList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            Margin="730,175,25,25"
+            Visibility="{Binding IsVisibleSubcategoriesDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Номер" 
+                    Width="1*"
+                    Binding="{Binding Id, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Подкатегория" 
+                    Width="4*"
+                    Binding="{Binding Name, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Примечание" 
+                    Width="5*"
+                    Binding="{Binding Note, Mode=OneWay}"
+                    CanUserSort="False">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Подкатегории" 
+            HorizontalAlignment="Left" 
+            Margin="987,136,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="24" 
+            FontWeight="Bold"
+            Visibility="{Binding IsVisibleSubcategoriesDataGrid}"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Категории" 
+            HorizontalAlignment="Left" 
+            Margin="303,136,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="24" 
+            FontWeight="Bold"
+            Visibility="{Binding IsVisibleSubcategoriesDataGrid}"/>
     </Grid>
 </Page>
