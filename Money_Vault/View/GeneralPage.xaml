@@ -175,12 +175,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Категория дохода" 
-                    Width="330"
+                    Width="6*"
                     Binding="{Binding TypeName, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
-                    Width="265"
+                    Width="4*"
                     Binding="{Binding TotalAmount, Mode=OneWay}">
                 </DataGridTextColumn>
             </DataGrid.Columns>
@@ -196,12 +196,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Категория расхода" 
-                    Width="330"
+                    Width="6*"
                     Binding="{Binding TypeName, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
-                    Width="265"
+                    Width="4*"
                     Binding="{Binding TotalAmount, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>

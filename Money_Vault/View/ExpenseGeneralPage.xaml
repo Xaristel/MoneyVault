@@ -116,32 +116,32 @@
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Номер" 
-                    Width="100"
+                    Width="1*"
                     Binding="{Binding Id, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Категория" 
-                    Width="250"
+                    Width="2*"
                     Binding="{Binding TypeName, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
-                    Width="200"
+                    Width="2*"
                     Binding="{Binding Amount, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Магазин" 
-                    Width="200"
+                    Width="2*"
                     Binding="{Binding ShopName, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Дата" 
-                    Width="200"
+                    Width="1*"
                     Binding="{Binding Date, Mode=OneWay, StringFormat=\{0:dd.MM.yyyy\}}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Примечание" 
-                    Width="264"
+                    Width="2*"
                     Binding="{Binding Note, Mode=OneWay}"
                     CanUserSort="False">
                 </DataGridTextColumn>
