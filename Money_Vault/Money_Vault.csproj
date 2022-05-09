@@ -156,6 +156,7 @@
     <Compile Include="ViewModel\ExpenseGeneralFullInfoViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralShortAddViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralShortEditViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseStatisticViewModel.cs" />
     <Compile Include="ViewModel\IClosable.cs" />
     <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
@@ -167,7 +168,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralViewModel.cs" />
     <Compile Include="ViewModel\ExpenseMainViewModel.cs" />
-    <Compile Include="ViewModel\ExpensePriceViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseShopViewModel.cs" />
     <Compile Include="ViewModel\GeneralViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
@@ -204,8 +205,11 @@
     <Compile Include="View\ExpenseMainPage.xaml.cs">
       <DependentUpon>ExpenseMainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ExpensePricePage.xaml.cs">
-      <DependentUpon>ExpensePricePage.xaml</DependentUpon>
+    <Compile Include="View\ExpenseShopPage.xaml.cs">
+      <DependentUpon>ExpenseShopPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseStatisticPage.xaml.cs">
+      <DependentUpon>ExpenseStatisticPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GeneralPage.xaml.cs">
       <DependentUpon>GeneralPage.xaml</DependentUpon>
@@ -298,7 +302,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ExpensePricePage.xaml">
+    <Page Include="View\ExpenseShopPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseStatisticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

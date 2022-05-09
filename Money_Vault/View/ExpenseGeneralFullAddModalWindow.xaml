@@ -87,7 +87,7 @@
             Margin="1003,75,0,0"/>
 
         <DatePicker 
-            Margin="919,198,9,0" 
+            Margin="919,198,14,0" 
             VerticalAlignment="Top" 
             FontFamily="Balsamiq Sans" 
             FontSize="14"
@@ -113,20 +113,19 @@
             Margin="918,292,0,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
-            Width="271"
+            Width="267"
             Text="{Binding Note, Mode=TwoWay}" FontSize="22" Height="307"/>
 
         <ComboBox 
-            x:Name="ComboBox_Shop" 
-            HorizontalAlignment="Left"
+            x:Name="ComboBox_Shop"
             VerticalAlignment="Top"
             Template="{StaticResource ComboBoxTemplateCommon}"
-            Margin="919,111,0,0" 
+            Margin="919,111,15,0" 
             FontSize="22"
             BorderThickness="3"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
             SelectedItem="{Binding Shop, Mode=TwoWay}" 
-            Height="35" Width="271"/>
+            Height="35"/>
 
         <Label 
             x:Name="LabelPlaceHolderShop"
@@ -161,7 +160,7 @@
             Style="{StaticResource Button_Common}"
             Content="Отмена" 
             HorizontalAlignment="Left" 
-            Margin="1064,604,0,0" 
+            Margin="1060,604,0,0" 
             Width="125" 
             FontSize="24" 
             ToolTip="Нажмите, чтобы закрыть окно."

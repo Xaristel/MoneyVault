@@ -1,16 +1,20 @@
 ﻿using Money_Vault.Properties;
+using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Money_Vault.ViewModel
 {
     public class ExpenseMainViewModel : BaseViewModel
     {
         private RelayCommand _showExpenseGeneralFrameCommand;
-        private RelayCommand _showExpensePriceFrameCommand;
+        private RelayCommand _showExpenseShopFrameCommand;
+        private RelayCommand _showExpenseStatisticFrameCommand;
         private RelayCommand _showCategoryFrameCommand;
         private RelayCommand _showExpenseReportFrameCommand;
 
         private string _currentExpensePagePath;
+        private bool _currentExpenseMode;
 
         public string CurrentExpensePagePath
         {
@@ -22,9 +26,31 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public bool CurrentExpenseMode
+        {
+            get => _currentExpenseMode;
+            set
+            {
+                _currentExpenseMode = value;
+                OnPropertyChanged("CurrentExpenseMode");
+            }
+        }
+
         public ExpenseMainViewModel()
         {
             CurrentExpensePagePath = "/View/ExpenseGeneralPage.xaml";
+            CurrentExpenseMode = Convert.ToBoolean(Settings.Default["currentExpenseMode"]);
+
+            DispatcherTimer timer = new DispatcherTimer();
+
+            timer.Tick += new EventHandler(UpdateCurrentExpenseMode);
+            timer.Interval = new TimeSpan(0, 0, 2);
+            timer.Start();
+        }
+
+        private void UpdateCurrentExpenseMode(object sender, EventArgs e)
+        {
+            CurrentExpenseMode = Convert.ToBoolean(Settings.Default["currentExpenseMode"]);
         }
 
         public RelayCommand ShowExpenseGeneralFrameCommand
@@ -38,13 +64,24 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public RelayCommand ShowExpensePriceFrameCommand
+        public RelayCommand ShowExpenseShopFrameCommand
         {
             get
             {
-                return _showExpensePriceFrameCommand ?? (_showExpensePriceFrameCommand = new RelayCommand((args) =>
+                return _showExpenseShopFrameCommand ?? (_showExpenseShopFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentExpensePagePath = "/View/ExpensePricePage.xaml";
+                    CurrentExpensePagePath = "/View/ExpenseShopPage.xaml";
+                }));
+            }
+        }
+
+        public RelayCommand ShowExpenseStatisticFrameCommand
+        {
+            get
+            {
+                return _showExpenseStatisticFrameCommand ?? (_showExpenseStatisticFrameCommand = new RelayCommand((args) =>
+                {
+                    CurrentExpensePagePath = "/View/ExpenseStatisticPage.xaml";
                 }));
             }
         }

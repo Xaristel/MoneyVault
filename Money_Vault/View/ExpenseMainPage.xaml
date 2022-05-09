@@ -42,8 +42,8 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="150" 
-            ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
+            Width="130" 
+            ToolTip="Нажмите, чтобы открыть вкладку с общим списком расходов." 
             Margin="25,25,0,0"
             Command="{Binding ShowExpenseGeneralFrameCommand}"
             Panel.ZIndex="1">
@@ -51,33 +51,50 @@
         </Button>
 
         <Button 
-            x:Name="Button_Category" 
+            x:Name="Button_Statistic" 
             Style="{StaticResource Button_Common}"
-            Content="Категории"
+            Content="Статистика"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="150" 
-            ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
-            Margin="375,25,0,0"
-            Command="{Binding ShowCategoryFrameCommand}"
-            Panel.ZIndex="1"/>
+            Width="130" 
+            ToolTip="Нажмите, чтобы открыть вкладку со статистикой подкатегорий расходов." 
+            Margin="160,25,0,0"
+            Command="{Binding ShowExpenseStatisticFrameCommand}"
+            Panel.ZIndex="1"
+            IsEnabled="{Binding CurrentExpenseMode}"/>
+
 
         <Button 
-            x:Name="Button_Price" 
+            x:Name="Button_Shop" 
             Style="{StaticResource Button_Common}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="150" 
+            Width="130" 
             ToolTip="Нажмите, чтобы открыть вкладку с 
-            информацией об изменении цен на купленные товары." 
-            Margin="200,25,0,0"
-            Command="{Binding ShowExpensePriceFrameCommand}"
+            информацией о магазинах" 
+            Margin="294,25,0,0"
+            Command="{Binding ShowExpenseShoprameCommand}"
             Panel.ZIndex="1">
-            <TextBlock TextAlignment="Center">Изменение<LineBreak/>цен</TextBlock>
+            <TextBlock TextAlignment="Center">Магазины</TextBlock>
+        </Button>
+
+        <Button 
+            x:Name="Button_Category" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="130" 
+            ToolTip="Нажмите, чтобы открыть вкладку со списками категорий и подкатегорий расходов. (подкатегории доступны только в режиме ~Полный~)." 
+            Margin="429,25,0,0"
+            Command="{Binding ShowCategoryFrameCommand}"
+            Panel.ZIndex="1">
+            <TextBlock TextAlignment="Center">Категории</TextBlock>
         </Button>
 
         <Button 
@@ -88,9 +105,9 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
-            Width="150" 
-            ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
-            Margin="550,25,0,0"
+            Width="130" 
+            ToolTip="Нажмите, чтобы открыть вкладку с отчётом по расходам." 
+            Margin="564,25,0,0"
             Command="{Binding ShowExpenseReportFrameCommand}"
             Panel.ZIndex="1">
         </Button>
