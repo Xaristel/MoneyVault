@@ -93,7 +93,5 @@ namespace Money_Vault.ViewModel
                 }));
             }
         }
-
-
     }
 }

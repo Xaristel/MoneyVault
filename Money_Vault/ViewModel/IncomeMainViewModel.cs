@@ -24,6 +24,9 @@ namespace Money_Vault.ViewModel
         public IncomeMainViewModel()
         {
             CurrentIncomePagePath = "/View/IncomeGeneralPage.xaml";
+
+            Settings.Default["isIncomePage"] = true;
+            Settings.Default.Save();
         }
 
         //main income menu buttons
@@ -43,9 +46,6 @@ namespace Money_Vault.ViewModel
             {
                 return _showCategoryFrameCommand ?? (_showCategoryFrameCommand = new RelayCommand((args) =>
                 {
-                    Settings.Default["isIncomePage"] = true;
-                    Settings.Default.Save();
-
                     CurrentIncomePagePath = "/View/CategoryPage.xaml";
                 }));
             }

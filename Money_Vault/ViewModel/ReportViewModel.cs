@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.IO;
 using System.Diagnostics;
+using Money_Vault.Properties;
 
 namespace Money_Vault.ViewModel
 {
@@ -20,12 +21,15 @@ namespace Money_Vault.ViewModel
         private IEnumerable<ExpenseCommonListItem> _expenseDataList;
         private IEnumerable<TotalListItem> _totalDataList;
 
+        private Visibility _isVisibleIncomeSubMenu;
+        private Visibility _isVisibleExpenseSubMenu;
         private Visibility _isVisibleDataGridIncome;
         private Visibility _isVisibleDataGridExpense;
         private Visibility _isVisibleDataGridTotal;
         private bool _isEnableComboBoxMonth;
         private bool _isEnableSaveButton;
         private bool _isEnablePrintButton;
+        private string _buttonContentCurrentMode;
 
         private IEnumerable<string> _yearsList;
         private List<string> _operationsList = new List<string>
@@ -106,6 +110,14 @@ namespace Money_Vault.ViewModel
             {
                 _currentOperationsType = value;
                 FillYearsList();
+                if (_currentOperationsType == "Расходы")
+                {
+                    ReportTypesList = new List<string>() { "Операции", "Категории", "Подкатегории" };
+                }
+                else
+                {
+                    ReportTypesList = new List<string>() { "Операции", "Категории" };
+                }
 
                 OnPropertyChanged("CurrentOperationsType");
             }
@@ -191,6 +203,26 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public Visibility IsVisibleIncomeSubMenu
+        {
+            get => _isVisibleIncomeSubMenu;
+            set
+            {
+                _isVisibleIncomeSubMenu = value;
+                OnPropertyChanged("IsVisibleIncomeSubMenu");
+            }
+        }
+
+        public Visibility IsVisibleExpenseSubMenu
+        {
+            get => _isVisibleExpenseSubMenu;
+            set
+            {
+                _isVisibleExpenseSubMenu = value;
+                OnPropertyChanged("IsVisibleExpenseSubMenu");
+            }
+        }
+
         public Visibility IsVisibleDataGridIncome
         {
             get => _isVisibleDataGridIncome;
@@ -246,6 +278,16 @@ namespace Money_Vault.ViewModel
             {
                 _isEnablePrintButton = value;
                 OnPropertyChanged("IsEnablePrintButton");
+            }
+        }
+
+        public string ButtonContentCurrentMode
+        {
+            get => _buttonContentCurrentMode;
+            set
+            {
+                _buttonContentCurrentMode = value;
+                OnPropertyChanged("ButtonContentCurrentMode");
             }
         }
 
@@ -332,6 +374,25 @@ namespace Money_Vault.ViewModel
 
             CurrentReportType = ReportTypesList[0];
             CurrentOperationsType = OperationsList[0];
+
+            if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
+            {
+                IsVisibleExpenseSubMenu = Visibility.Hidden;
+                IsVisibleIncomeSubMenu = Visibility.Visible;
+            }
+            else
+            {
+                if (Convert.ToBoolean(Settings.Default["currentExpenseMode"]))
+                {
+                    ButtonContentCurrentMode = "Сменить\nрежим на\nКраткий";
+                }
+                else
+                {
+                    ButtonContentCurrentMode = "Сменить\nрежим на\nПолный";
+                }
+                IsVisibleExpenseSubMenu = Visibility.Visible;
+                IsVisibleIncomeSubMenu = Visibility.Hidden;
+            }
         }
 
         private void FillExcelFile()
@@ -396,10 +457,7 @@ namespace Money_Vault.ViewModel
         }
         private void FillYearsList()
         {
-            List<string> years = new List<string>
-            {
-                CurrentYear
-            };
+            List<string> years = new List<string>();
 
             using (DatabaseContext database = new DatabaseContext())
             {
@@ -536,6 +594,15 @@ namespace Money_Vault.ViewModel
                                         listTotal = FillExpensesTotalList();
                                         break;
                                     }
+                                case "Подкатегории":
+                                    {
+                                        IsVisibleDataGridIncome = Visibility.Hidden;
+                                        IsVisibleDataGridExpense = Visibility.Hidden;
+                                        IsVisibleDataGridTotal = Visibility.Visible;
+
+                                        listTotal = FillExpenseSubtypesTotalList();
+                                        break;
+                                    }
                                 default:
                                     break;
                             }
@@ -622,6 +689,54 @@ namespace Money_Vault.ViewModel
                         tempList.Add(new TotalListItem()
                         {
                             TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
+                            TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
+                        });
+
+                        totalSum += item.TotalAmount;
+                    }
+                }
+            }
+
+            tempList.Add(new TotalListItem()
+            {
+                TypeName = "Итого",
+                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
+            });
+
+            return tempList;
+        }
+
+        private List<TotalListItem> FillExpenseSubtypesTotalList()
+        {
+            List<TotalListItem> tempList = new List<TotalListItem>();
+            int totalSum = 0;
+
+            using (DatabaseContext database = new DatabaseContext())
+            {
+                var subQuery = from item in database.Expenses.ToList()
+                               where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                               || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                               || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
+                               || CurrentYear == "Все годы"
+                               select item.Id;
+
+                var query = from expense in database.Expense_Items.ToList()
+                            where subQuery.Contains(expense.Expense_Id)
+                            group expense by expense.Expense_Subtype_Id into expenseListItem
+                            select new
+                            {
+                                TypeId = expenseListItem.Key,
+                                TotalAmount = (from item in expenseListItem
+                                               select item.Price).Sum()
+                            };
+
+                foreach (var item in query)
+                {
+                    if (item.TotalAmount != 0)
+                    {
+                        tempList.Add(new TotalListItem()
+                        {
+                            TypeName = database.Expense_Subtypes.ToList().Find(x => x.Id == item.TypeId).Name,
                             TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
                         });
 

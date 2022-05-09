@@ -65,7 +65,6 @@
             Panel.ZIndex="1"
             IsEnabled="{Binding CurrentExpenseMode}"/>
 
-
         <Button 
             x:Name="Button_Shop" 
             Style="{StaticResource Button_Common}"
@@ -77,7 +76,7 @@
             ToolTip="Нажмите, чтобы открыть вкладку с 
             информацией о магазинах" 
             Margin="294,25,0,0"
-            Command="{Binding ShowExpenseShoprameCommand}"
+            Command="{Binding ShowExpenseShopFrameCommand}"
             Panel.ZIndex="1">
             <TextBlock TextAlignment="Center">Магазины</TextBlock>
         </Button>

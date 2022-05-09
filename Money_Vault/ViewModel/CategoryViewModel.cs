@@ -61,10 +61,13 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var categoryEditViewModel = new CategoryEditViewModel(SelectedItem.Id, SelectedItem.Name, SelectedItem.Note);
-                    await _displayRootRegistry.ShowModalPresentation(categoryEditViewModel);
+                    if (SelectedItem != null)
+                    {
+                        var categoryEditViewModel = new CategoryEditViewModel(SelectedItem.Id, SelectedItem.Name, SelectedItem.Note);
+                        await _displayRootRegistry.ShowModalPresentation(categoryEditViewModel);
 
-                    UpdateData();
+                        UpdateData();
+                    }
                 }));
             }
         }

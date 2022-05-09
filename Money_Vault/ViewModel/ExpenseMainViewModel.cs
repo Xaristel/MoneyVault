@@ -41,10 +41,13 @@ namespace Money_Vault.ViewModel
             CurrentExpensePagePath = "/View/ExpenseGeneralPage.xaml";
             CurrentExpenseMode = Convert.ToBoolean(Settings.Default["currentExpenseMode"]);
 
+            Settings.Default["isIncomePage"] = false;
+            Settings.Default.Save();
+
             DispatcherTimer timer = new DispatcherTimer();
 
             timer.Tick += new EventHandler(UpdateCurrentExpenseMode);
-            timer.Interval = new TimeSpan(0, 0, 2);
+            timer.Interval = new TimeSpan(0, 0, 1);
             timer.Start();
         }
 
@@ -92,9 +95,6 @@ namespace Money_Vault.ViewModel
             {
                 return _showCategoryFrameCommand ?? (_showCategoryFrameCommand = new RelayCommand((args) =>
                 {
-                    Settings.Default["isIncomePage"] = false;
-                    Settings.Default.Save();
-
                     CurrentExpensePagePath = "/View/CategoryPage.xaml";
                 }));
             }
