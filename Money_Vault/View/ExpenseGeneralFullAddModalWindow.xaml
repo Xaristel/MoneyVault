@@ -14,6 +14,12 @@
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         Name="expenseGeneralFullAddModalWindow">
+
+    <Window.Resources>
+        <CollectionViewSource x:Key="SubcategoriesList" Source="{Binding SubcategoriesList}"/>
+        <viewmodel:DecimalConverter x:Key="decimalconverter"/>
+    </Window.Resources>
+
     <Grid>
         <Label 
             Content="Добавление новой записи" 
@@ -25,40 +31,21 @@
         <DataGrid 
             x:Name="dataGrid_ExpenseItems" 
             Style="{StaticResource DataGridView_Common}"
-            ItemsSource="{Binding ProductListsList, Mode=OneWay}" 
-            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-            Margin="10,75,286,10">
+            ItemsSource="{Binding ExpenseItemsList, Mode=TwoWay}"
+            Margin="10,75,286,10"
+            CanUserAddRows="True"
+            CanUserDeleteRows="True">
             <DataGrid.Columns>
-                <DataGridTextColumn 
-                    Header="Номер" 
-                    Width="100"
-                    Binding="{Binding Id, Mode=OneWay}">
-                </DataGridTextColumn>
-                <DataGridTextColumn 
+                <DataGridComboBoxColumn 
                     Header="Категория" 
-                    Width="250"
-                    Binding="{Binding TypeName, Mode=OneWay}">
-                </DataGridTextColumn>
+                    Width="5*"
+                    ItemsSource="{Binding Source={StaticResource SubcategoriesList}, Mode=OneWay}"
+                    SelectedValueBinding="{Binding TypeName, Mode=TwoWay}">
+                </DataGridComboBoxColumn>
                 <DataGridTextColumn 
                     Header="Сумма (руб)" 
-                    Width="200"
-                    Binding="{Binding Amount, Mode=OneWay}">
-                </DataGridTextColumn>
-                <DataGridTextColumn 
-                    Header="Магазин" 
-                    Width="200"
-                    Binding="{Binding ShopName, Mode=OneWay}">
-                </DataGridTextColumn>
-                <DataGridTextColumn 
-                    Header="Дата" 
-                    Width="200"
-                    Binding="{Binding Date, Mode=OneWay, StringFormat=\{0:dd.MM.yyyy\}}">
-                </DataGridTextColumn>
-                <DataGridTextColumn 
-                    Header="Примечание" 
-                    Width="264"
-                    Binding="{Binding Note, Mode=OneWay}"
-                    CanUserSort="False">
+                    Width="5*"
+                    Binding="{Binding TotalAmount, Mode=TwoWay, Converter={StaticResource decimalconverter}}">
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
@@ -67,7 +54,7 @@
             Style="{StaticResource Label_Common}"
             Content="Дата:" 
             HorizontalAlignment="Left" 
-            Margin="1021,162,0,0" 
+            Margin="1020,235,0,0" 
             VerticalAlignment="Top" 
             FontSize="22"/>
 
@@ -75,7 +62,7 @@
             Style="{StaticResource Label_Common}"
             Content="Примечание:" 
             HorizontalAlignment="Left" 
-            Margin="982,256,0,0" 
+            Margin="983,320,0,0" 
             VerticalAlignment="Top" FontSize="22"/>
 
         <Label 
@@ -84,10 +71,10 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             FontSize="22" 
-            Margin="1003,75,0,0"/>
+            Margin="1000,154,0,0"/>
 
         <DatePicker 
-            Margin="919,198,14,0" 
+            Margin="918,271,13,0" 
             VerticalAlignment="Top" 
             FontFamily="Balsamiq Sans" 
             FontSize="14"
@@ -109,18 +96,16 @@
             x:Name="TextBox_Note"
             Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание..." 
-            HorizontalAlignment="Left" 
-            Margin="918,292,0,0" 
-            TextWrapping="Wrap" 
-            VerticalAlignment="Top" 
-            Width="267"
-            Text="{Binding Note, Mode=TwoWay}" FontSize="22" Height="307"/>
+            Margin="918,356,15,65" 
+            TextWrapping="Wrap"
+            Text="{Binding Note, Mode=TwoWay}" 
+            FontSize="22"/>
 
         <ComboBox 
             x:Name="ComboBox_Shop"
             VerticalAlignment="Top"
             Template="{StaticResource ComboBoxTemplateCommon}"
-            Margin="919,111,15,0" 
+            Margin="918,190,14,0" 
             FontSize="22"
             BorderThickness="3"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
@@ -132,7 +117,7 @@
             Style="{StaticResource Label_Common}"
             Content="Выберите магазин...*"
             HorizontalAlignment="Left" 
-            Margin="919,111,0,0" 
+            Margin="920,190,0,0" 
             VerticalAlignment="Top" 
             Width="271" 
             Panel.ZIndex="-1" 
@@ -145,27 +130,56 @@
             x:Name="button_Add" 
             Style="{StaticResource Button_Common}"
             Content="Добавить" 
-            HorizontalAlignment="Left" 
-            Margin="919,604,0,0" 
-            Width="125" 
+            Margin="918,0,147,10" 
             FontSize="24" 
             ToolTip="Нажмите, чтобы добавить новую запись и закрыть окно."
             Command="{Binding AddCommand}"
             CommandParameter="{Binding ElementName=expenseGeneralFullAddModalWindow}" 
             Height="50" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Bottom"/>
 
         <Button 
             x:Name="button_Cancel" 
             Style="{StaticResource Button_Common}"
             Content="Отмена" 
-            HorizontalAlignment="Left" 
-            Margin="1060,604,0,0" 
-            Width="125" 
+            Margin="1050,0,15,10" 
             FontSize="24" 
             ToolTip="Нажмите, чтобы закрыть окно."
+            IsCancel="True" 
             Height="50" 
+            VerticalAlignment="Bottom"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Категория:" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            Margin="993,75,0,0"/>
+
+        <ComboBox 
+            x:Name="ComboBox_Category"
             VerticalAlignment="Top"
-            IsCancel="True"/>
+            Template="{StaticResource ComboBoxTemplateCommon}"
+            Margin="918,111,14,0" 
+            FontSize="22"
+            BorderThickness="3"
+            ItemsSource="{Binding CategoriesList, Mode=OneWay}"
+            SelectedItem="{Binding Category, Mode=TwoWay}" 
+            Height="35"/>
+
+        <Label 
+            x:Name="LabelPlaceHolderCategory"
+            Style="{StaticResource Label_Common}"
+            Content="Выберите категорию...*"
+            HorizontalAlignment="Left" 
+            Margin="920,111,0,0" 
+            VerticalAlignment="Top" 
+            Width="271" 
+            Panel.ZIndex="-1" 
+            FontSize="22" 
+            Foreground="DarkGray"
+            Height="35"
+            Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}"/>
     </Grid>
 </Window>

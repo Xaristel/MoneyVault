@@ -147,6 +147,7 @@
     <Compile Include="Model\Expense_Subtype.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="ViewModel\DecimalConverter.cs" />
     <Compile Include="ViewModel\DisplayRootRegistry.cs" />
     <Compile Include="Model\TotalListItem.cs" />
     <Compile Include="ViewModel\CategoryAddViewModel.cs" />
