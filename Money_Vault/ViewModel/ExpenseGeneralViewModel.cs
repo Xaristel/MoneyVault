@@ -208,6 +208,14 @@ namespace Money_Vault.ViewModel
                             }
                         }
                     }
+                    else
+                    {
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы не выбрали запись для редактирования.");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                    }
 
                     UpdateData();
                 }));
@@ -219,10 +227,10 @@ namespace Money_Vault.ViewModel
             {
                 return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
                 {
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
                     if (SelectedItem != null)
                     {
-                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
                         var messageViewModel = new MessageViewModel(
                             "Внимание",
                             "Вы действительно хотите удалить данную запись?");
@@ -240,6 +248,14 @@ namespace Money_Vault.ViewModel
                             UpdateData();
                         }
                     }
+                    else
+                    {
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы не выбрали запись для удаления.");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                    }
                 }));
             }
         }
@@ -250,10 +266,10 @@ namespace Money_Vault.ViewModel
             {
                 return _showInfoFrameCommand ?? (_showInfoFrameCommand = new RelayCommand(async (args) =>
                 {
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
                     if (SelectedItem != null)
                     {
-                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
                         var expenseGeneralFullInfoViewModel = new ExpenseGeneralFullInfoViewModel(
                             SelectedItem.Id,
                             SelectedItem.TypeName,
@@ -262,6 +278,14 @@ namespace Money_Vault.ViewModel
                             SelectedItem.Note);
 
                         await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullInfoViewModel);
+                    }
+                    else
+                    {
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы не выбрали запись для просмотра.");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
                     }
                 }));
             }

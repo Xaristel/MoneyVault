@@ -37,7 +37,7 @@
             CanUserDeleteRows="True">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn 
-                    Header="Категория" 
+                    Header="Подкатегория" 
                     Width="5*"
                     ItemsSource="{Binding Source={StaticResource SubcategoriesList}, Mode=OneWay}"
                     SelectedValueBinding="{Binding TypeName, Mode=TwoWay}">

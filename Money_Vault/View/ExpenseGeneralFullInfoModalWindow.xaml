@@ -38,7 +38,7 @@
             IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn 
-                    Header="Категория" 
+                    Header="Подкатегория" 
                     Width="5*"
                     Binding="{Binding TypeName, Mode=OneWay}">
                 </DataGridTextColumn>

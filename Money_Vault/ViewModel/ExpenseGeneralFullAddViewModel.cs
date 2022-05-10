@@ -137,12 +137,19 @@ namespace Money_Vault.ViewModel
                 {
                     bool isCorrectDatagridData = true;
 
-                    foreach (var item in ExpenseItemsList)
+                    if (ExpenseItemsList.Count() == 0)
                     {
-                        if (item.TypeName == "" || item.TotalAmount == 0)
+                        isCorrectDatagridData = false;
+                    }
+                    else
+                    {
+                        foreach (var item in ExpenseItemsList)
                         {
-                            isCorrectDatagridData = false;
-                            break;
+                            if (item.TypeName == "" || item.TotalAmount == 0)
+                            {
+                                isCorrectDatagridData = false;
+                                break;
+                            }
                         }
                     }
 

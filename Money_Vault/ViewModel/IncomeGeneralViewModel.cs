@@ -144,16 +144,27 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var incomeGeneralEditViewModel = new IncomeGeneralEditViewModel(
-                        SelectedItem.Id,
-                        SelectedItem.TypeName,
-                        SelectedItem.Amount.ToString(),
-                        SelectedItem.Date.ToString("dd.MM.yyyy"),
-                        SelectedItem.Note);
+                    if (SelectedItem != null)
+                    {
+                        var incomeGeneralEditViewModel = new IncomeGeneralEditViewModel(
+                                                SelectedItem.Id,
+                                                SelectedItem.TypeName,
+                                                SelectedItem.Amount.ToString(),
+                                                SelectedItem.Date.ToString("dd.MM.yyyy"),
+                                                SelectedItem.Note);
 
-                    await _displayRootRegistry.ShowModalPresentation(incomeGeneralEditViewModel);
+                        await _displayRootRegistry.ShowModalPresentation(incomeGeneralEditViewModel);
 
-                    UpdateData();
+                        UpdateData();
+                    }
+                    else
+                    {
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы не выбрали запись для редактирования.");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                    }
                 }));
             }
         }
@@ -166,21 +177,32 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var messageViewModel = new MessageViewModel(
-                        "Внимание",
-                        "Вы действительно хотите удалить данную запись?");
-
-                    await _displayRootRegistry.ShowModalPresentation(messageViewModel);
-
-                    if (messageViewModel.Result && SelectedItem != null)
+                    if (SelectedItem != null)
                     {
-                        using (DatabaseContext database = new DatabaseContext())
+                        var messageViewModel = new MessageViewModel(
+                                                "Внимание",
+                                                "Вы действительно хотите удалить данную запись?");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                        if (messageViewModel.Result)
                         {
-                            Income item = database.Incomes.ToList().Find(x => x.Id == SelectedItem.Id);
-                            database.Incomes.Remove(item);
-                            database.SaveChanges();
+                            using (DatabaseContext database = new DatabaseContext())
+                            {
+                                Income item = database.Incomes.ToList().Find(x => x.Id == SelectedItem.Id);
+                                database.Incomes.Remove(item);
+                                database.SaveChanges();
+                            }
+                            UpdateData();
                         }
-                        UpdateData();
+                    }
+                    else
+                    {
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы не выбрали запись для удаления.");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
                     }
                 }));
             }
