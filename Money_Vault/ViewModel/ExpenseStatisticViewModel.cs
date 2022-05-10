@@ -250,9 +250,11 @@ namespace Money_Vault.ViewModel
 
         private void FillPieChartData()
         {
-            NumberFormatInfo provider = new NumberFormatInfo();
-            provider.NumberDecimalSeparator = ".";
-            provider.NumberDecimalDigits = 2;
+            NumberFormatInfo provider = new NumberFormatInfo
+            {
+                NumberDecimalSeparator = ".",
+                NumberDecimalDigits = 2
+            };
 
             SeriesCollection tempCollectionGeneral = new SeriesCollection();
 

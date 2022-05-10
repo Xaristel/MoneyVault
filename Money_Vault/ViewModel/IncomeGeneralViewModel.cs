@@ -2,8 +2,10 @@
 using Money_Vault.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
 {
@@ -39,6 +41,35 @@ namespace Money_Vault.ViewModel
         "Полный год"
         };
 
+        private ObservableCollection<Brush> _buttonsColorList = new ObservableCollection<Brush>()
+        {
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White
+        };
+
+        public ObservableCollection<Brush> ButtonsColorList
+        {
+            get
+            {
+                return _buttonsColorList;
+            }
+            set
+            {
+                _buttonsColorList = value;
+            }
+        }
+
         public IncomeCommonListItem SelectedItem
         {
             get => _selectedItem;
@@ -71,6 +102,8 @@ namespace Money_Vault.ViewModel
             {
                 _currentMonth = value;
                 OnPropertyChanged("CurrentMonth");
+
+                SetColorForActiveButton(CurrentMonth);
 
                 if (_currentYear != null)
                 {
@@ -280,6 +313,15 @@ namespace Money_Vault.ViewModel
 
             YearsList.Sort();
             YearsList.Add("Все годы");
+        }
+
+        private void SetColorForActiveButton(string path)
+        {
+            for (int i = 0; i < ButtonsColorList.Count(); i++)
+            {
+                ButtonsColorList[i] = Brushes.White;
+            }
+            ButtonsColorList[_monthsList.IndexOf(path)] = Brushes.DeepSkyBlue;
         }
     }
 }

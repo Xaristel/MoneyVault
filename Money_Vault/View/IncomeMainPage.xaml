@@ -37,6 +37,7 @@
         <Button 
             x:Name="Button_General" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding GeneralMenuItemColor}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -51,6 +52,7 @@
         <Button 
             x:Name="Button_Category" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding CategoryMenuItemColor}"
             Content="Категории"
             FontSize="22" 
             HorizontalAlignment="Left" 
@@ -65,6 +67,7 @@
         <Button 
             x:Name="Button_Report" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ReportMenuItemColor}"
             Content="Отчёт"
             FontSize="22" 
             HorizontalAlignment="Left" 

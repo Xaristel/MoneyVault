@@ -38,6 +38,7 @@
         <Button 
             x:Name="Button_General" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding GeneralMenuItemColor}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -53,6 +54,7 @@
         <Button 
             x:Name="Button_Statistic" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding StatisticMenuItemColor}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -69,6 +71,7 @@
         <Button 
             x:Name="Button_Shop" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ShopMenuItemColor}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -85,6 +88,7 @@
         <Button 
             x:Name="Button_Category" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding CategoryMenuItemColor}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -100,6 +104,7 @@
         <Button 
             x:Name="Button_Report" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ReportMenuItemColor}"
             Content="Отчёт"
             FontSize="22" 
             HorizontalAlignment="Left" 
