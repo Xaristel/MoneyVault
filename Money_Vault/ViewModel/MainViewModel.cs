@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
@@ -14,15 +16,39 @@ namespace Money_Vault.ViewModel
 
         private string _currentPagePath;
 
-        private Brush _generalMenuItemColor;
-        private Brush _incomeMenuItemColor;
-        private Brush _expenseMenuItemColor;
-        private Brush _planMenuItemColor;
-        private Brush _helpMenuItemColor;
+        private ObservableCollection<Brush> _buttonsColorList = new ObservableCollection<Brush>()
+        {
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White
+        };
+
+        public ObservableCollection<Brush> ButtonsColorList
+        {
+            get
+            {
+                return _buttonsColorList;
+            }
+            set
+            {
+                _buttonsColorList = value;
+            }
+        }
+
+        private List<string> _pagesPathList = new List<string>()
+        {
+            "/View/GeneralPage.xaml",
+            "/View/IncomeMainPage.xaml",
+            "/View/ExpenseMainPage.xaml",
+            "/View/PlanningMainPage.xaml",
+            "/View/HelpPage.xaml"
+        };
 
         public MainViewModel()
         {
-            CurrentPagePath = "/View/GeneralPage.xaml";
+            CurrentPagePath = _pagesPathList[0];
         }
 
         public string CurrentPagePath
@@ -33,57 +59,7 @@ namespace Money_Vault.ViewModel
                 _currentPagePath = value;
                 OnPropertyChanged("CurrentPagePath");
 
-                SetColorForActiveMenuItem(CurrentPagePath);
-            }
-        }
-
-        public Brush GeneralMenuItemColor
-        {
-            get => _generalMenuItemColor;
-            set
-            {
-                _generalMenuItemColor = value;
-                OnPropertyChanged("GeneralMenuItemColor");
-            }
-        }
-
-        public Brush IncomeMenuItemColor
-        {
-            get => _incomeMenuItemColor;
-            set
-            {
-                _incomeMenuItemColor = value;
-                OnPropertyChanged("IncomeMenuItemColor");
-            }
-        }
-
-        public Brush ExpenseMenuItemColor
-        {
-            get => _expenseMenuItemColor;
-            set
-            {
-                _expenseMenuItemColor = value;
-                OnPropertyChanged("ExpenseMenuItemColor");
-            }
-        }
-
-        public Brush PlanMenuItemColor
-        {
-            get => _planMenuItemColor;
-            set
-            {
-                _planMenuItemColor = value;
-                OnPropertyChanged("PlanMenuItemColor");
-            }
-        }
-
-        public Brush HelpMenuItemColor
-        {
-            get => _helpMenuItemColor;
-            set
-            {
-                _helpMenuItemColor = value;
-                OnPropertyChanged("HelpMenuItemColor");
+                AdditionalFunctions.SetColorForActiveButton(ButtonsColorList, _pagesPathList, CurrentPagePath);
             }
         }
 
@@ -93,7 +69,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showGeneralFrameCommand ?? (_showGeneralFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentPagePath = "/View/GeneralPage.xaml";
+                    CurrentPagePath = _pagesPathList[0];
                 }));
             }
         }
@@ -104,7 +80,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showIncomeFrameCommand ?? (_showIncomeFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentPagePath = "/View/IncomeMainPage.xaml";
+                    CurrentPagePath = _pagesPathList[1];
                 }));
             }
         }
@@ -115,7 +91,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showExpenseFrameCommand ?? (_showExpenseFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentPagePath = "/View/ExpenseMainPage.xaml";
+                    CurrentPagePath = _pagesPathList[2];
                 }));
             }
         }
@@ -126,7 +102,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showPlanningFrameCommand ?? (_showPlanningFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentPagePath = "/View/PlanningMainPage.xaml";
+                    CurrentPagePath = _pagesPathList[3];
                 }));
             }
         }
@@ -137,7 +113,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showHelpFrameCommand ?? (_showHelpFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentPagePath = "/View/HelpPage.xaml";
+                    CurrentPagePath = _pagesPathList[4];
                 }));
             }
         }
@@ -150,60 +126,6 @@ namespace Money_Vault.ViewModel
                 {
                     (Application.Current as App).displayRootRegistry.HidePresentation(this);
                 }));
-            }
-        }
-
-        private void SetColorForActiveMenuItem(string path)
-        {
-            switch (path)
-            {
-                case "/View/GeneralPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.DeepSkyBlue;
-                        IncomeMenuItemColor = Brushes.White;
-                        ExpenseMenuItemColor = Brushes.White;
-                        PlanMenuItemColor = Brushes.White;
-                        HelpMenuItemColor = Brushes.White;
-                        break;
-                    }
-                case "/View/IncomeMainPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.White;
-                        IncomeMenuItemColor = Brushes.DeepSkyBlue;
-                        ExpenseMenuItemColor = Brushes.White;
-                        PlanMenuItemColor = Brushes.White;
-                        HelpMenuItemColor = Brushes.White;
-                        break;
-                    }
-                case "/View/ExpenseMainPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.White;
-                        IncomeMenuItemColor = Brushes.White;
-                        ExpenseMenuItemColor = Brushes.DeepSkyBlue;
-                        PlanMenuItemColor = Brushes.White;
-                        HelpMenuItemColor = Brushes.White;
-                        break;
-                    }
-                case "/View/PlanningMainPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.White;
-                        IncomeMenuItemColor = Brushes.White;
-                        ExpenseMenuItemColor = Brushes.White;
-                        PlanMenuItemColor = Brushes.DeepSkyBlue;
-                        HelpMenuItemColor = Brushes.White;
-                        break;
-                    }
-                case "/View/HelpPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.White;
-                        IncomeMenuItemColor = Brushes.White;
-                        ExpenseMenuItemColor = Brushes.White;
-                        PlanMenuItemColor = Brushes.White;
-                        HelpMenuItemColor = Brushes.DeepSkyBlue;
-                        break;
-                    }
-                default:
-                    break;
             }
         }
     }

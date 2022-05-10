@@ -103,7 +103,7 @@ namespace Money_Vault.ViewModel
                 _currentMonth = value;
                 OnPropertyChanged("CurrentMonth");
 
-                SetColorForActiveButton(CurrentMonth);
+                AdditionalFunctions.SetColorForActiveButton(ButtonsColorList, _monthsList, CurrentMonth);
 
                 if (_currentYear != null)
                 {
@@ -313,15 +313,6 @@ namespace Money_Vault.ViewModel
 
             YearsList.Sort();
             YearsList.Add("Все годы");
-        }
-
-        private void SetColorForActiveButton(string path)
-        {
-            for (int i = 0; i < ButtonsColorList.Count(); i++)
-            {
-                ButtonsColorList[i] = Brushes.White;
-            }
-            ButtonsColorList[_monthsList.IndexOf(path)] = Brushes.DeepSkyBlue;
         }
     }
 }

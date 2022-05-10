@@ -125,6 +125,7 @@
         <Button 
             x:Name="Button_January" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[0]}"
             Content="Январь" 
             Margin="25,184,1283,626" 
             Width="131"
@@ -139,6 +140,7 @@
         <Button 
             x:Name="Button_February" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[1]}"
             Content="Февраль" 
             Margin="25,232,1283,578" 
             Width="131"
@@ -153,6 +155,7 @@
         <Button 
             x:Name="Button_March" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[2]}"
             Content="Март" 
             Margin="25,282,1283,527" 
             Width="131"
@@ -167,6 +170,7 @@
         <Button 
             x:Name="Button_April" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[3]}"
             Content="Апрель" 
             Margin="25,333,1283,477" 
             Width="131"
@@ -181,6 +185,7 @@
         <Button 
             x:Name="Button_May" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[4]}"
             Content="Май" 
             Margin="25,383,1283,427" 
             Width="131"
@@ -195,6 +200,7 @@
         <Button 
             x:Name="Button_June" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[5]}"
             Content="Июнь" 
             Margin="25,433,1283,377" 
             Width="131"
@@ -209,6 +215,7 @@
         <Button 
             x:Name="Button_July" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[6]}"
             Content="Июль" 
             Margin="25,483,1283,326" 
             Width="131"
@@ -223,6 +230,7 @@
         <Button 
             x:Name="Button_August" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[7]}"
             Content="Август" 
             Margin="25,534,1283,276" 
             Width="131"
@@ -237,6 +245,7 @@
         <Button 
             x:Name="Button_September" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[8]}"
             Content="Сентябрь" 
             Margin="25,584,1283,226" 
             Width="131"
@@ -251,6 +260,7 @@
         <Button 
             x:Name="Button_October" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[9]}"
             Content="Октябрь" 
             Margin="25,634,1283,176" 
             Width="131"
@@ -265,6 +275,7 @@
         <Button 
             x:Name="Button_November" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[10]}"
             Content="Ноябрь" 
             Margin="25,684,1283,125" 
             Width="131"
@@ -279,6 +290,7 @@
         <Button 
             x:Name="Button_December" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[11]}"
             Content="Декабрь" 
             Margin="25,735,1283,75" 
             Width="131"
@@ -293,6 +305,7 @@
         <Button 
             x:Name="Button_AllYear" 
             Style="{StaticResource Button_Common}"
+            Background="{Binding ButtonsColorList[12]}"
             Content="Полный год" 
             Margin="25,785,1283,25" 
             Width="131"

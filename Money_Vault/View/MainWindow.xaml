@@ -28,7 +28,7 @@
         <Button 
             x:Name="button_GeneralPage" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding GeneralMenuItemColor}"
+            Background="{Binding ButtonsColorList[0]}"
             HorizontalAlignment="Left" 
             Margin="10,10,0,0" 
             VerticalAlignment="Top" 
@@ -46,7 +46,7 @@
         <Button 
             x:Name="button_IncomePage" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding IncomeMenuItemColor}"
+            Background="{Binding ButtonsColorList[1]}"
             HorizontalAlignment="Left" 
             Margin="10,150,0,0" 
             VerticalAlignment="Top" 
@@ -64,7 +64,7 @@
         <Button 
             x:Name="button_OutcomePage" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding ExpenseMenuItemColor}"
+            Background="{Binding ButtonsColorList[2]}"
             HorizontalAlignment="Left" 
             Margin="10,290,0,0" 
             VerticalAlignment="Top" 
@@ -82,7 +82,7 @@
         <Button 
             x:Name="button_PlanningPage" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding PlanMenuItemColor}"
+            Background="{Binding ButtonsColorList[3]}"
             HorizontalAlignment="Left" 
             Margin="10,430,0,0" 
             VerticalAlignment="Top" 
@@ -100,7 +100,7 @@
         <Button 
             x:Name="button_HelpPage" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding HelpMenuItemColor}"
+            Background="{Binding ButtonsColorList[4]}"
             HorizontalAlignment="Left" 
             Margin="10,570,0,0" 
             VerticalAlignment="Top" 

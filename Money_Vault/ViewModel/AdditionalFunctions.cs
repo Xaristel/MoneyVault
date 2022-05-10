@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
 {
@@ -77,6 +81,15 @@ namespace Money_Vault.ViewModel
             }
 
             return false;
+        }
+
+        public static void SetColorForActiveButton(ObservableCollection<Brush> buttonsColorList, List<string> pathesList, string path)
+        {
+            for (int i = 0; i < buttonsColorList.Count(); i++)
+            {
+                buttonsColorList[i] = Brushes.White;
+            }
+            buttonsColorList[pathesList.IndexOf(path)] = Brushes.DeepSkyBlue;
         }
     }
 }

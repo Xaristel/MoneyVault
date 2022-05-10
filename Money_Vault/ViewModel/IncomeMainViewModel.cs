@@ -1,5 +1,6 @@
 ﻿using Money_Vault.Properties;
-using System.Windows;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
@@ -12,39 +13,33 @@ namespace Money_Vault.ViewModel
 
         private string _currentIncomePagePath;
 
-        private Brush _generalMenuItemColor;
-        private Brush _categoryMenuItemColor;
-        private Brush _reportMenuItemColor;
-
-        public Brush GeneralMenuItemColor
+        private ObservableCollection<Brush> _buttonsColorList = new ObservableCollection<Brush>()
         {
-            get => _generalMenuItemColor;
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White,
+            Brushes.White
+        };
+
+        public ObservableCollection<Brush> ButtonsColorList
+        {
+            get
+            {
+                return _buttonsColorList;
+            }
             set
             {
-                _generalMenuItemColor = value;
-                OnPropertyChanged("GeneralMenuItemColor");
+                _buttonsColorList = value;
             }
         }
 
-        public Brush CategoryMenuItemColor
+        private List<string> _pagesPathList = new List<string>()
         {
-            get => _categoryMenuItemColor;
-            set
-            {
-                _categoryMenuItemColor = value;
-                OnPropertyChanged("CategoryMenuItemColor");
-            }
-        }
-
-        public Brush ReportMenuItemColor
-        {
-            get => _reportMenuItemColor;
-            set
-            {
-                _reportMenuItemColor = value;
-                OnPropertyChanged("ReportMenuItemColor");
-            }
-        }
+            "/View/IncomeGeneralPage.xaml",
+            "/View/CategoryPage.xaml",
+            "/View/ReportPage.xaml"
+        };
 
         public string CurrentIncomePagePath
         {
@@ -54,7 +49,7 @@ namespace Money_Vault.ViewModel
                 _currentIncomePagePath = value;
                 OnPropertyChanged("CurrentIncomePagePath");
 
-                SetColorForActiveMenuItem(CurrentIncomePagePath);
+                AdditionalFunctions.SetColorForActiveButton(ButtonsColorList, _pagesPathList, CurrentIncomePagePath);
             }
         }
 
@@ -73,7 +68,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showIncomeGeneralFrameCommand ?? (_showIncomeGeneralFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentIncomePagePath = "/View/IncomeGeneralPage.xaml";
+                    CurrentIncomePagePath = _pagesPathList[0];
                 }));
             }
         }
@@ -83,7 +78,7 @@ namespace Money_Vault.ViewModel
             {
                 return _showCategoryFrameCommand ?? (_showCategoryFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentIncomePagePath = "/View/CategoryPage.xaml";
+                    CurrentIncomePagePath = _pagesPathList[1];
                 }));
             }
         }
@@ -93,38 +88,8 @@ namespace Money_Vault.ViewModel
             {
                 return _showIncomeReportFrameCommand ?? (_showIncomeReportFrameCommand = new RelayCommand((args) =>
                 {
-                    CurrentIncomePagePath = "/View/ReportPage.xaml";
+                    CurrentIncomePagePath = _pagesPathList[2];
                 }));
-            }
-        }
-
-        private void SetColorForActiveMenuItem(string path)
-        {
-            switch (path)
-            {
-                case "/View/ExpenseGeneralPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.DeepSkyBlue;
-                        CategoryMenuItemColor = Brushes.White;
-                        ReportMenuItemColor = Brushes.White;
-                        break;
-                    }
-                case "/View/CategoryPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.White;
-                        CategoryMenuItemColor = Brushes.DeepSkyBlue;
-                        ReportMenuItemColor = Brushes.White;
-                        break;
-                    }
-                case "/View/ReportPage.xaml":
-                    {
-                        GeneralMenuItemColor = Brushes.White;
-                        CategoryMenuItemColor = Brushes.White;
-                        ReportMenuItemColor = Brushes.DeepSkyBlue;
-                        break;
-                    }
-                default:
-                    break;
             }
         }
     }

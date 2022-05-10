@@ -38,7 +38,7 @@
         <Button 
             x:Name="Button_General" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding GeneralMenuItemColor}"
+            Background="{Binding ButtonsColorList[0]}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -54,7 +54,7 @@
         <Button 
             x:Name="Button_Statistic" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding StatisticMenuItemColor}"
+            Background="{Binding ButtonsColorList[1]}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -71,7 +71,7 @@
         <Button 
             x:Name="Button_Shop" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding ShopMenuItemColor}"
+            Background="{Binding ButtonsColorList[2]}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -88,7 +88,7 @@
         <Button 
             x:Name="Button_Category" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding CategoryMenuItemColor}"
+            Background="{Binding ButtonsColorList[3]}"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
@@ -104,7 +104,7 @@
         <Button 
             x:Name="Button_Report" 
             Style="{StaticResource Button_Common}"
-            Background="{Binding ReportMenuItemColor}"
+            Background="{Binding ButtonsColorList[4]}"
             Content="Отчёт"
             FontSize="22" 
             HorizontalAlignment="Left" 
