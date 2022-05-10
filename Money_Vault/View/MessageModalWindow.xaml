@@ -19,7 +19,7 @@
         Icon="/Icon/icon_chest_fill.png" 
         ResizeMode="NoResize" 
         WindowStyle="ThreeDBorderWindow" 
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" SizeToContent="Height">
 
     <Grid Margin="0,0,0,-6">
         <Label 
