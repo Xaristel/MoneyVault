@@ -54,7 +54,7 @@
             Style="{StaticResource Label_Common}"
             Content="Дата:" 
             HorizontalAlignment="Left" 
-            Margin="1020,235,0,0" 
+            Margin="1020,217,0,0" 
             VerticalAlignment="Top" 
             FontSize="22"/>
 
@@ -62,7 +62,7 @@
             Style="{StaticResource Label_Common}"
             Content="Примечание:" 
             HorizontalAlignment="Left" 
-            Margin="983,320,0,0" 
+            Margin="983,297,0,0" 
             VerticalAlignment="Top" FontSize="22"/>
 
         <Label 
@@ -71,10 +71,10 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             FontSize="22" 
-            Margin="1000,154,0,0"/>
+            Margin="1002,141,0,0" RenderTransformOrigin="0.587,0.541"/>
 
         <DatePicker 
-            Margin="918,271,13,0" 
+            Margin="919,253,14,0" 
             VerticalAlignment="Top" 
             FontFamily="Balsamiq Sans" 
             FontSize="14"
@@ -96,7 +96,7 @@
             x:Name="TextBox_Note"
             Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание..." 
-            Margin="918,356,15,65" 
+            Margin="919,332,15,197" 
             TextWrapping="Wrap"
             Text="{Binding Note, Mode=TwoWay}" 
             FontSize="22"/>
@@ -105,7 +105,7 @@
             x:Name="ComboBox_Shop"
             VerticalAlignment="Top"
             Template="{StaticResource ComboBoxTemplateCommon}"
-            Margin="918,190,14,0" 
+            Margin="919,177,15,0" 
             FontSize="22"
             BorderThickness="3"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
@@ -117,7 +117,7 @@
             Style="{StaticResource Label_Common}"
             Content="Выберите магазин...*"
             HorizontalAlignment="Left" 
-            Margin="920,190,0,0" 
+            Margin="919,177,0,0" 
             VerticalAlignment="Top" 
             Width="271" 
             Panel.ZIndex="-1" 
@@ -155,31 +155,41 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             FontSize="22" 
-            Margin="993,75,0,0"/>
+            Margin="993,66,0,0"/>
 
         <ComboBox 
             x:Name="ComboBox_Category"
             VerticalAlignment="Top"
             Template="{StaticResource ComboBoxTemplateCommon}"
-            Margin="918,111,14,0" 
+            Margin="919,102,15,0" 
             FontSize="22"
             BorderThickness="3"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}"
             SelectedItem="{Binding Category, Mode=TwoWay}" 
-            Height="35"/>
+            Height="34"/>
 
         <Label 
             x:Name="LabelPlaceHolderCategory"
             Style="{StaticResource Label_Common}"
             Content="Выберите категорию...*"
             HorizontalAlignment="Left" 
-            Margin="920,111,0,0" 
+            Margin="920,102,0,0" 
             VerticalAlignment="Top" 
             Width="271" 
             Panel.ZIndex="-1" 
             FontSize="22" 
             Foreground="DarkGray"
-            Height="35"
+            Height="34"
             Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}"/>
+        <TextBlock 
+            HorizontalAlignment="Left" 
+            Margin="920,472,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            Height="132" 
+            Width="266"
+            FontSize="18" 
+            FontStretch="Normal" 
+            FontWeight="Normal"><Run Text="Подсказка" FontWeight="Bold"/><Run Text=" "/><Run Text=": " FontWeight="Bold"/><Run Text=" "/><Run Text="для"/><Run Text=" "/><Run Text=" добавления новой строки в таблицу, нажмите "/><Run Text=" "/><Run Text="Enter"/><Run Text=" "/><Run Text=", а для удаления выделите нужную строку и нажмите "/><Run Text=" "/><Run Language="ru-ru" Text="клавишу "/><Run Text=" "/><Run Text="Delete"/><Run Text=" "/><Run Text="."/></TextBlock>
     </Grid>
 </Window>

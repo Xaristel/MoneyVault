@@ -183,8 +183,13 @@ namespace Money_Vault.ViewModel
                     {
                         if (CurrentMode) //full
                         {
-                            var expenseGeneralFullEditViewModel = new ExpenseGeneralFullEditViewModel();
-                            //args
+                            var expenseGeneralFullEditViewModel = new ExpenseGeneralFullEditViewModel(
+                                SelectedItem.Id,
+                                SelectedItem.TypeName,
+                                SelectedItem.ShopName,
+                                SelectedItem.Date.ToString("dd.MM.yyyy"),
+                                SelectedItem.Note);
+
                             await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullEditViewModel);
                         }
                         else //short

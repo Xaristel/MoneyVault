@@ -5,8 +5,6 @@ using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
@@ -218,15 +216,6 @@ namespace Money_Vault.ViewModel
             }
 
             Date = System.DateTime.Now;
-            //Amount = "";
-        }
-        private async Task CallErrorMessage(string message)
-        {
-            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-            var messageViewModel = new MessageViewModel(
-                "Ошибка",
-                message);
-            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }
