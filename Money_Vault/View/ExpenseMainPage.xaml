@@ -53,17 +53,18 @@
         <Button 
             x:Name="Button_Statistic" 
             Style="{StaticResource Button_Common}"
-            Content="Статистика"
             FontSize="22" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Height="90" 
             Width="130" 
-            ToolTip="Нажмите, чтобы открыть вкладку со статистикой подкатегорий расходов." 
+            ToolTip="Нажмите, чтобы открыть вкладку с дополнительной статистикой для подкатегорий расходов." 
             Margin="160,25,0,0"
             Command="{Binding ShowExpenseStatisticFrameCommand}"
             Panel.ZIndex="1"
-            IsEnabled="{Binding CurrentExpenseMode}"/>
+            IsEnabled="{Binding CurrentExpenseMode}">
+            <TextBlock TextAlignment="Center">Доп.<LineBreak/>Статистика</TextBlock>
+        </Button>
 
         <Button 
             x:Name="Button_Shop" 

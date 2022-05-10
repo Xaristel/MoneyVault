@@ -129,18 +129,6 @@ namespace Money_Vault.ViewModel
         {
             using (DatabaseContext database = new DatabaseContext())
             {
-                //List<Shop> shops = new List<Shop>();
-
-                //foreach (var item in database.Shops.ToList())
-                //{
-                //    shops.Add(new Shop()
-                //    {
-                //        Id = item.Id,
-                //        Name = item.Name,
-                //        Note = item.Note
-                //    });
-                //}
-
                 ShopsList = database.Shops.ToList();
             }
         }
