@@ -8,6 +8,7 @@ namespace Money_Vault.Model
     {
         private int _id;
         private string _name;
+        private string _note;
 
         public int Id
         {
@@ -27,6 +28,16 @@ namespace Money_Vault.Model
             {
                 _name = value;
                 OnPropertyChanged("Name");
+            }
+        }
+
+        public string Note
+        {
+            get => _note;
+            set
+            {
+                _note = value;
+                OnPropertyChanged("Note");
             }
         }
     }

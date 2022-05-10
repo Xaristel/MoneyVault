@@ -22,11 +22,13 @@ namespace Money_Vault
             displayRootRegistry.RegisterWindowType<IncomeGeneralEditViewModel, IncomeGeneralEditModalWindow>();
             displayRootRegistry.RegisterWindowType<ExpenseGeneralShortAddViewModel, ExpenseGeneralShortAddModalWindow>();
             displayRootRegistry.RegisterWindowType<ExpenseGeneralShortEditViewModel, ExpenseGeneralShortEditModalWindow>();
-            displayRootRegistry.RegisterWindowType<CategoryAddViewModel, CategoryAddWindow>();
-            displayRootRegistry.RegisterWindowType<CategoryEditViewModel, CategoryEditWindow>();
+            displayRootRegistry.RegisterWindowType<CategoryAddViewModel, CategoryAddModalWindow>();
+            displayRootRegistry.RegisterWindowType<CategoryEditViewModel, CategoryEditModalWindow>();
             displayRootRegistry.RegisterWindowType<ExpenseGeneralFullInfoViewModel, ExpenseGeneralFullInfoModalWindow>();
             displayRootRegistry.RegisterWindowType<ExpenseGeneralFullAddViewModel, ExpenseGeneralFullAddModalWindow>();
             displayRootRegistry.RegisterWindowType<ExpenseGeneralFullEditViewModel, ExpenseGeneralFullEditModalWindow>();
+            displayRootRegistry.RegisterWindowType<ExpenseShopAddViewModel, ExpenseShopAddModalWindow>();
+            displayRootRegistry.RegisterWindowType<ExpenseShopEditViewModel, ExpenseShopEditModalWindow>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

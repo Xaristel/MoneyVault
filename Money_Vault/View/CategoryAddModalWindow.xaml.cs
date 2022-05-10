@@ -6,9 +6,9 @@ namespace Money_Vault.View
     /// <summary>
     /// Логика взаимодействия для IncomeCategoryAddWindow.xaml
     /// </summary>
-    public partial class CategoryAddWindow : Window, IClosable
+    public partial class CategoryAddModalWindow : Window, IClosable
     {
-        public CategoryAddWindow()
+        public CategoryAddModalWindow()
         {
             InitializeComponent();
 

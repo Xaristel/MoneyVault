@@ -1,23 +1,23 @@
-﻿<Window x:Class="Money_Vault.View.CategoryAddWindow"
+﻿<Window x:Class="Money_Vault.View.ExpenseShopEditModalWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Money_Vault.View"
         xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
-        d:DataContext="{d:DesignInstance Type=viewmodel:CategoryAddViewModel}"
+        d:DataContext="{d:DesignInstance Type=viewmodel:ExpenseShopEditViewModel}"
         mc:Ignorable="d"
         Title="Money Vault v2.01" 
-        Height="380" 
+        Height="325" 
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="categoryAddModalWindow">
+        Name="expenseShopEditModalWindow">
 
     <Grid Margin="0,0,0,-6">
         <Label 
             x:Name="LabelHeader" 
-            Content="Добавление новой записи" 
+            Content="Изменение записи" 
             VerticalAlignment="Top" 
             FontSize="50" 
             FontFamily="Balsamiq Sans"
@@ -30,34 +30,34 @@
             />
 
         <Button 
-            x:Name="button_Add" 
+            x:Name="button_Edit" 
             Style="{StaticResource Button_Common}"
-            Content="Добавить" 
+            Content="Изменить" 
             HorizontalAlignment="Left" 
-            Margin="25,270,0,0" 
+            Margin="25,0,0,28" 
             Width="230" 
             FontSize="28" 
-            ToolTip="Нажмите, чтобы добавить новую запись и закрыть окно."
-            Command="{Binding AddCommand}"
-            CommandParameter="{Binding ElementName=categoryAddModalWindow}" 
+            ToolTip="Нажмите, чтобы изменить текущую запись и закрыть окно."
+            Command="{Binding EditCommand}"
+            CommandParameter="{Binding ElementName=expenseShopEditModalWindow}" 
             Height="50" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Bottom"/>
 
         <Button 
             x:Name="button_Cancel" 
             Style="{StaticResource Button_Common}"
             Content="Отмена" 
-            Margin="445,270,25,0" 
+            Margin="445,0,25,28" 
             FontSize="28" 
             ToolTip="Нажмите, чтобы закрыть окно." 
             IsCancel="True" 
             Height="50" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Bottom"/>
 
         <Label 
-            Content="Категория:" 
+            Content="Магазин:" 
             HorizontalAlignment="Left" 
-            Margin="25,130,0,0" 
+            Margin="25,77,0,0" 
             VerticalAlignment="Top" 
             FontFamily="Balsamiq Sans" 
             FontSize="22" 
@@ -67,66 +67,31 @@
             Style="{StaticResource Label_Common}"
             Content="Примечание:" 
             HorizontalAlignment="Left" 
-            Margin="25,185,0,0" 
+            Margin="25,132,0,0" 
             VerticalAlignment="Top" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571"/>
 
         <TextBox 
-            x:Name="TextBox_Category"
+            x:Name="TextBox_Shop"
             Style="{StaticResource TextBox_Common}"
-            Tag="Введите название категории...*" 
-            Margin="185,130,25,0" 
+            Tag="Введите название магазина...*" 
+            Margin="185,77,25,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             FontSize="22"
-            Text="{Binding Category, Mode=TwoWay}" Height="35"/>
+            Text="{Binding Shop, Mode=TwoWay}" Height="35"/>
 
         <TextBox 
             x:Name="TextBox_Note"
             Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание... (необязательно)" 
-            Margin="185,185,25,0" 
+            Margin="185,132,25,0" 
             VerticalAlignment="Top" 
             FontSize="22" 
             Height="65"
             Text="{Binding Note, Mode=TwoWay}" />
-
-        <Label 
-            Content="Тип записи:" 
-            HorizontalAlignment="Left" 
-            Margin="25,76,0,0" 
-            VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
-            FontSize="22" 
-            RenderTransformOrigin="0.748,0.571" Width="144"/>
-
-        <ComboBox 
-            Template="{StaticResource ComboBoxTemplateCommon}"
-            x:Name="ComboBox_Type" 
-            Margin="185,76,25,0" 
-            VerticalAlignment="Top" 
-            FontSize="22"
-            FontFamily="Balsamiq Sans"
-            BorderThickness="3"
-            ItemsSource="{Binding TypesList, Mode=OneWay}"
-            SelectedItem="{Binding Type, Mode=TwoWay}" 
-            Height="35"/>
-
-        <Label 
-            x:Name="LabelPlaceHolderType"
-            Style="{StaticResource Label_Common}"
-            Content="Выберите тип записи...*"
-            HorizontalAlignment="Left" 
-            Margin="183,72,0,0" 
-            VerticalAlignment="Top" 
-            Width="492" 
-            Panel.ZIndex="-1" 
-            FontSize="22" 
-            Foreground="DarkGray"
-            Height="40"
-            Visibility="{Binding IsVisibleLabelPlaceHolderType, Mode=TwoWay}">
-        </Label>
     </Grid>
 </Window>
+
 

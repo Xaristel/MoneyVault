@@ -219,23 +219,26 @@ namespace Money_Vault.ViewModel
             {
                 return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
-                    var messageViewModel = new MessageViewModel(
-                        "Внимание",
-                        "Вы действительно хотите удалить данную запись?");
-
-                    await _displayRootRegistry.ShowModalPresentation(messageViewModel);
-
-                    if (messageViewModel.Result && SelectedItem != null)
+                    if (SelectedItem != null)
                     {
-                        using (DatabaseContext database = new DatabaseContext())
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы действительно хотите удалить данную запись?");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                        if (messageViewModel.Result)
                         {
-                            Expense item = database.Expenses.ToList().Find(x => x.Id == SelectedItem.Id);
-                            database.Expenses.Remove(item);
-                            database.SaveChanges();
+                            using (DatabaseContext database = new DatabaseContext())
+                            {
+                                Expense item = database.Expenses.ToList().Find(x => x.Id == SelectedItem.Id);
+                                database.Expenses.Remove(item);
+                                database.SaveChanges();
+                            }
+                            UpdateData();
                         }
-                        UpdateData();
                     }
                 }));
             }
@@ -247,16 +250,19 @@ namespace Money_Vault.ViewModel
             {
                 return _showInfoFrameCommand ?? (_showInfoFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                    if (SelectedItem != null)
+                    {
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var expenseGeneralFullInfoViewModel = new ExpenseGeneralFullInfoViewModel(
-                        SelectedItem.Id,
-                        SelectedItem.TypeName,
-                        SelectedItem.ShopName,
-                        SelectedItem.Date.ToString("dd.MM.yyyy"),
-                        SelectedItem.Note);
+                        var expenseGeneralFullInfoViewModel = new ExpenseGeneralFullInfoViewModel(
+                            SelectedItem.Id,
+                            SelectedItem.TypeName,
+                            SelectedItem.ShopName,
+                            SelectedItem.Date.ToString("dd.MM.yyyy"),
+                            SelectedItem.Note);
 
-                    await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullInfoViewModel);
+                        await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullInfoViewModel);
+                    }
                 }));
             }
         }

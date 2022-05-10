@@ -157,6 +157,8 @@
     <Compile Include="ViewModel\ExpenseGeneralFullInfoViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralShortAddViewModel.cs" />
     <Compile Include="ViewModel\ExpenseGeneralShortEditViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseShopAddViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseShopEditViewModel.cs" />
     <Compile Include="ViewModel\ExpenseStatisticViewModel.cs" />
     <Compile Include="ViewModel\IClosable.cs" />
     <Compile Include="ViewModel\IncomeGeneralAddViewModel.cs" />
@@ -206,6 +208,12 @@
     <Compile Include="View\ExpenseMainPage.xaml.cs">
       <DependentUpon>ExpenseMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ExpenseShopAddModalWindow.xaml.cs">
+      <DependentUpon>ExpenseShopAddModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseShopEditModalWindow.xaml.cs">
+      <DependentUpon>ExpenseShopEditModalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ExpenseShopPage.xaml.cs">
       <DependentUpon>ExpenseShopPage.xaml</DependentUpon>
     </Compile>
@@ -218,11 +226,11 @@
     <Compile Include="View\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CategoryAddWindow.xaml.cs">
-      <DependentUpon>CategoryAddWindow.xaml</DependentUpon>
+    <Compile Include="View\CategoryAddModalWindow.xaml.cs">
+      <DependentUpon>CategoryAddModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CategoryEditWindow.xaml.cs">
-      <DependentUpon>CategoryEditWindow.xaml</DependentUpon>
+    <Compile Include="View\CategoryEditModalWindow.xaml.cs">
+      <DependentUpon>CategoryEditModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CategoryPage.xaml.cs">
       <DependentUpon>CategoryPage.xaml</DependentUpon>
@@ -303,6 +311,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ExpenseShopAddModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseShopEditModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ExpenseShopPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -319,11 +335,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CategoryAddWindow.xaml">
+    <Page Include="View\CategoryAddModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CategoryEditWindow.xaml">
+    <Page Include="View\CategoryEditModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

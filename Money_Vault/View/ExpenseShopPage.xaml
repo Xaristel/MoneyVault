@@ -5,10 +5,126 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ExpensePricePage">
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:ExpenseShopViewModel}"
+      Title="ExpenseShopPage" 
+      Background="White" 
+      Width="1439" 
+      Height="850" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid>
-        
+    <Grid Width="1439">
+        <Button 
+            x:Name="Button_ExpenseDelete" 
+            Style="{StaticResource Button_Common}"
+            Command="{Binding ShowDeleteFrameCommand}"
+            FontSize="22" 
+            Content="Удалить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы удалить выбранный элемент." 
+            Margin="1002,24,0,0"/>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            Command="{Binding ShowEditFrameCommand}"
+            x:Name="Button_ExpenseEdit" 
+            FontSize="22" 
+            Content="Изменить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы редактировать выбранный элемент." 
+            Margin="863,24,0,0"/>
+
+        <Button 
+            x:Name="Button_ExpenseAdd" 
+            Style="{StaticResource Button_Common}"
+            Command="{Binding ShowAddFrameCommand}"
+            FontSize="22" 
+            Content="Добавить" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы добавить новую строку." 
+            Margin="725,24,0,0"/>
+
+        <Button 
+            x:Name="Button_ExpenseInfo" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Подробнее" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы открыть окно с подробной информацией о записи." 
+            Margin="1140,24,0,0" 
+            IsEnabled="False"/>
+
+        <Button 
+            x:Name="Button_ChangeExpenseMode" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="{Binding ButtonContentCurrentMode}"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Width="125" 
+            ToolTip="Нажмите, чтобы сменить режим отображения расходов. Существует полный и краткий режимы." 
+            Margin="1289,24,0,0"
+            IsEnabled="False"/>
+
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Stroke="Black" 
+            Width="3" 
+            StrokeThickness="3" 
+            Margin="1275,0,0,726"/>
+
+        <DataGrid 
+            x:Name="DataGrid_Shops" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding ShopsList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            Margin="25,135,25,25">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Номер" 
+                    Width="1*"
+                    Binding="{Binding Id, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Название магазина" 
+                    Width="4*"
+                    Binding="{Binding Name, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Примечание" 
+                    Width="5*"
+                    Binding="{Binding Note, Mode=OneWay}"
+                    CanUserSort="False">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                            <Setter Property="AcceptsReturn" Value="true" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>
