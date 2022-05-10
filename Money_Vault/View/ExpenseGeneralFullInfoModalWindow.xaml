@@ -4,9 +4,135 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Money_Vault.View"
+        xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:ExpenseGeneralFullAddViewModel}"
         mc:Ignorable="d"
-        Title="ExpenseGeneralFullInfoModalWindow" Height="450" Width="800">
+        Title="Money Vault v2.01" 
+        Height="680" 
+        Width="1200" 
+        FontFamily="Balsamiq Sans"
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        Name="expenseGeneralFullAddModalWindow">
+
+    <Window.Resources>
+        <CollectionViewSource x:Key="SubcategoriesList" Source="{Binding SubcategoriesList}"/>
+        <viewmodel:DecimalConverter x:Key="decimalconverter"/>
+    </Window.Resources>
+
     <Grid>
-        
+        <Label 
+            Content="Подробная информация о записи" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top" 
+            FontWeight="Bold" 
+            FontSize="50"/>
+
+        <DataGrid 
+            x:Name="dataGrid_ExpenseItems" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding ExpenseItemsList, Mode=TwoWay}"
+            Margin="10,75,286,10"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Категория" 
+                    Width="5*"
+                    Binding="{Binding TypeName, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма (руб)" 
+                    Width="5*"
+                    Binding="{Binding TotalAmount, Mode=OneWay, Converter={StaticResource decimalconverter}}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Дата:" 
+            HorizontalAlignment="Left" 
+            Margin="1020,217,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="22"/>
+
+        <Label             
+            Style="{StaticResource Label_Common}"
+            Content="Примечание:" 
+            HorizontalAlignment="Left" 
+            Margin="983,297,0,0" 
+            VerticalAlignment="Top" FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Магазин:" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            Margin="1002,141,0,0" RenderTransformOrigin="0.587,0.541"/>
+
+        <TextBox 
+            x:Name="TextBox_Date"
+            Style="{StaticResource TextBox_Common}"
+            Margin="920,253,15,0" 
+            VerticalAlignment="Top" 
+            FontSize="22"
+            BorderBrush="Black"
+            Text="{Binding Date, Mode=OneWay}" 
+            Height="35"
+            IsReadOnly="True"/>
+
+        <TextBox 
+            x:Name="TextBox_Note"
+            Style="{StaticResource TextBox_Multiline}"
+            Tag="" 
+            Margin="919,332,15,65" 
+            TextWrapping="Wrap"
+            Text="{Binding Note, Mode=TwoWay}" 
+            FontSize="22"
+            IsReadOnly="True"/>
+
+        <TextBox 
+            x:Name="TextBox_Shop"
+            Style="{StaticResource TextBox_Common}"
+            VerticalAlignment="Top"
+            Margin="920,177,15,0" 
+            FontSize="22"
+            BorderThickness="3"
+            Text="{Binding Shop, Mode=OneWay}"
+            Height="35"
+            IsReadOnly="True"/>
+
+        <Button 
+            x:Name="button_Cancel" 
+            Style="{StaticResource Button_Common}"
+            Content="Закрыть" 
+            Margin="920,0,15,10" 
+            FontSize="24" 
+            ToolTip="Нажмите, чтобы закрыть окно."
+            IsCancel="True" 
+            Height="50" 
+            VerticalAlignment="Bottom"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Категория:" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            FontSize="22" 
+            Margin="993,66,0,0"/>
+
+        <TextBox 
+            x:Name="TextBox_Category"
+            Style="{StaticResource TextBox_Common}"
+            VerticalAlignment="Top"
+            Margin="920,102,15,0" 
+            FontSize="22"
+            BorderThickness="3"
+            Text="{Binding Category, Mode=OneWay}"
+            Height="34"
+            IsReadOnly="True"/>
     </Grid>
 </Window>

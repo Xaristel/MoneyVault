@@ -249,8 +249,13 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var expenseGeneralFullInfoViewModel = new ExpenseGeneralFullInfoViewModel();
-                    //args
+                    var expenseGeneralFullInfoViewModel = new ExpenseGeneralFullInfoViewModel(
+                        SelectedItem.Id,
+                        SelectedItem.TypeName,
+                        SelectedItem.ShopName,
+                        SelectedItem.Date.ToString("dd.MM.yyyy"),
+                        SelectedItem.Note);
+
                     await _displayRootRegistry.ShowModalPresentation(expenseGeneralFullInfoViewModel);
                 }));
             }

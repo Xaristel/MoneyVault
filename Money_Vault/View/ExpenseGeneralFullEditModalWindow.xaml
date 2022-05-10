@@ -74,14 +74,14 @@
             Margin="1002,142,0,0"/>
 
         <DatePicker 
-            Margin="919,254,15,0" 
+            Margin="0,254,15,0" 
             VerticalAlignment="Top" 
             FontFamily="Balsamiq Sans" 
             FontSize="14"
             BorderThickness="2,2,2,2"
             BorderBrush="Black"
             SelectedDate="{Binding Date, Mode=TwoWay}" 
-            FirstDayOfWeek="Monday">
+            FirstDayOfWeek="Monday" HorizontalAlignment="Right" Width="183">
             <DatePicker.LayoutTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1.45" ScaleY="1.45"/>
@@ -96,53 +96,51 @@
             x:Name="TextBox_Note"
             Style="{StaticResource TextBox_Multiline}"
             Tag="Введите примечание..." 
-            Margin="919,334,15,197" 
+            Margin="0,334,15,197" 
             TextWrapping="Wrap"
             Text="{Binding Note, Mode=TwoWay}" 
-            FontSize="22"/>
+            FontSize="22" HorizontalAlignment="Right" Width="266"/>
 
         <ComboBox 
             x:Name="ComboBox_Shop"
             VerticalAlignment="Top"
             Template="{StaticResource ComboBoxTemplateCommon}"
-            Margin="920,178,15,0" 
+            Margin="0,178,15,0" 
             FontSize="22"
             BorderThickness="3"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
             SelectedItem="{Binding Shop, Mode=TwoWay}" 
-            Height="35"/>
+            Height="35" HorizontalAlignment="Right" Width="265"/>
 
         <Label 
             x:Name="LabelPlaceHolderShop"
             Style="{StaticResource Label_Common}"
-            Content="Выберите магазин...*"
-            HorizontalAlignment="Left" 
-            Margin="920,178,0,0" 
+            Content="Выберите магазин...*" 
+            Margin="0,178,15,0" 
             VerticalAlignment="Top" 
-            Width="271" 
             Panel.ZIndex="-1" 
             FontSize="22" 
             Foreground="DarkGray"
             Height="35"
-            Visibility="{Binding IsVisibleLabelPlaceHolderShop, Mode=TwoWay}"/>
+            Visibility="{Binding IsVisibleLabelPlaceHolderShop, Mode=TwoWay}" HorizontalAlignment="Right" Width="265"/>
 
         <Button 
             x:Name="button_Add" 
             Style="{StaticResource Button_Common}"
             Content="Изменить" 
-            Margin="918,0,147,10" 
+            Margin="0,0,154,10" 
             FontSize="24" 
             ToolTip="Нажмите, чтобы изменить запись и закрыть окно."
             Command="{Binding AddCommand}"
             CommandParameter="{Binding ElementName=expenseGeneralFullEditModalWindow}" 
             Height="50" 
-            VerticalAlignment="Bottom"/>
+            VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="128"/>
 
         <Button 
             x:Name="button_Cancel" 
             Style="{StaticResource Button_Common}"
             Content="Отмена" 
-            Margin="1050,0,15,10" 
+            Margin="1057,0,15,10" 
             FontSize="24" 
             ToolTip="Нажмите, чтобы закрыть окно."
             IsCancel="True" 
@@ -161,32 +159,30 @@
             x:Name="ComboBox_Category"
             VerticalAlignment="Top"
             Template="{StaticResource ComboBoxTemplateCommon}"
-            Margin="919,102,15,0" 
+            Margin="0,102,15,0" 
             FontSize="22"
             BorderThickness="3"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}"
             SelectedItem="{Binding Category, Mode=TwoWay}" 
-            Height="35"/>
+            Height="35" HorizontalAlignment="Right" Width="266"/>
 
         <Label 
             x:Name="LabelPlaceHolderCategory"
             Style="{StaticResource Label_Common}"
-            Content="Выберите категорию...*"
-            HorizontalAlignment="Left" 
-            Margin="920,102,0,0" 
+            Content="Выберите категорию...*" 
+            Margin="0,102,15,0" 
             VerticalAlignment="Top" 
-            Width="271" 
             Panel.ZIndex="-1" 
             FontSize="22" 
             Foreground="DarkGray"
             Height="35"
-            Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}"/>
+            Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}" HorizontalAlignment="Right" Width="265"/>
 
         <TextBlock 
-            HorizontalAlignment="Left" 
-            Margin="920,472,0,0" 
+            HorizontalAlignment="Right" 
+            Margin="0,0,15,60" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" 
+            VerticalAlignment="Bottom" 
             Height="132" 
             Width="265"
             FontSize="18" 

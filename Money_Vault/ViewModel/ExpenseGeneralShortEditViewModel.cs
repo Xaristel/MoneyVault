@@ -136,19 +136,32 @@ namespace Money_Vault.ViewModel
                         {
                             Expense currentExpense = database.Expenses.ToList().Find(x => x.Id == _id);
 
-                            currentExpense.User_Id = Convert.ToInt32(Settings.Default["currentUserId"]);
-                            currentExpense.Expense_Type_Id = database.Expense_Types.ToList().Find(x => x.Name == Category).Id;
-                            currentExpense.Total_Price = AdditionalFunctions.ConvertFromCurrencyFormat(Amount);
-                            currentExpense.Shop_Id = database.Shops.ToList().Find(x => x.Name == Shop).Id;
-                            currentExpense.Date = Date.ToString("dd.MM.yyyy");
-                            currentExpense.Note = Note;
+                            if (currentExpense.Total_Price != AdditionalFunctions.ConvertFromCurrencyFormat(Amount)
+                            && database.Expense_Items.ToList().Find(x => x.Expense_Id == currentExpense.Id) != null)
+                            {
+                                var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                                var messageViewModel = new MessageViewModel(
+                                    "Ошибка",
+                                    "Вы не можете изменить сумму, так как в данном расходе присутствуют подкатегории." +
+                                    "Перейдите в Полный режим для редактирования данного расхода.");
+                                await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                            }
+                            else
+                            {
+                                currentExpense.User_Id = Convert.ToInt32(Settings.Default["currentUserId"]);
+                                currentExpense.Expense_Type_Id = database.Expense_Types.ToList().Find(x => x.Name == Category).Id;
+                                currentExpense.Total_Price = AdditionalFunctions.ConvertFromCurrencyFormat(Amount);
+                                currentExpense.Shop_Id = database.Shops.ToList().Find(x => x.Name == Shop).Id;
+                                currentExpense.Date = Date.ToString("dd.MM.yyyy");
+                                currentExpense.Note = Note;
 
-                            database.SaveChanges();
-                        }
+                                database.SaveChanges();
 
-                        if (window != null)
-                        {
-                            window.Close();
+                                if (window != null)
+                                {
+                                    window.Close();
+                                }
+                            }
                         }
                     }
                     else
