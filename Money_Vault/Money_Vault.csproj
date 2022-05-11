@@ -173,7 +173,6 @@
     <Compile Include="ViewModel\ExpenseMainViewModel.cs" />
     <Compile Include="ViewModel\ExpenseShopViewModel.cs" />
     <Compile Include="ViewModel\GeneralViewModel.cs" />
-    <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\IncomeGeneralViewModel.cs" />
     <Compile Include="ViewModel\IncomeMainViewModel.cs" />
