@@ -12,8 +12,6 @@
       Background="White">
 
     <Grid>
-
-
         <FlowDocumentPageViewer 
             FontFamily="Balsamiq Sans" 
             FontSize="22" 
@@ -79,9 +77,5 @@
                 данной программы.</Paragraph>
             </FlowDocument>
         </FlowDocumentPageViewer>
-
-
-
-
     </Grid>
 </Page>
