@@ -165,6 +165,8 @@
     <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\MultiConverter.cs" />
+    <Compile Include="ViewModel\PlanningNoteAddViewModel.cs" />
+    <Compile Include="ViewModel\PlanningNoteEditViewModel.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\AuthViewModel.cs" />
@@ -245,6 +247,12 @@
     </Compile>
     <Compile Include="View\IncomeMainPage.xaml.cs">
       <DependentUpon>IncomeMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningNoteAddModalWindow.xaml.cs">
+      <DependentUpon>PlanningNoteAddModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningNoteEditModalWindow.xaml.cs">
+      <DependentUpon>PlanningNoteEditModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ReportPage.xaml.cs">
       <DependentUpon>ReportPage.xaml</DependentUpon>
@@ -359,6 +367,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\IncomeMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningNoteAddModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningNoteEditModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

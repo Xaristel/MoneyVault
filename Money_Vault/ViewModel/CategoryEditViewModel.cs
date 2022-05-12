@@ -50,7 +50,7 @@ namespace Money_Vault.ViewModel
                         {
                             if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                             {
-                                if (database.Income_Types.ToList().Find(x => x.Name == Category) == null)
+                                if (database.Income_Types.ToList().Find(x => x.Name == Category && x.Id != _id) == null)
                                 {
                                     Income_Type item = database.Income_Types.ToList().Find(x => x.Id == _id);
 
@@ -70,7 +70,7 @@ namespace Money_Vault.ViewModel
                             }
                             else
                             {
-                                if (database.Expense_Types.ToList().Find(x => x.Name == Category) == null
+                                if (database.Expense_Types.ToList().Find(x => x.Name == Category && x.Id != _id) == null
                                 && database.Expense_Subtypes.ToList().Find(x => x.Name == Category) == null)
                                 {
                                     if (database.Expense_Types.ToList().Find(x => x.Name == _initialCategory) != null)

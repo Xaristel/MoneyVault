@@ -3,12 +3,110 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PlanningNotePage">
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:PlanningNoteViewModel}"
+      Title="PlanningNotePage" 
+      Background="White" 
+      Width="1439" 
+      Height="850" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid>
-        
+    <Grid Width="1439">
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Stroke="Black" 
+            Width="3" 
+            StrokeThickness="3" 
+            Margin="300,124,0,0">
+        </Rectangle>
+
+        <Button 
+            x:Name="Button_Delete" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Удалить" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="1264,24,25,0" 
+            IsEnabled="False"/>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            x:Name="Button_Edit" 
+            FontSize="22" 
+            Content="Изменить" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="1087,24,202,0" 
+            IsEnabled="False"/>
+
+        <Button 
+            x:Name="Button_Add" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Добавить" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="909,24,380,0" 
+            IsEnabled="False"/>
+
+        <DataGrid 
+            x:Name="dataGrid_Notes" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding NotesList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            Margin="20,133,1144,301">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Width="1*"
+                    Binding="{Binding Name, Mode=OneWay}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button 
+            x:Name="Button_AddNote" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Добавить заметку" 
+            Margin="20,0,1144,210" 
+            Height="86" 
+            VerticalAlignment="Bottom"
+            Command="{Binding ShowAddFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_EditNote" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Изменить заметку" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="20,645,1144,0"
+            Command="{Binding ShowEditFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_DeleteNote" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Удалить заметку" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="20,740,1144,0"
+            Command="{Binding ShowDeleteFrameCommand}"/>
+
+        <TextBox 
+            x:Name="TextBox_Note"
+            Style="{StaticResource TextBox_Multiline}"
+            Tag="Выберите заметку из списка..." 
+            Margin="0,133,20,20" 
+            TextWrapping="Wrap"
+            Text="{Binding Text, Mode=OneWay}" 
+            FontSize="22" 
+            HorizontalAlignment="Right" 
+            Width="1111"
+            IsReadOnly="True"/>
     </Grid>
 </Page>

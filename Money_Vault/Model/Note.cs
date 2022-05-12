@@ -6,11 +6,12 @@ namespace Money_Vault.Model
     [Table("Notes")]
     public partial class Note : BaseModel
     {
-        private string _id;
+        private int _id;
         private int _user_Id;
+        private string _name;
         private string _text;
 
-        public string Id
+        public int Id
         {
             get => _id;
             set
@@ -28,6 +29,16 @@ namespace Money_Vault.Model
             {
                 _user_Id = value;
                 OnPropertyChanged("User_Id");
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name");
             }
         }
 

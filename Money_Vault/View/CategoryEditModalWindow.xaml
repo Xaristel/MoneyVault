@@ -89,8 +89,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             VerticalAlignment="Top" 
             FontSize="22" 
             Height="65"
-            Text="{Binding Note, Mode=TwoWay}"
-            Width="490"/>
+            Text="{Binding Note, Mode=TwoWay}"/>
     </Grid>
 </Window>
 
