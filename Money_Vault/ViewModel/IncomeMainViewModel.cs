@@ -17,8 +17,6 @@ namespace Money_Vault.ViewModel
         {
             Brushes.White,
             Brushes.White,
-            Brushes.White,
-            Brushes.White,
             Brushes.White
         };
 

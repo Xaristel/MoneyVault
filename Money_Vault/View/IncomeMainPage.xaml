@@ -45,7 +45,8 @@
             Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку с общим списком доходов." 
             Margin="25,25,0,0"
-            Command="{Binding ShowIncomeGeneralFrameCommand}" Panel.ZIndex="1">
+            Command="{Binding ShowIncomeGeneralFrameCommand}" 
+            Panel.ZIndex="1">
             <TextBlock TextAlignment="Center">Общий<LineBreak/>список</TextBlock>
         </Button>
 
@@ -61,7 +62,8 @@
             Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку со списком категорий доходов." 
             Margin="328,25,0,0"
-            Command="{Binding ShowCategoryFrameCommand}" Panel.ZIndex="1">
+            Command="{Binding ShowCategoryFrameCommand}" 
+            Panel.ZIndex="1">
         </Button>
 
         <Button 
@@ -76,7 +78,8 @@
             Width="250" 
             ToolTip="Нажмите, чтобы открыть вкладку с отчётом по доходам." 
             Margin="630,25,0,0"
-            Command="{Binding ShowIncomeReportFrameCommand}" Panel.ZIndex="1">
+            Command="{Binding ShowIncomeReportFrameCommand}" 
+            Panel.ZIndex="1">
         </Button>
 
         <Frame 
