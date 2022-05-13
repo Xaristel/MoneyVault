@@ -7,6 +7,7 @@ namespace Money_Vault.Model
     public partial class Shop : BaseModel
     {
         private int _id;
+        private int _userId;
         private string _name;
         private string _note;
 
@@ -17,6 +18,16 @@ namespace Money_Vault.Model
             {
                 _id = value;
                 OnPropertyChanged("Id");
+            }
+        }
+
+        public int UserId
+        {
+            get => _userId;
+            set
+            {
+                _userId = value;
+                OnPropertyChanged("UserId");
             }
         }
 
