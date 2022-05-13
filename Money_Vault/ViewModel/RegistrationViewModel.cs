@@ -1,6 +1,8 @@
 ﻿using Money_Vault.Database;
 using Money_Vault.Model;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
@@ -60,31 +62,27 @@ namespace Money_Vault.ViewModel
             {
                 return _registerNewUserCommand ?? (_registerNewUserCommand = new RelayCommand(async (args) =>
                 {
-                    try
+                    using (DatabaseContext database = new DatabaseContext())
                     {
-                        using (DatabaseContext dbContext = new DatabaseContext())
+                        if (database.Users.ToList().Find(x => x.Login == RegLogin) == null)
                         {
-                            User newUser = new User()
+                            database.Users.Add(new User()
                             {
                                 Login = RegLogin,
                                 Password = Convert.ToString(RegPassword.GetHashCode() + RegLogin.GetHashCode()),
                                 Name = RegName,
                                 Surname = RegSurname
-                            };
+                            });
+                            database.SaveChanges();
 
-                            dbContext.Users.Add(newUser);
-                            dbContext.SaveChanges();
+                            await AdditionalFunctions.CallModalMessage("Внимание", $"Пользователь {RegLogin} успешно зарегистрирован.");
+                            (Application.Current as App).displayRootRegistry.HidePresentation(this);
+                        }
+                        else
+                        {
+                            await AdditionalFunctions.CallModalMessage("Ошибка", $"Пользователь с таким логином уже зарегистрирован! Укажите другой логин.");
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-
-                    var messageViewModel = new MessageViewModel("", $"Пользователь {RegLogin} успешно зарегистрирован.");
-                    await (Application.Current as App).displayRootRegistry.ShowModalPresentation(messageViewModel);
-
-                    (Application.Current as App).displayRootRegistry.HidePresentation(this);
                 }));
             }
         }

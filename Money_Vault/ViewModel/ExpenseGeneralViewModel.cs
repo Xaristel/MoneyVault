@@ -243,11 +243,7 @@ namespace Money_Vault.ViewModel
                     }
                     else
                     {
-                        var messageViewModel = new MessageViewModel(
-                            "Внимание",
-                            "Вы не выбрали запись для редактирования.");
-
-                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для редактирования.");
                     }
 
                     UpdateData();
@@ -283,11 +279,7 @@ namespace Money_Vault.ViewModel
                     }
                     else
                     {
-                        var messageViewModel = new MessageViewModel(
-                            "Внимание",
-                            "Вы не выбрали запись для удаления.");
-
-                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для удаления.");
                     }
                 }));
             }
@@ -314,11 +306,7 @@ namespace Money_Vault.ViewModel
                     }
                     else
                     {
-                        var messageViewModel = new MessageViewModel(
-                            "Внимание",
-                            "Вы не выбрали запись для просмотра.");
-
-                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для просмотра.");
                     }
                 }));
             }

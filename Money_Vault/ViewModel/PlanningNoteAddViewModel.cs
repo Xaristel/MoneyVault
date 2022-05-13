@@ -63,21 +63,13 @@ namespace Money_Vault.ViewModel
                             }
                             else
                             {
-                                var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                                var messageViewModel = new MessageViewModel(
-                                    "Ошибка",
-                                    "Такое название заметки уже существует! Укажите другое название.");
-                                await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                                await AdditionalFunctions.CallModalMessage("Ошибка", "Такое название заметки уже существует! Укажите другое название.");
                             }
                         }
                     }
                     else
                     {
-                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        var messageViewModel = new MessageViewModel(
-                            "Ошибка",
-                            "Заполнены не все поля или введены некорректные значения.");
-                        await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }

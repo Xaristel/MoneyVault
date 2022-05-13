@@ -65,7 +65,7 @@ namespace Money_Vault.ViewModel
                                 }
                                 else
                                 {
-                                    await CallErrorMessage("Такое название категории уже существует!");
+                                    await AdditionalFunctions.CallModalMessage("Ошибка", "Такое название категории уже существует!");
                                 }
                             }
                             else
@@ -102,14 +102,14 @@ namespace Money_Vault.ViewModel
                                 }
                                 else
                                 {
-                                    await CallErrorMessage("Такое название категории или подкатегории уже существует!");
+                                    await AdditionalFunctions.CallModalMessage("Ошибка", "Такое название категории или подкатегории уже существует!");
                                 }
                             }
                         }
                     }
                     else
                     {
-                        await CallErrorMessage("Заполнены не все поля или введены некорректные значения.");
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }
@@ -123,15 +123,6 @@ namespace Money_Vault.ViewModel
             Category = category;
             _initialCategory = category;
             Note = note;
-        }
-
-        private async Task CallErrorMessage(string message)
-        {
-            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-            var messageViewModel = new MessageViewModel(
-                "Ошибка",
-                message);
-            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }

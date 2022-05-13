@@ -1,12 +1,8 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using Money_Vault.Database;
 using Money_Vault.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Money_Vault.ViewModel
 {
@@ -74,25 +70,16 @@ namespace Money_Vault.ViewModel
                             }
                             else
                             {
-                                await CallErrorMessage("Такое название магазина уже существует!");
+                                await AdditionalFunctions.CallModalMessage("Ошибка", "Такое название магазина уже существует!");
                             }
                         }
                     }
                     else
                     {
-                        await CallErrorMessage("Заполнены не все поля или введены некорректные значения.");
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }
-        }
-
-        private async Task CallErrorMessage(string message)
-        {
-            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-            var messageViewModel = new MessageViewModel(
-                "Ошибка",
-                message);
-            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }

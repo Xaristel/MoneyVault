@@ -139,12 +139,9 @@ namespace Money_Vault.ViewModel
                             if (currentExpense.Total_Price != AdditionalFunctions.ConvertFromCurrencyFormat(Amount)
                             && database.Expense_Items.ToList().Find(x => x.Expense_Id == currentExpense.Id) != null)
                             {
-                                var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                                var messageViewModel = new MessageViewModel(
-                                    "Ошибка",
+                                await AdditionalFunctions.CallModalMessage("Ошибка",
                                     "Вы не можете изменить сумму, так как в данном расходе присутствуют подкатегории. " +
                                     "Перейдите в Полный режим для редактирования данного расхода.");
-                                await displayRootRegistry.ShowModalPresentation(messageViewModel);
                             }
                             else
                             {
@@ -166,11 +163,7 @@ namespace Money_Vault.ViewModel
                     }
                     else
                     {
-                        var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        var messageViewModel = new MessageViewModel(
-                            "Ошибка",
-                            "Заполнены не все поля или введены некорректные значения.");
-                        await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }

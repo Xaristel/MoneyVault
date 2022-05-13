@@ -72,13 +72,13 @@ namespace Money_Vault.ViewModel
                             }
                             else
                             {
-                                await CallErrorMessage("Такое название магазина уже существует!");
+                                await AdditionalFunctions.CallModalMessage("Ошибка", "Такое название магазина уже существует!");
                             }
                         }
                     }
                     else
                     {
-                        await CallErrorMessage("Заполнены не все поля или введены некорректные значения.");
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Заполнены не все поля или введены некорректные значения.");
                     }
                 }));
             }
@@ -91,15 +91,6 @@ namespace Money_Vault.ViewModel
             _id = id;
             Shop = name;
             Note = note;
-        }
-
-        private async Task CallErrorMessage(string message)
-        {
-            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-            var messageViewModel = new MessageViewModel(
-                "Ошибка",
-                message);
-            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }

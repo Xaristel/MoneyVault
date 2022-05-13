@@ -94,11 +94,7 @@ namespace Money_Vault.ViewModel
                         }
                         else
                         {
-                            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                            var messageViewModel = new MessageViewModel(
-                                "Ошибка",
-                                "Пользователя не существует или были введены неверные данные.");
-                            await displayRootRegistry.ShowModalPresentation(messageViewModel);
+                            await AdditionalFunctions.CallModalMessage("Ошибка", "Пользователя не существует или были введены неверные данные.");
                         }
                     }
                 }));

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
@@ -90,6 +92,13 @@ namespace Money_Vault.ViewModel
                 buttonsColorList[i] = Brushes.White;
             }
             buttonsColorList[pathesList.IndexOf(path)] = Brushes.DeepSkyBlue;
+        }
+
+        public static async Task CallModalMessage(string header, string message)
+        {
+            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
+            var messageViewModel = new MessageViewModel(header, message);
+            await displayRootRegistry.ShowModalPresentation(messageViewModel);
         }
     }
 }
