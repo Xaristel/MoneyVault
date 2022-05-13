@@ -80,6 +80,10 @@ namespace Money_Vault.ViewModel
 
                         UpdateData();
                     }
+                    else
+                    {
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Вы не выбрали магазин для редактирования!");
+                    }
                 }));
             }
         }
@@ -89,23 +93,30 @@ namespace Money_Vault.ViewModel
             {
                 return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
-                    var messageViewModel = new MessageViewModel(
-                        "Внимание",
-                        "Вы действительно хотите удалить данную запись?");
-
-                    await _displayRootRegistry.ShowModalPresentation(messageViewModel);
-
-                    if (messageViewModel.Result && SelectedItem != null)
+                    if (SelectedItem != null)
                     {
-                        using (DatabaseContext database = new DatabaseContext())
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы действительно хотите удалить данную запись?");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                        if (messageViewModel.Result && SelectedItem != null)
                         {
-                            Shop item = database.Shops.ToList().Find(x => x.Id == SelectedItem.Id);
-                            database.Shops.Remove(item);
-                            database.SaveChanges();
+                            using (DatabaseContext database = new DatabaseContext())
+                            {
+                                Shop item = database.Shops.ToList().Find(x => x.Id == SelectedItem.Id);
+                                database.Shops.Remove(item);
+                                database.SaveChanges();
+                            }
+                            UpdateData();
                         }
-                        UpdateData();
+                    }
+                    else
+                    {
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Вы не выбрали магазин для удаления!");
                     }
                 }));
             }

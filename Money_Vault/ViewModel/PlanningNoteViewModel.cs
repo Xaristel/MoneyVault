@@ -81,10 +81,9 @@ namespace Money_Vault.ViewModel
             {
                 return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
                     if (SelectedItem != null)
                     {
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
                         var planningNoteEditViewModel = new PlanningNoteEditViewModel(
                             SelectedItem.Id,
                             SelectedItem.Name,
@@ -108,10 +107,9 @@ namespace Money_Vault.ViewModel
             {
                 return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
                     if (SelectedItem != null)
                     {
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
                         var messageViewModel = new MessageViewModel(
                                                 "Внимание",
                                                 "Вы действительно хотите удалить данную запись?");

@@ -140,14 +140,17 @@ namespace Money_Vault.ViewModel
             {
                 return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
                     if (SelectedItem != null)
                     {
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
                         var categoryEditViewModel = new CategoryEditViewModel(SelectedItem.Id, SelectedItem.Name, SelectedItem.Note);
                         await _displayRootRegistry.ShowModalPresentation(categoryEditViewModel);
 
                         UpdateData();
+                    }
+                    else
+                    {
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Вы не выбрали категорию для редактирования!");
                     }
                 }));
             }
@@ -159,41 +162,48 @@ namespace Money_Vault.ViewModel
             {
                 return _showDeleteFrameCommand ?? (_showDeleteFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
-                    var messageViewModel = new MessageViewModel(
-                        "Внимание",
-                        "Вы действительно хотите удалить данную запись?");
-
-                    await _displayRootRegistry.ShowModalPresentation(messageViewModel);
-
-                    if (messageViewModel.Result && SelectedItem != null)
+                    if (SelectedItem != null)
                     {
-                        using (DatabaseContext database = new DatabaseContext())
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+
+                        var messageViewModel = new MessageViewModel(
+                            "Внимание",
+                            "Вы действительно хотите удалить данную запись?");
+
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                        if (messageViewModel.Result)
                         {
-                            if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
+                            using (DatabaseContext database = new DatabaseContext())
                             {
-                                Income_Type item = database.Income_Types.ToList().Find(x => x.Id == SelectedItem.Id);
-                                database.Income_Types.Remove(item);
-                                database.SaveChanges();
-                            }
-                            else
-                            {
-                                if (database.Expense_Types.ToList().Find(x => (x.Name == SelectedItem.Name)) != null)
+                                if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                                 {
-                                    Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == SelectedItem.Id);
-                                    database.Expense_Types.Remove(item);
+                                    Income_Type item = database.Income_Types.ToList().Find(x => x.Id == SelectedItem.Id);
+                                    database.Income_Types.Remove(item);
+                                    database.SaveChanges();
                                 }
                                 else
                                 {
-                                    Expense_Subtype item = database.Expense_Subtypes.ToList().Find(x => x.Id == SelectedItem.Id);
-                                    database.Expense_Subtypes.Remove(item);
-                                }
+                                    if (database.Expense_Types.ToList().Find(x => (x.Name == SelectedItem.Name)) != null)
+                                    {
+                                        Expense_Type item = database.Expense_Types.ToList().Find(x => x.Id == SelectedItem.Id);
+                                        database.Expense_Types.Remove(item);
+                                    }
+                                    else
+                                    {
+                                        Expense_Subtype item = database.Expense_Subtypes.ToList().Find(x => x.Id == SelectedItem.Id);
+                                        database.Expense_Subtypes.Remove(item);
+                                    }
 
-                                database.SaveChanges();
+                                    database.SaveChanges();
+                                }
                             }
+                            UpdateData();
                         }
-                        UpdateData();
+                    }
+                    else
+                    {
+                        await AdditionalFunctions.CallModalMessage("Ошибка", "Вы не выбрали категорию для удаления!");
                     }
                 }));
             }

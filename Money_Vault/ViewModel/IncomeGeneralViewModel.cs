@@ -176,10 +176,9 @@ namespace Money_Vault.ViewModel
             {
                 return _showEditFrameCommand ?? (_showEditFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
                     if (SelectedItem != null)
                     {
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
                         var incomeGeneralEditViewModel = new IncomeGeneralEditViewModel(
                                                 SelectedItem.Id,
                                                 SelectedItem.TypeName,
