@@ -88,6 +88,7 @@ namespace Money_Vault.ViewModel
                                 {
                                     database.Income_Types.Add(new Income_Type()
                                     {
+                                        UserId = Convert.ToInt32(Settings.Default["currentUserId"]),
                                         Name = Category,
                                         Note = Note
                                     });
@@ -112,6 +113,7 @@ namespace Money_Vault.ViewModel
                                     {
                                         database.Expense_Types.Add(new Expense_Type()
                                         {
+                                            UserId = Convert.ToInt32(Settings.Default["currentUserId"]),
                                             Name = Category,
                                             Note = Note
                                         });
@@ -126,6 +128,7 @@ namespace Money_Vault.ViewModel
                                     {
                                         database.Expense_Subtypes.Add(new Expense_Subtype()
                                         {
+                                            UserId = Convert.ToInt32(Settings.Default["currentUserId"]),
                                             Name = Category,
                                             Note = Note
                                         });

@@ -1,5 +1,6 @@
 ﻿using Money_Vault.Database;
 using Money_Vault.Model;
+using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -263,10 +264,11 @@ namespace Money_Vault.ViewModel
 
                 foreach (var item in database.Incomes.ToList())
                 {
-                    if (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                        && (item.Date.Contains($".{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                         || item.Date.Contains($".0{_monthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                         || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                        || CurrentYear == "Все годы")
+                        || CurrentYear == "Все годы"))
                     {
                         tempList.Add(new IncomeCommonListItem()
                         {
@@ -293,12 +295,15 @@ namespace Money_Vault.ViewModel
             {
                 foreach (var item in database.Incomes.ToList())
                 {
-                    //try to get year from date (14.05.2022 -> 2022)
-                    string tempYear = item.Date.Split('.')[2];
-
-                    if (!YearsList.Contains(tempYear))
+                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                     {
-                        YearsList.Add(tempYear);
+                        //try to get year from date (14.05.2022 -> 2022)
+                        string tempYear = item.Date.Split('.')[2];
+
+                        if (!YearsList.Contains(tempYear))
+                        {
+                            YearsList.Add(tempYear);
+                        }
                     }
                 }
             }

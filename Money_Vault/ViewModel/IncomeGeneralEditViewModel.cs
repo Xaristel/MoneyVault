@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using Money_Vault.Database;
 using Money_Vault.Model;
+using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,6 +137,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 CategoriesList = from item in database.Income_Types.ToList()
+                                 where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                  select item.Name;
             }
 

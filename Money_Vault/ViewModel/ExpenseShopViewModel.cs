@@ -129,7 +129,9 @@ namespace Money_Vault.ViewModel
         {
             using (DatabaseContext database = new DatabaseContext())
             {
-                ShopsList = database.Shops.ToList();
+                ShopsList = from item in database.Shops.ToList()
+                            where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
+                            select item;
             }
         }
     }

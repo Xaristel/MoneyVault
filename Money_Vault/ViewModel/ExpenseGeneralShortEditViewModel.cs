@@ -169,29 +169,18 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public ExpenseGeneralShortEditViewModel()
-        {
-            using (DatabaseContext database = new DatabaseContext())
-            {
-                CategoriesList = from item in database.Expense_Types.ToList()
-                                 select item.Name;
-
-                ShopsList = from item in database.Shops.ToList()
-                            select item.Name;
-            }
-
-            Date = System.DateTime.Now;
-            Amount = "";
-        }
+        public ExpenseGeneralShortEditViewModel() { }
 
         public ExpenseGeneralShortEditViewModel(int id, string category, string amount, string shop, string date, string note)
         {
             using (DatabaseContext database = new DatabaseContext())
             {
                 CategoriesList = from item in database.Expense_Types.ToList()
+                                 where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                  select item.Name;
 
                 ShopsList = from item in database.Shops.ToList()
+                            where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                             select item.Name;
             }
 

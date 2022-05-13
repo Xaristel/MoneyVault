@@ -176,23 +176,29 @@ namespace Money_Vault.ViewModel
             {
                 foreach (var item in database.Incomes.ToList())
                 {
-                    //try to get year from date (14.05.2022 -> 2022)
-                    string tempYear = item.Date.Split('.')[2];
-
-                    if (!YearsList.Contains(tempYear))
+                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                     {
-                        YearsList.Add(tempYear);
+                        //try to get year from date (14.05.2022 -> 2022)
+                        string tempYear = item.Date.Split('.')[2];
+
+                        if (!YearsList.Contains(tempYear))
+                        {
+                            YearsList.Add(tempYear);
+                        }
                     }
                 }
 
                 foreach (var item in database.Expenses.ToList())
                 {
-                    //try to get year from date (14.05.2022 -> 2022)
-                    string tempYear = item.Date.Split('.')[2];
-
-                    if (!YearsList.Contains(tempYear))
+                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                     {
-                        YearsList.Add(tempYear);
+                        //try to get year from date (14.05.2022 -> 2022)
+                        string tempYear = item.Date.Split('.')[2];
+
+                        if (!YearsList.Contains(tempYear))
+                        {
+                            YearsList.Add(tempYear);
+                        }
                     }
                 }
             }
@@ -208,31 +214,37 @@ namespace Money_Vault.ViewModel
 
             using (DatabaseContext database = new DatabaseContext())
             {
-                List<Expense> expenses = database.Expenses.ToList();
-                var query = from item in database.Expense_Items.ToList()
-                            where expenses.Find(x => x.Id == item.Expense_Id).Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                               || expenses.Find(x => x.Id == item.Expense_Id).Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                               || (CurrentMonth == "Полный год" && expenses.Find(x => x.Id == item.Expense_Id).Date.Contains($".{CurrentYear}"))
-                                               || CurrentYear == "Все годы"
-                            group item by item.Expense_Subtype_Id into expenseListItem
-                            select new
-                            {
-                                SubtypeId = expenseListItem.Key,
-                                TotalAmount = (from item in expenseListItem
-                                               select item.Price).Sum()
-                            };
+                List<Expense> expenses = (from item in database.Expenses.ToList()
+                                          where item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                          select item).ToList();
 
-                foreach (var item in query)
+                if (expenses.Count != 0)
                 {
-                    if (item.TotalAmount != 0)
-                    {
-                        tempList.Add(new TotalListItem()
-                        {
-                            TypeName = database.Expense_Subtypes.ToList().Find(x => x.Id == item.SubtypeId).Name,
-                            TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
-                        });
+                    var query = from item in database.Expense_Items.ToList()
+                                where expenses.Find(x => x.Id == item.Expense_Id).Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                                   || expenses.Find(x => x.Id == item.Expense_Id).Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                                   || (CurrentMonth == "Полный год" && expenses.Find(x => x.Id == item.Expense_Id).Date.Contains($".{CurrentYear}"))
+                                                   || CurrentYear == "Все годы"
+                                group item by item.Expense_Subtype_Id into expenseListItem
+                                select new
+                                {
+                                    SubtypeId = expenseListItem.Key,
+                                    TotalAmount = (from item in expenseListItem
+                                                   select item.Price).Sum()
+                                };
 
-                        totalSum += item.TotalAmount;
+                    foreach (var item in query)
+                    {
+                        if (item.TotalAmount != 0)
+                        {
+                            tempList.Add(new TotalListItem()
+                            {
+                                TypeName = database.Expense_Subtypes.ToList().Find(x => x.Id == item.SubtypeId).Name,
+                                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
+                            });
+
+                            totalSum += item.TotalAmount;
+                        }
                     }
                 }
             }

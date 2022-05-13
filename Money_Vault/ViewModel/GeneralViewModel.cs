@@ -8,6 +8,7 @@ using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 using System.Windows.Media;
 using System.Globalization;
+using Money_Vault.Properties;
 
 namespace Money_Vault.ViewModel
 {
@@ -251,23 +252,30 @@ namespace Money_Vault.ViewModel
             {
                 foreach (var item in database.Incomes.ToList())
                 {
-                    //try to get year from date (14.05.2022 -> 2022)
-                    string tempYear = item.Date.Split('.')[2];
-
-                    if (!YearsList.Contains(tempYear))
+                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                     {
-                        YearsList.Add(tempYear);
+                        //try to get year from date (14.05.2022 -> 2022)
+                        string tempYear = item.Date.Split('.')[2];
+
+                        if (!YearsList.Contains(tempYear))
+                        {
+                            YearsList.Add(tempYear);
+                        }
                     }
+
                 }
 
                 foreach (var item in database.Expenses.ToList())
                 {
-                    //try to get year from date (14.05.2022 -> 2022)
-                    string tempYear = item.Date.Split('.')[2];
-
-                    if (!YearsList.Contains(tempYear))
+                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                     {
-                        YearsList.Add(tempYear);
+                        //try to get year from date (14.05.2022 -> 2022)
+                        string tempYear = item.Date.Split('.')[2];
+
+                        if (!YearsList.Contains(tempYear))
+                        {
+                            YearsList.Add(tempYear);
+                        }
                     }
                 }
             }
@@ -285,6 +293,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 var query = from income in database.Incomes.ToList()
+                            where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
                             group income by income.Income_Type_Id into incomeListItem
                             select new
                             {
@@ -343,6 +352,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 var query = from expense in database.Expenses.ToList()
+                            where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
                             group expense by expense.Expense_Type_Id into expenseListItem
                             select new
                             {
@@ -408,7 +418,8 @@ namespace Money_Vault.ViewModel
                         + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minIncomesDate.Split('.')[1]);
 
                         tempTotalAmount = (from income in database.Incomes.ToList()
-                                           where AdditionalFunctions.FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                           && AdditionalFunctions.FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                            select income.Total_Amount).Sum();
                     }
                     else
@@ -417,7 +428,8 @@ namespace Money_Vault.ViewModel
                         + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minExpensesDate.Split('.')[1]);
 
                         tempTotalAmount = (from expense in database.Expenses.ToList()
-                                           where AdditionalFunctions.FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                           where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                           && AdditionalFunctions.FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                            select expense.Total_Price).Sum();
                     }
                 }
@@ -430,7 +442,8 @@ namespace Money_Vault.ViewModel
                             timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2]);
 
                             tempTotalAmount = (from income in database.Incomes.ToList()
-                                               where AdditionalFunctions.FindLessDate(income.Date, $"01.01.{CurrentYear}")
+                                               where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                               && AdditionalFunctions.FindLessDate(income.Date, $"01.01.{CurrentYear}")
                                                select income.Total_Amount).Sum();
                         }
                         else
@@ -438,7 +451,8 @@ namespace Money_Vault.ViewModel
                             timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2]);
 
                             tempTotalAmount = (from expense in database.Expenses.ToList()
-                                               where AdditionalFunctions.FindLessDate(expense.Date, $"01.01.{CurrentYear}")
+                                               where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                               && AdditionalFunctions.FindLessDate(expense.Date, $"01.01.{CurrentYear}")
                                                select expense.Total_Price).Sum();
                         }
                     }
@@ -469,11 +483,13 @@ namespace Money_Vault.ViewModel
                 if (isIncomesList)
                 {
                     tempDates = from income in database.Incomes.ToList()
+                                where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
                                 select income.Date;
                 }
                 else
                 {
                     tempDates = from expense in database.Expenses.ToList()
+                                where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
                                 select expense.Date;
                 }
             }

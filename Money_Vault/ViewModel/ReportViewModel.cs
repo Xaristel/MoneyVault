@@ -467,12 +467,15 @@ namespace Money_Vault.ViewModel
                         {
                             foreach (var item in database.Incomes.ToList())
                             {
-                                //try to get year from date (14.05.2022 -> 2022)
-                                string tempYear = item.Date.Split('.')[2];
-
-                                if (!years.Contains(tempYear))
+                                if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                                 {
-                                    years.Add(tempYear);
+                                    //try to get year from date (14.05.2022 -> 2022)
+                                    string tempYear = item.Date.Split('.')[2];
+
+                                    if (!years.Contains(tempYear))
+                                    {
+                                        years.Add(tempYear);
+                                    }
                                 }
                             }
                             break;
@@ -481,12 +484,15 @@ namespace Money_Vault.ViewModel
                         {
                             foreach (var item in database.Expenses.ToList())
                             {
-                                //try to get year from date (14.05.2022 -> 2022)
-                                string tempYear = item.Date.Split('.')[2];
-
-                                if (!years.Contains(tempYear))
+                                if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
                                 {
-                                    years.Add(tempYear);
+                                    //try to get year from date (14.05.2022 -> 2022)
+                                    string tempYear = item.Date.Split('.')[2];
+
+                                    if (!years.Contains(tempYear))
+                                    {
+                                        years.Add(tempYear);
+                                    }
                                 }
                             }
                             break;
@@ -523,10 +529,11 @@ namespace Money_Vault.ViewModel
 
                                         foreach (var item in database.Incomes.ToList())
                                         {
-                                            if (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                            if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                               && (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                                || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                                || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                                               || CurrentYear == "Все годы")
+                                               || CurrentYear == "Все годы"))
                                             {
                                                 listIncomes.Add(new IncomeCommonListItem()
                                                 {
@@ -567,10 +574,11 @@ namespace Money_Vault.ViewModel
 
                                         foreach (var item in database.Expenses.ToList())
                                         {
-                                            if (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                                            if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                                               && (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                                || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                                || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                                               || CurrentYear == "Все годы")
+                                               || CurrentYear == "Все годы"))
                                             {
                                                 listExpenses.Add(new ExpenseCommonListItem()
                                                 {
@@ -626,6 +634,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 var query = from income in database.Incomes.ToList()
+                            where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
                             group income by income.Income_Type_Id into incomeListItem
                             select new
                             {
@@ -670,6 +679,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 var query = from expense in database.Expenses.ToList()
+                            where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
                             group expense by expense.Expense_Type_Id into expenseListItem
                             select new
                             {
@@ -714,10 +724,11 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 var subQuery = from item in database.Expenses.ToList()
-                               where item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
+                               where item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
+                               && (item.Date.Contains($".{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                || item.Date.Contains($".0{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
                                || (CurrentMonth == "Полный год" && item.Date.Contains($".{CurrentYear}"))
-                               || CurrentYear == "Все годы"
+                               || CurrentYear == "Все годы")
                                select item.Id;
 
                 var query = from expense in database.Expense_Items.ToList()

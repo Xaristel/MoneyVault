@@ -162,9 +162,11 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 CategoriesList = from item in database.Expense_Types.ToList()
+                                 where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                  select item.Name;
 
                 ShopsList = from item in database.Shops.ToList()
+                            where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                             select item.Name;
             }
 

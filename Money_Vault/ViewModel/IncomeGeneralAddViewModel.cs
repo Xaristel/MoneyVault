@@ -125,6 +125,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 CategoriesList = from item in database.Income_Types.ToList()
+                                 where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                  select item.Name;
             }
 

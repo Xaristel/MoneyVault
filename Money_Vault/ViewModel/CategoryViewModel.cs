@@ -118,7 +118,6 @@ namespace Money_Vault.ViewModel
             }
         }
 
-
         public RelayCommand ShowAddFrameCommand
         {
             get
@@ -134,6 +133,7 @@ namespace Money_Vault.ViewModel
                 }));
             }
         }
+
         public RelayCommand ShowEditFrameCommand
         {
             get
@@ -152,6 +152,7 @@ namespace Money_Vault.ViewModel
                 }));
             }
         }
+
         public RelayCommand ShowDeleteFrameCommand
         {
             get
@@ -241,12 +242,15 @@ namespace Money_Vault.ViewModel
                 {
                     foreach (var item in database.Income_Types.ToList())
                     {
-                        categories.Add(new CategoryListItem()
+                        if (item.UserId == Convert.ToInt32(Settings.Default["currentUserId"]))
                         {
-                            Id = item.Id,
-                            Name = item.Name,
-                            Note = item.Note
-                        });
+                            categories.Add(new CategoryListItem()
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Note = item.Note
+                            });
+                        }
                     }
                 }
                 else
@@ -255,22 +259,28 @@ namespace Money_Vault.ViewModel
 
                     foreach (var item in database.Expense_Types.ToList())
                     {
-                        categories.Add(new CategoryListItem()
+                        if (item.UserId == Convert.ToInt32(Settings.Default["currentUserId"]))
                         {
-                            Id = item.Id,
-                            Name = item.Name,
-                            Note = item.Note
-                        });
+                            categories.Add(new CategoryListItem()
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Note = item.Note
+                            });
+                        }
                     }
 
                     foreach (var item in database.Expense_Subtypes.ToList())
                     {
-                        subcategories.Add(new CategoryListItem()
+                        if (item.UserId == Convert.ToInt32(Settings.Default["currentUserId"]))
                         {
-                            Id = item.Id,
-                            Name = item.Name,
-                            Note = item.Note
-                        });
+                            subcategories.Add(new CategoryListItem()
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Note = item.Note
+                            });
+                        }
                     }
 
                     SubcategoriesList = subcategories;
