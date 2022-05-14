@@ -6,13 +6,13 @@ namespace Money_Vault.View
     /// <summary>
     /// Логика взаимодействия для PlanningAccumulationPage.xaml
     /// </summary>
-    public partial class PlanningAccumulationPage : Page
+    public partial class PlanningAccountPage : Page
     {
-        public PlanningAccumulationPage()
+        public PlanningAccountPage()
         {
             InitializeComponent();
 
-            DataContext = new PlanningAccumulationViewModel();
+            DataContext = new PlanningAccountViewModel();
         }
     }
 }

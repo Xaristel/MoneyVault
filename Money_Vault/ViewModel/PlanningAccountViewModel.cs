@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Money_Vault.ViewModel
 {
-    public class PlanningAccumulationViewModel : BaseViewModel
+    public class PlanningAccountViewModel : BaseViewModel
     {
         private RelayCommand _showAddOperationFrameCommand;
         private RelayCommand _showEditOperationFrameCommand;
@@ -241,7 +241,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public PlanningAccumulationViewModel()
+        public PlanningAccountViewModel()
         {
             UpdateData();
         }
