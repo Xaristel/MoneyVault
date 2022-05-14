@@ -35,7 +35,6 @@ namespace Money_Vault.Model
             }
         }
 
-        [Required]
         public string Name
         {
             get => _name;
@@ -46,6 +45,7 @@ namespace Money_Vault.Model
             }
         }
 
+        [Required]
         public int Number
         {
             get => _number;

@@ -8,8 +8,9 @@ namespace Money_Vault.Model
     {
         private int _id;
         private int _account_Id;
-        private int _type;
+        private string _type;
         private int _amount;
+        private string _date;
 
         public int Id
         {
@@ -33,7 +34,7 @@ namespace Money_Vault.Model
         }
 
         [Required]
-        public int Type
+        public string Type
         {
             get => _type;
             set
@@ -51,6 +52,17 @@ namespace Money_Vault.Model
             {
                 _amount = value;
                 OnPropertyChanged("Amount");
+            }
+        }
+
+        [Required]
+        public string Date
+        {
+            get => _date;
+            set
+            {
+                _date = value;
+                OnPropertyChanged("Date");
             }
         }
     }

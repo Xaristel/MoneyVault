@@ -3,12 +3,226 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PlanningAccumulationPage">
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      d:DataContext="{d:DesignInstance Type=viewmodel:PlanningAccumulationViewModel}"
+      Title="PlanningAccumulationPage" 
+      Background="White" 
+      Width="1439" 
+      Height="850" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid>
-        
+    <Grid Width="1439">
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Stroke="Black" 
+            Width="3" 
+            StrokeThickness="3" 
+            Margin="300,124,0,0">
+        </Rectangle>
+
+        <Button 
+            x:Name="Button_Delete" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="1264,24,25,0" 
+            Command="{Binding ShowDeleteOperationFrameCommand}">
+            <TextBlock TextAlignment="Center">Удалить<LineBreak/>запись</TextBlock>
+        </Button>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            x:Name="Button_Edit" 
+            FontSize="22" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="1087,24,202,0" 
+            Command="{Binding ShowEditOperationFrameCommand}">
+            <TextBlock TextAlignment="Center">Изменить<LineBreak/>запись</TextBlock>
+        </Button>
+
+        <Button 
+            x:Name="Button_Add" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="909,24,380,0" 
+            Command="{Binding ShowAddOperationFrameCommand}">
+            <TextBlock TextAlignment="Center">Добавить<LineBreak/>запись</TextBlock>
+        </Button>
+
+        <DataGrid 
+            x:Name="dataGrid_Accounts" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding AccountsList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedAccount, Mode=TwoWay}"
+            Margin="20,133,1144,301">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Width="1*"
+                    Binding="{Binding Name, Mode=OneWay}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            x:Name="dataGrid_Operations" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding OperationsList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedOperation, Mode=TwoWay}"
+            Margin="909,177,20,20">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Номер"
+                    Width="1*"
+                    Binding="{Binding Id, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Тип операции"
+                    Width="2*"
+                    Binding="{Binding Type, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Сумма"
+                    Width="2*"
+                    Binding="{Binding Amount, Mode=OneWay}">
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Дата"
+                    Width="1*"
+                    Binding="{Binding Date, Mode=OneWay}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <Button 
+            x:Name="Button_AddNote" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Добавить счёт" 
+            Margin="20,0,1144,210" 
+            Height="86" 
+            VerticalAlignment="Bottom"
+            Command="{Binding ShowAddAccountFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_EditNote" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Изменить счёт" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="20,645,1144,0"
+            Command="{Binding ShowEditAccountFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_DeleteNote" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Удалить счёт" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="20,740,1144,0"
+            Command="{Binding ShowDeleteAccountFrameCommand}"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Снятия и пополнения" 
+            HorizontalAlignment="Left" 
+            Margin="909,133,0,0" 
+            VerticalAlignment="Top" 
+            Width="510"
+            HorizontalContentAlignment="Center"
+            FontSize="24"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Текущее состояние" 
+            HorizontalAlignment="Left" 
+            Margin="308,133,0,0" 
+            VerticalAlignment="Top" 
+            Width="580"
+            HorizontalContentAlignment="Center"
+            FontSize="24"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Сумма:" 
+            HorizontalAlignment="Left" 
+            Margin="308,177,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Прогноз на конец месяца:" 
+            HorizontalAlignment="Left" 
+            Margin="308,225,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Прогноз на конец года:" 
+            HorizontalAlignment="Left" 
+            Margin="308,273,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="308,330,551,20" >
+            <!--<lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Sales" LabelFormatter="{Binding }"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>-->
+        </lvc:CartesianChart>
+
+        <Label 
+            Name="Label_Amount"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding SelectedAccount.Current_Amount}" 
+            HorizontalAlignment="Left" 
+            Margin="603,175,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="38"/>
+
+        <Label 
+            Name="Label_ForecastMonth"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding CurrentForecastMonth}" 
+            HorizontalAlignment="Left" 
+            Margin="603,225,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="36"/>
+
+        <Label 
+            Name="Label_ForecastYear"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding CurrentForecastYear}" 
+            HorizontalAlignment="Left" 
+            Margin="603,273,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="36"/>
     </Grid>
 </Page>
+
