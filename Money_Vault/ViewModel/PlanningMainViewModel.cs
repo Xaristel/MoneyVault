@@ -34,7 +34,7 @@ namespace Money_Vault.ViewModel
         private List<string> _pagesPathList = new List<string>()
         {
             "/View/PlanningNotePage.xaml",
-            "/View/PlanningAccumulationPage.xaml",
+            "/View/PlanningAccountPage.xaml",
             "/View/PlanningGoalPage.xaml"
         };
 

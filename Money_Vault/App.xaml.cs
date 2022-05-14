@@ -32,6 +32,10 @@ namespace Money_Vault
             displayRootRegistry.RegisterWindowType<ExpenseShopEditViewModel, ExpenseShopEditModalWindow>();
             displayRootRegistry.RegisterWindowType<PlanningNoteAddViewModel, PlanningNoteAddModalWindow>();
             displayRootRegistry.RegisterWindowType<PlanningNoteEditViewModel, PlanningNoteEditModalWindow>();
+            displayRootRegistry.RegisterWindowType<PlanningAccountAddViewModel, PlanningAccountAddModalWindow>();
+            displayRootRegistry.RegisterWindowType<PlanningAccountEditViewModel, PlanningAccountEditModalWindow>();
+            displayRootRegistry.RegisterWindowType<PlanningAccountsOperationAddViewModel, PlanningAccountsOperationAddModalWindow>();
+            displayRootRegistry.RegisterWindowType<PlanningAccountsOperationEditViewModel, PlanningAccountsOperationEditModalWindow>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

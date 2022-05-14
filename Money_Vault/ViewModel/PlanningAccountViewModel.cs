@@ -1,10 +1,13 @@
-﻿using Money_Vault.Database;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using Money_Vault.Database;
 using Money_Vault.Model;
 using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
 {
@@ -21,11 +24,17 @@ namespace Money_Vault.ViewModel
         private IEnumerable<Account> _accountsList;
         private Account _selectedAccount;
 
-        private IEnumerable<Account_Operation> _operationsList;
-        private Account_Operation _selectedOperation;
+        private IEnumerable<AccountOperationCommonListItem> _operationsList;
+        private AccountOperationCommonListItem _selectedOperation;
 
-        private int _currentForecastMonth;
-        private int _currentForecastYear;
+        private string _currentNumberLabel;
+        private double _initialAmount;
+        private double _currentAmount;
+        private double _currentForecastMonth;
+        private double _currentForecastYear;
+
+        private SeriesCollection _operationsSeries;
+        private string[] _datesLabels;
 
         public IEnumerable<Account> AccountsList
         {
@@ -45,11 +54,11 @@ namespace Money_Vault.ViewModel
                 _selectedAccount = value;
                 OnPropertyChanged("SelectedAccount");
 
-                FillOperationList();
+                FillAccountData();
             }
         }
 
-        public IEnumerable<Account_Operation> OperationsList
+        public IEnumerable<AccountOperationCommonListItem> OperationsList
         {
             get => _operationsList;
             set
@@ -59,7 +68,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public Account_Operation SelectedOperation
+        public AccountOperationCommonListItem SelectedOperation
         {
             get => _selectedOperation;
             set
@@ -69,23 +78,73 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public int CurrentForecastMonth
+        public double CurrentForecastMonth
         {
             get => _currentForecastMonth;
             set
             {
                 _currentForecastMonth = value;
-                OnPropertyChanged("ForecastMonth");
+                OnPropertyChanged("CurrentForecastMonth");
             }
         }
 
-        public int CurrentForecastYear
+        public double CurrentForecastYear
         {
             get => _currentForecastYear;
             set
             {
                 _currentForecastYear = value;
-                OnPropertyChanged("ForecastYear");
+                OnPropertyChanged("CurrentForecastYear");
+            }
+        }
+
+        public double InitialAmount
+        {
+            get => _initialAmount;
+            set
+            {
+                _initialAmount = value;
+                OnPropertyChanged("InitialAmount");
+            }
+        }
+
+        public double CurrentAmount
+        {
+            get => _currentAmount;
+            set
+            {
+                _currentAmount = value;
+                OnPropertyChanged("CurrentAmount");
+            }
+        }
+
+        public string CurrentNumberLabel
+        {
+            get => _currentNumberLabel;
+            set
+            {
+                _currentNumberLabel = value;
+                OnPropertyChanged("CurrentNumberLabel");
+            }
+        }
+
+        public SeriesCollection OperationsSeries
+        {
+            get => _operationsSeries;
+            set
+            {
+                _operationsSeries = value;
+                OnPropertyChanged("OperationsSeries");
+            }
+        }
+
+        public string[] DatesLabels
+        {
+            get => _datesLabels;
+            set
+            {
+                _datesLabels = value;
+                OnPropertyChanged("DatesLabels");
             }
         }
 
@@ -95,12 +154,12 @@ namespace Money_Vault.ViewModel
             {
                 return _showAddOperationFrameCommand ?? (_showAddOperationFrameCommand = new RelayCommand(async (args) =>
                 {
-                    //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    //var planningNoteAddViewModel = new PlanningNoteAddViewModel();
-                    //await _displayRootRegistry.ShowModalPresentation(planningNoteAddViewModel);
+                    var planningAccountsOperationAddViewModel = new PlanningAccountsOperationAddViewModel(SelectedAccount.Id);
+                    await _displayRootRegistry.ShowModalPresentation(planningAccountsOperationAddViewModel);
 
-                    //UpdateData();
+                    FillAccountData();
                 }));
             }
         }
@@ -113,15 +172,16 @@ namespace Money_Vault.ViewModel
                 {
                     if (SelectedOperation != null)
                     {
-                        //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        //var planningNoteEditViewModel = new PlanningNoteEditViewModel(
-                        //    SelectedItem.Id,
-                        //    SelectedItem.Name,
-                        //    SelectedItem.Text);
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        var planningAccountsOperationEditViewModel = new PlanningAccountsOperationEditViewModel(
+                            SelectedOperation.Id,
+                            SelectedOperation.Type,
+                            SelectedOperation.Amount.ToString(),
+                            SelectedOperation.Date);
 
-                        //await _displayRootRegistry.ShowModalPresentation(planningNoteEditViewModel);
+                        await _displayRootRegistry.ShowModalPresentation(planningAccountsOperationEditViewModel);
 
-                        //UpdateData();
+                        FillAccountData();
                     }
                     else
                     {
@@ -139,23 +199,23 @@ namespace Money_Vault.ViewModel
                 {
                     if (SelectedOperation != null)
                     {
-                        //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        //var messageViewModel = new MessageViewModel(
-                        //                        "Внимание",
-                        //                        "Вы действительно хотите удалить данную запись?");
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        var messageViewModel = new MessageViewModel(
+                                                "Внимание",
+                                                "Вы действительно хотите удалить данную запись?");
 
-                        //await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
 
-                        //if (messageViewModel.Result)
-                        //{
-                        //    using (DatabaseContext database = new DatabaseContext())
-                        //    {
-                        //        Note item = database.Notes.ToList().Find(x => x.Id == SelectedItem.Id);
-                        //        database.Notes.Remove(item);
-                        //        database.SaveChanges();
-                        //    }
-                        //    UpdateData();
-                        //}
+                        if (messageViewModel.Result)
+                        {
+                            using (DatabaseContext database = new DatabaseContext())
+                            {
+                                Account_Operation item = database.Account_Operations.ToList().Find(x => x.Id == SelectedOperation.Id);
+                                database.Account_Operations.Remove(item);
+                                database.SaveChanges();
+                            }
+                            FillAccountData();
+                        }
                     }
                     else
                     {
@@ -171,12 +231,12 @@ namespace Money_Vault.ViewModel
             {
                 return _showAddAccountFrameCommand ?? (_showAddAccountFrameCommand = new RelayCommand(async (args) =>
                 {
-                    //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    //var planningNoteAddViewModel = new PlanningNoteAddViewModel();
-                    //await _displayRootRegistry.ShowModalPresentation(planningNoteAddViewModel);
+                    var planningAccountAddViewModel = new PlanningAccountAddViewModel();
+                    await _displayRootRegistry.ShowModalPresentation(planningAccountAddViewModel);
 
-                    //UpdateData();
+                    UpdateData();
                 }));
             }
         }
@@ -189,15 +249,23 @@ namespace Money_Vault.ViewModel
                 {
                     if (SelectedAccount != null)
                     {
-                        //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        //var planningNoteEditViewModel = new PlanningNoteEditViewModel(
-                        //    SelectedItem.Id,
-                        //    SelectedItem.Name,
-                        //    SelectedItem.Text);
+                        int lastSelectedId = SelectedAccount.Id;
 
-                        //await _displayRootRegistry.ShowModalPresentation(planningNoteEditViewModel);
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        var planningAccountEditViewModel = new PlanningAccountEditViewModel(
+                            SelectedAccount.Id,
+                            SelectedAccount.Name,
+                            SelectedAccount.Number,
+                            SelectedAccount.Current_Amount);
 
-                        //UpdateData();
+                        await _displayRootRegistry.ShowModalPresentation(planningAccountEditViewModel);
+
+                        UpdateData();
+
+                        using (DatabaseContext database = new DatabaseContext())
+                        {
+                            SelectedAccount = database.Accounts.ToList().Find(x => x.Id == lastSelectedId);
+                        }
                     }
                     else
                     {
@@ -215,23 +283,24 @@ namespace Money_Vault.ViewModel
                 {
                     if (SelectedAccount != null)
                     {
-                        //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        //var messageViewModel = new MessageViewModel(
-                        //                        "Внимание",
-                        //                        "Вы действительно хотите удалить данную запись?");
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        var messageViewModel = new MessageViewModel(
+                                                "Внимание",
+                                                "Вы действительно хотите удалить данную запись?");
 
-                        //await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
 
-                        //if (messageViewModel.Result)
-                        //{
-                        //    using (DatabaseContext database = new DatabaseContext())
-                        //    {
-                        //        Note item = database.Notes.ToList().Find(x => x.Id == SelectedItem.Id);
-                        //        database.Notes.Remove(item);
-                        //        database.SaveChanges();
-                        //    }
-                        //    UpdateData();
-                        //}
+                        if (messageViewModel.Result)
+                        {
+                            using (DatabaseContext database = new DatabaseContext())
+                            {
+                                Account item = database.Accounts.ToList().Find(x => x.Id == SelectedAccount.Id);
+                                database.Accounts.Remove(item);
+                                database.SaveChanges();
+                            }
+                            UpdateData();
+                            SelectedAccount = null;
+                        }
                     }
                     else
                     {
@@ -255,23 +324,174 @@ namespace Money_Vault.ViewModel
                 AccountsList = from item in database.Accounts.ToList()
                                where item.User_Id == currentUserId
                                select item;
-
             }
-
-            FillOperationList();
         }
 
-        private void FillOperationList()
+        private void FillAccountData()
         {
             using (DatabaseContext database = new DatabaseContext())
             {
                 if (SelectedAccount != null)
                 {
-                    OperationsList = from item in database.Account_Operations.ToList()
-                                     where item.Account_Id == SelectedAccount.Id
-                                     select item;
+                    List<AccountOperationCommonListItem> accountOperationsTempList = new List<AccountOperationCommonListItem>();
+                    int currentAmount = SelectedAccount.Current_Amount;
+
+                    foreach (var item in database.Account_Operations.ToList())
+                    {
+                        if (item.Account_Id == SelectedAccount.Id)
+                        {
+                            accountOperationsTempList.Add(new AccountOperationCommonListItem()
+                            {
+                                Id = item.Id,
+                                Account_Id = item.Account_Id,
+                                Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Amount),
+                                Type = item.Type,
+                                Date = item.Date
+                            });
+
+                            if (item.Type == "Снятие")
+                            {
+                                currentAmount -= item.Amount;
+                            }
+                            else
+                            {
+                                currentAmount += item.Amount;
+                            }
+                        }
+                    }
+
+                    InitialAmount = AdditionalFunctions.ConvertToCurrencyFormat(SelectedAccount.Current_Amount);
+                    OperationsList = accountOperationsTempList;
+                    CurrentNumberLabel = "Текущее состояние счёта №" + SelectedAccount.Number;
+                    CurrentAmount = AdditionalFunctions.ConvertToCurrencyFormat(currentAmount);
+                    CalculateForecast();
+                    FillChartData();
+                }
+                else
+                {
+                    OperationsList = new List<AccountOperationCommonListItem>();
+                    CurrentNumberLabel = "Выберите счёт...";
+                    CurrentAmount = 0;
+                    CurrentForecastMonth = 0;
+                    CurrentForecastYear = 0;
                 }
             }
+        }
+
+        private void CalculateForecast()
+        {
+            int averageAmount = 0;
+            int timeDiff = (DateTime.Now.Year - Convert.ToInt32(GetMinOperationsDate().Split('.')[2])) * 12
+                        + DateTime.Now.Month - Convert.ToInt32(GetMinOperationsDate().Split('.')[1]);
+
+            if (timeDiff != 0)
+            {
+                using (DatabaseContext database = new DatabaseContext())
+                {
+                    foreach (var item in database.Account_Operations.ToList())
+                    {
+                        if (item.Account_Id == SelectedAccount.Id && AdditionalFunctions.FindLessDate(item.Date, DateTime.Now.ToString("dd.MM.yyyy")))
+                        {
+                            if (item.Type == "Снятие")
+                            {
+                                averageAmount -= item.Amount;
+                            }
+                            else
+                            {
+                                averageAmount += item.Amount;
+                            }
+                        }
+                    }
+                }
+
+                CurrentForecastMonth = CurrentAmount
+                    + AdditionalFunctions.ConvertToCurrencyFormat(averageAmount) / timeDiff;
+
+                CurrentForecastYear = CurrentAmount
+                    + (AdditionalFunctions.ConvertToCurrencyFormat(averageAmount) / timeDiff) * (12 - DateTime.Now.Month + 1);
+            }
+            else
+            {
+                CurrentForecastMonth = 0;
+
+                CurrentForecastYear = 0;
+            }
+        }
+
+        private string GetMinOperationsDate()
+        {
+            string minDate = "99.99.9999";
+
+            IEnumerable<string> tempDates = new List<string>();
+
+            using (DatabaseContext database = new DatabaseContext())
+            {
+                tempDates = from item in database.Account_Operations.ToList()
+                            where item.Account_Id == SelectedAccount.Id
+                            select item.Date;
+            }
+
+            foreach (var date in tempDates)
+            {
+                if (AdditionalFunctions.FindLessDate(date, minDate))
+                {
+                    minDate = date;
+                }
+            }
+
+            return minDate;
+        }
+
+        private void FillChartData()
+        {
+            double currentSum = InitialAmount;
+
+            SeriesCollection tempCollection = new SeriesCollection();
+            List<string> tempDates = new List<string>
+            {
+                GetMinOperationsDate()
+            };
+
+            ChartValues<double> chartValues = new ChartValues<double>
+            {
+                currentSum
+            };
+
+            using (DatabaseContext database = new DatabaseContext())
+            {
+                foreach (var item in database.Account_Operations.ToList())
+                {
+                    if (item.Account_Id == SelectedAccount.Id)
+                    {
+                        if (item.Type == "Снятие")
+                        {
+                            currentSum -= AdditionalFunctions.ConvertToCurrencyFormat(item.Amount);
+                        }
+                        else
+                        {
+                            currentSum += AdditionalFunctions.ConvertToCurrencyFormat(item.Amount);
+                        }
+
+                        chartValues.Add(currentSum);
+                        tempDates.Add(item.Date);
+                    }
+                }
+            }
+
+            tempCollection.Add(
+                new LineSeries
+                {
+                    Title = "Текущая сумма",
+                    Values = chartValues,
+                    PointGeometrySize = 14,
+                    PointForeground = Brushes.Green,
+                    StrokeThickness = 3,
+                    FontFamily = new FontFamily("Balsamiq Sans"),
+                    FontSize = 20,
+                });
+
+            OperationsSeries = tempCollection;
+            DatesLabels = tempDates.ToArray();
         }
     }
 }

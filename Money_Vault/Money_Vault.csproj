@@ -132,6 +132,7 @@
     </ApplicationDefinition>
     <Compile Include="Database\DatabaseContext.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\AccountOperationCommonListItem.cs" />
     <Compile Include="Model\Account_Operation.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\CategoryListItem.cs" />
@@ -165,6 +166,10 @@
     <Compile Include="ViewModel\IncomeGeneralEditViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\MultiConverter.cs" />
+    <Compile Include="ViewModel\PlanningAccountAddViewModel.cs" />
+    <Compile Include="ViewModel\PlanningAccountEditViewModel.cs" />
+    <Compile Include="ViewModel\PlanningAccountsOperationAddViewModel.cs" />
+    <Compile Include="ViewModel\PlanningAccountsOperationEditViewModel.cs" />
     <Compile Include="ViewModel\PlanningNoteAddViewModel.cs" />
     <Compile Include="ViewModel\PlanningNoteEditViewModel.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
@@ -180,7 +185,7 @@
     <Compile Include="ViewModel\IncomeMainViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\PlanningAccumulationViewModel.cs" />
+    <Compile Include="ViewModel\PlanningAccountViewModel.cs" />
     <Compile Include="ViewModel\PlanningGoalViewModel.cs" />
     <Compile Include="ViewModel\PlanningMainViewModel.cs" />
     <Compile Include="ViewModel\PlanningNoteViewModel.cs" />
@@ -248,6 +253,18 @@
     <Compile Include="View\IncomeMainPage.xaml.cs">
       <DependentUpon>IncomeMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PlanningAccountAddModalWindow.xaml.cs">
+      <DependentUpon>PlanningAccountAddModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningAccountEditModalWindow.xaml.cs">
+      <DependentUpon>PlanningAccountEditModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningAccountsOperationAddModalWindow.xaml.cs">
+      <DependentUpon>PlanningAccountsOperationAddModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningAccountsOperationEditModalWindow.xaml.cs">
+      <DependentUpon>PlanningAccountsOperationEditModalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PlanningNoteAddModalWindow.xaml.cs">
       <DependentUpon>PlanningNoteAddModalWindow.xaml</DependentUpon>
     </Compile>
@@ -263,8 +280,8 @@
     <Compile Include="View\MessageModalWindow.xaml.cs">
       <DependentUpon>MessageModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PlanningAccumulationPage.xaml.cs">
-      <DependentUpon>PlanningAccumulationPage.xaml</DependentUpon>
+    <Compile Include="View\PlanningAccountPage.xaml.cs">
+      <DependentUpon>PlanningAccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PlanningGoalPage.xaml.cs">
       <DependentUpon>PlanningGoalPage.xaml</DependentUpon>
@@ -370,6 +387,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\PlanningAccountAddModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningAccountEditModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningAccountsOperationAddModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningAccountsOperationEditModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PlanningNoteAddModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,7 +423,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PlanningAccumulationPage.xaml">
+    <Page Include="View\PlanningAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
