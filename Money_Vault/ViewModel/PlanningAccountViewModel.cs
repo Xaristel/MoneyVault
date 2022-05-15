@@ -393,7 +393,7 @@ namespace Money_Vault.ViewModel
                     });
 
                     OperationsSeries = tempSeries;
-                    DatesLabels = new string[] { DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy") };
+                    DatesLabels = new string[] { "" };
                 }
             }
         }

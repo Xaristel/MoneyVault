@@ -11,6 +11,7 @@ namespace Money_Vault.Model
         private int _account_Id;
         private string _name;
         private int _required_Amount;
+        private string _note;
 
         public int Id
         {
@@ -63,6 +64,16 @@ namespace Money_Vault.Model
             {
                 _required_Amount = value;
                 OnPropertyChanged("Required_Amount");
+            }
+        }
+
+        public string Note
+        {
+            get => _note;
+            set
+            {
+                _note = value;
+                OnPropertyChanged("Note");
             }
         }
     }

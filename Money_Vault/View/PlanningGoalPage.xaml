@@ -3,12 +3,267 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Money_Vault.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PlanningGoalPage">
+      xmlns:viewmodel="clr-namespace:Money_Vault.ViewModel" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      d:DataContext="{d:DesignInstance Type=viewmodel:PlanningGoalViewModel}"
+      Title="PlanningGoalPage" 
+      Background="White" 
+      Width="1439" 
+      Height="850" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Center" 
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid>
-        
+    <Grid Width="1439">
+        <Rectangle 
+            HorizontalAlignment="Left" 
+            Stroke="Black" 
+            Width="3" 
+            StrokeThickness="3" 
+            Margin="300,124,0,0">
+        </Rectangle>
+
+        <Button 
+            x:Name="Button_Delete" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="1264,24,25,0" 
+            IsEnabled="False">
+            <TextBlock TextAlignment="Center">Удалить<LineBreak/>запись</TextBlock>
+        </Button>
+
+        <Button 
+            Style="{StaticResource Button_Common}"
+            x:Name="Button_Edit" 
+            FontSize="22" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="1087,24,202,0" 
+            IsEnabled="False">
+            <TextBlock TextAlignment="Center">Изменить<LineBreak/>запись</TextBlock>
+        </Button>
+
+        <Button 
+            x:Name="Button_Add" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="909,24,380,0" 
+            IsEnabled="False">
+            <TextBlock TextAlignment="Center">Добавить<LineBreak/>запись</TextBlock>
+        </Button>
+
+        <DataGrid 
+            x:Name="dataGrid_Goals" 
+            Style="{StaticResource DataGridView_Common}"
+            ItemsSource="{Binding GoalsList, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedGoal, Mode=TwoWay}"
+            Margin="20,133,1144,301">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Width="1*"
+                    Binding="{Binding Name, Mode=OneWay}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button 
+            x:Name="Button_AddGoal" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Добавить цель" 
+            Margin="20,0,1144,210" 
+            Height="86" 
+            VerticalAlignment="Bottom"
+            Command="{Binding ShowAddGoalFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_EditGoal" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Изменить цель" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="20,645,1144,0"
+            Command="{Binding ShowEditGoalFrameCommand}"/>
+
+        <Button 
+            x:Name="Button_DeleteGoal" 
+            Style="{StaticResource Button_Common}"
+            FontSize="22" 
+            Content="Удалить цель" 
+            VerticalAlignment="Top" 
+            Height="90" 
+            Margin="20,740,1144,0"
+            Command="{Binding ShowDeleteGoalFrameCommand}"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Текущее состояние цели" 
+            HorizontalAlignment="Left" 
+            Margin="308,133,0,0" 
+            VerticalAlignment="Top" 
+            Width="580"
+            HorizontalContentAlignment="Center"
+            FontSize="24" 
+            Height="39"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Цель:" 
+            HorizontalAlignment="Left" 
+            Margin="308,177,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Необходимая сумма:" 
+            HorizontalAlignment="Left" 
+            Margin="308,227,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Накоплено:" 
+            HorizontalAlignment="Left" 
+            Margin="308,277,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Осталось:" 
+            HorizontalAlignment="Left" 
+            Margin="308,327,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Прогноз выполнения:" 
+            HorizontalAlignment="Left" 
+            Margin="308,377,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            HorizontalContentAlignment="Left"
+            FontSize="22"/>
+
+        <Label 
+            Style="{StaticResource Label_Common}"
+            Content="Заметка:" 
+            HorizontalAlignment="Left" 
+            Margin="308,427,0,0" 
+            VerticalAlignment="Top" 
+            Width="526"
+            HorizontalContentAlignment="Center"
+            FontSize="24"/>
+
+        <lvc:CartesianChart 
+            Series="{Binding OperationsSeries}" 
+            LegendLocation="None" 
+            Margin="839,177,20,20"
+            BorderBrush="White"
+            FontFamily="Balsamiq Sans"
+            FontSize="20">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis 
+                    Title="Сумма" 
+                    FontFamily="Balsamiq Sans"
+                    FontSize="14"
+                    Foreground="Black">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis 
+                    Title="Дата" 
+                    Labels="{Binding DatesLabels}"
+                    FontFamily="Balsamiq Sans"
+                    FontSize="14"
+                    Foreground="Black">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+
+        <Label 
+            x:Name="Label_GoalName"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding SelectedGoal.Name}" 
+            HorizontalAlignment="Center" 
+            Margin="0,175,0,0" 
+            VerticalAlignment="Top" 
+            Width="231"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="38"/>
+
+        <Label 
+            Name="Label_RequiredAmount"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding RequiredAmount}" 
+            HorizontalAlignment="Center" 
+            Margin="0,225,0,0" 
+            VerticalAlignment="Top" 
+            Width="229"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="38"/>
+
+        <Label 
+            Name="Label_CurrentAmount"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding CurrentAmount}" 
+            HorizontalAlignment="Center" 
+            Margin="0,277,0,0" 
+            VerticalAlignment="Top" 
+            Width="229"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="36"/>
+
+        <Label 
+            Name="Label_RemainingAmount"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding RemainingAmount}" 
+            HorizontalAlignment="Center" 
+            Margin="0,327,0,0" 
+            VerticalAlignment="Top" 
+            Width="229"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="36"/>
+
+        <Label 
+            Name="Label_ForecastTime"
+            Style="{StaticResource Label_Common}"
+            Content="{Binding ForecastTime}" 
+            HorizontalAlignment="Center" 
+            Margin="0,377,0,0" 
+            VerticalAlignment="Top" 
+            Width="231"
+            HorizontalContentAlignment="Left"
+            FontSize="22" Height="36"/>
+
+        <TextBox 
+            x:Name="TextBox_Note"
+            Style="{StaticResource TextBox_Multiline}"
+            Margin="0,468,605,20" 
+            TextWrapping="Wrap"
+            Text="{Binding SelectedGoal.Note, Mode=OneWay}" 
+            FontSize="22" 
+            HorizontalAlignment="Right" 
+            Width="526"
+            IsReadOnly="True"/>
+
     </Grid>
 </Page>
+

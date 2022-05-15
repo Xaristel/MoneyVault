@@ -103,7 +103,7 @@
         </DataGrid>
 
         <Button 
-            x:Name="Button_AddNote" 
+            x:Name="Button_AddAccount" 
             Style="{StaticResource Button_Common}"
             FontSize="22" 
             Content="Добавить счёт" 
@@ -113,7 +113,7 @@
             Command="{Binding ShowAddAccountFrameCommand}"/>
 
         <Button 
-            x:Name="Button_EditNote" 
+            x:Name="Button_EditAccount" 
             Style="{StaticResource Button_Common}"
             FontSize="22" 
             Content="Изменить счёт" 
@@ -123,7 +123,7 @@
             Command="{Binding ShowEditAccountFrameCommand}"/>
 
         <Button 
-            x:Name="Button_DeleteNote" 
+            x:Name="Button_DeleteAccount" 
             Style="{StaticResource Button_Common}"
             FontSize="22" 
             Content="Удалить счёт" 
