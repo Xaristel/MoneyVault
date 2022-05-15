@@ -81,7 +81,7 @@
                 <DataGridTextColumn 
                     Header="Номер"
                     Width="0.8*"
-                    Binding="{Binding Id, Mode=OneWay}">
+                    Binding="{Binding Number, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Тип операции"

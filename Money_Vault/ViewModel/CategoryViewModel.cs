@@ -247,6 +247,8 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 List<CategoryListItem> categories = new List<CategoryListItem>();
+                int indexCategory = 1;
+                int indexSubcategory = 1;
 
                 if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                 {
@@ -256,11 +258,13 @@ namespace Money_Vault.ViewModel
                         {
                             categories.Add(new CategoryListItem()
                             {
+                                Number = indexCategory,
                                 Id = item.Id,
                                 Name = item.Name,
                                 Note = item.Note
                             });
                         }
+                        indexCategory++;
                     }
                 }
                 else
@@ -273,11 +277,13 @@ namespace Money_Vault.ViewModel
                         {
                             categories.Add(new CategoryListItem()
                             {
+                                Number = indexCategory,
                                 Id = item.Id,
                                 Name = item.Name,
                                 Note = item.Note
                             });
                         }
+                        indexCategory++;
                     }
 
                     foreach (var item in database.Expense_Subtypes.ToList())
@@ -286,11 +292,13 @@ namespace Money_Vault.ViewModel
                         {
                             subcategories.Add(new CategoryListItem()
                             {
+                                Number = indexSubcategory,
                                 Id = item.Id,
                                 Name = item.Name,
                                 Note = item.Note
                             });
                         }
+                        indexSubcategory++;
                     }
 
                     SubcategoriesList = subcategories;

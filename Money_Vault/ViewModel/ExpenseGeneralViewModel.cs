@@ -370,6 +370,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 List<ExpenseCommonListItem> tempList = new List<ExpenseCommonListItem>();
+                int index = 1;
 
                 foreach (var item in database.Expenses.ToList())
                 {
@@ -381,6 +382,7 @@ namespace Money_Vault.ViewModel
                     {
                         tempList.Add(new ExpenseCommonListItem()
                         {
+                            Number = index,
                             Id = item.Id,
                             TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.Expense_Type_Id).Name,
                             Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Price),
@@ -388,6 +390,8 @@ namespace Money_Vault.ViewModel
                             Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
                             Note = item.Note
                         });
+
+                        index++;
                     }
                 }
 

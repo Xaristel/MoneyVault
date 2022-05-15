@@ -512,6 +512,7 @@ namespace Money_Vault.ViewModel
             List<IncomeCommonListItem> listIncomes = new List<IncomeCommonListItem>();
             List<ExpenseCommonListItem> listExpenses = new List<ExpenseCommonListItem>();
             List<TotalListItem> listTotal = new List<TotalListItem>();
+            int index = 1;
 
             using (DatabaseContext database = new DatabaseContext())
             {
@@ -537,12 +538,15 @@ namespace Money_Vault.ViewModel
                                             {
                                                 listIncomes.Add(new IncomeCommonListItem()
                                                 {
+                                                    Number = index,
                                                     Id = item.Id,
                                                     TypeName = database.Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
                                                     Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
                                                     Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
                                                     Note = item.Note
                                                 });
+
+                                                index++;
                                             }
                                         }
                                         break;
@@ -582,6 +586,7 @@ namespace Money_Vault.ViewModel
                                             {
                                                 listExpenses.Add(new ExpenseCommonListItem()
                                                 {
+                                                    Number = index,
                                                     Id = item.Id,
                                                     TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.Expense_Type_Id).Name,
                                                     Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Price),
@@ -589,6 +594,8 @@ namespace Money_Vault.ViewModel
                                                     Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
                                                     Note = item.Note
                                                 });
+
+                                                index++;
                                             }
                                         }
                                         break;

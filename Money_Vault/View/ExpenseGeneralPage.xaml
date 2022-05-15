@@ -117,7 +117,7 @@
                 <DataGridTextColumn 
                     Header="Номер" 
                     Width="1*"
-                    Binding="{Binding Id, Mode=OneWay}">
+                    Binding="{Binding Number, Mode=OneWay}">
                 </DataGridTextColumn>
                 <DataGridTextColumn 
                     Header="Категория" 

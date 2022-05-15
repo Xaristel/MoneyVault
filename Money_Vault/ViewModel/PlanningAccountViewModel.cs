@@ -337,12 +337,14 @@ namespace Money_Vault.ViewModel
                     List<AccountOperationCommonListItem> accountOperationsTempList = new List<AccountOperationCommonListItem>();
                     int currentAmount = SelectedAccount.Current_Amount;
 
+                    int index = 1;
                     foreach (var item in database.Account_Operations.ToList())
                     {
                         if (item.Account_Id == SelectedAccount.Id)
                         {
                             accountOperationsTempList.Add(new AccountOperationCommonListItem()
                             {
+                                Number = index,
                                 Id = item.Id,
                                 Account_Id = item.Account_Id,
                                 Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Amount),
@@ -358,6 +360,7 @@ namespace Money_Vault.ViewModel
                             {
                                 currentAmount += item.Amount;
                             }
+                            index++;
                         }
                     }
 

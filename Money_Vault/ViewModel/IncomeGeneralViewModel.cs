@@ -260,7 +260,7 @@ namespace Money_Vault.ViewModel
             using (DatabaseContext database = new DatabaseContext())
             {
                 List<IncomeCommonListItem> tempList = new List<IncomeCommonListItem>();
-
+                int index = 1;
                 foreach (var item in database.Incomes.ToList())
                 {
                     if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
@@ -271,12 +271,15 @@ namespace Money_Vault.ViewModel
                     {
                         tempList.Add(new IncomeCommonListItem()
                         {
+                            Number = index,
                             Id = item.Id,
                             TypeName = database.Income_Types.ToList().Find(x => x.Id == item.Income_Type_Id).Name,
                             Amount = AdditionalFunctions.ConvertToCurrencyFormat(item.Total_Amount),
                             Date = new DateTime(Convert.ToInt32(item.Date.Split('.')[2]), Convert.ToInt32(item.Date.Split('.')[1]), Convert.ToInt32(item.Date.Split('.')[0])),
                             Note = item.Note
                         });
+
+                        index++;
                     }
                 }
                 IncomesList = tempList;
