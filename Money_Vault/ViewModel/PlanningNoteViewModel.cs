@@ -83,6 +83,8 @@ namespace Money_Vault.ViewModel
                 {
                     if (SelectedItem != null)
                     {
+                        int lastSelectedItemId = SelectedItem.Id;
+
                         var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
                         var planningNoteEditViewModel = new PlanningNoteEditViewModel(
                             SelectedItem.Id,
@@ -92,6 +94,11 @@ namespace Money_Vault.ViewModel
                         await _displayRootRegistry.ShowModalPresentation(planningNoteEditViewModel);
 
                         UpdateData();
+
+                        using (DatabaseContext database = new DatabaseContext())
+                        {
+                            SelectedItem = database.Notes.ToList().Find(x => x.Id == lastSelectedItemId);
+                        }
                     }
                     else
                     {

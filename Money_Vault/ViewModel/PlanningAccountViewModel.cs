@@ -313,6 +313,7 @@ namespace Money_Vault.ViewModel
         public PlanningAccountViewModel()
         {
             UpdateData();
+            FillAccountData();
         }
 
         private void UpdateData()
@@ -374,6 +375,22 @@ namespace Money_Vault.ViewModel
                     CurrentAmount = 0;
                     CurrentForecastMonth = 0;
                     CurrentForecastYear = 0;
+
+                    ChartValues<double> chartValues = new ChartValues<double> { 0D };
+                    SeriesCollection tempSeries = new SeriesCollection();
+                    tempSeries.Add(new LineSeries
+                    {
+                        Title = "Выберите счёт",
+                        Values = chartValues,
+                        PointGeometrySize = 14,
+                        PointForeground = Brushes.Green,
+                        StrokeThickness = 3,
+                        FontFamily = new FontFamily("Balsamiq Sans"),
+                        FontSize = 20
+                    });
+
+                    OperationsSeries = tempSeries;
+                    DatesLabels = new string[] { DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy") };
                 }
             }
         }
@@ -449,7 +466,7 @@ namespace Money_Vault.ViewModel
             SeriesCollection tempCollection = new SeriesCollection();
             List<string> tempDates = new List<string>
             {
-                GetMinOperationsDate()
+                ""
             };
 
             ChartValues<double> chartValues = new ChartValues<double>

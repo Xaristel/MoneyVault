@@ -32,7 +32,7 @@
             Height="90" 
             Margin="1264,24,25,0" 
             Command="{Binding ShowDeleteOperationFrameCommand}">
-            <TextBlock TextAlignment="Center">Удалить<LineBreak/>запись</TextBlock>
+            <TextBlock TextAlignment="Center">Удалить<LineBreak/>операцию</TextBlock>
         </Button>
 
         <Button 
@@ -43,7 +43,7 @@
             Height="90" 
             Margin="1087,24,202,0" 
             Command="{Binding ShowEditOperationFrameCommand}">
-            <TextBlock TextAlignment="Center">Изменить<LineBreak/>запись</TextBlock>
+            <TextBlock TextAlignment="Center">Изменить<LineBreak/>операцию</TextBlock>
         </Button>
 
         <Button 
@@ -54,7 +54,7 @@
             Height="90" 
             Margin="909,24,380,0" 
             Command="{Binding ShowAddOperationFrameCommand}">
-            <TextBlock TextAlignment="Center">Добавить<LineBreak/>запись</TextBlock>
+            <TextBlock TextAlignment="Center">Добавить<LineBreak/>операцию</TextBlock>
         </Button>
 
         <DataGrid 
