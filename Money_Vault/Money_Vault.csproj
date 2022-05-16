@@ -170,6 +170,8 @@
     <Compile Include="ViewModel\PlanningAccountEditViewModel.cs" />
     <Compile Include="ViewModel\PlanningAccountsOperationAddViewModel.cs" />
     <Compile Include="ViewModel\PlanningAccountsOperationEditViewModel.cs" />
+    <Compile Include="ViewModel\PlanningGoalAddViewModel.cs" />
+    <Compile Include="ViewModel\PlanningGoalEditViewModel.cs" />
     <Compile Include="ViewModel\PlanningNoteAddViewModel.cs" />
     <Compile Include="ViewModel\PlanningNoteEditViewModel.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
@@ -264,6 +266,12 @@
     </Compile>
     <Compile Include="View\PlanningAccountsOperationEditModalWindow.xaml.cs">
       <DependentUpon>PlanningAccountsOperationEditModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningGoalAddModalWindow.xaml.cs">
+      <DependentUpon>PlanningGoalAddModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanningGoalEditModalWindow.xaml.cs">
+      <DependentUpon>PlanningGoalEditModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PlanningNoteAddModalWindow.xaml.cs">
       <DependentUpon>PlanningNoteAddModalWindow.xaml</DependentUpon>
@@ -400,6 +408,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PlanningAccountsOperationEditModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningGoalAddModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlanningGoalEditModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

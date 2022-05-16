@@ -103,7 +103,7 @@
 
         <Label 
             Style="{StaticResource Label_Common}"
-            Content="Текущее состояние цели" 
+            Content="{Binding CurrentGoalLabelText}" 
             HorizontalAlignment="Left" 
             Margin="308,133,0,0" 
             VerticalAlignment="Top" 

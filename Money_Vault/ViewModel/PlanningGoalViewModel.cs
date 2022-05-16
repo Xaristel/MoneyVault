@@ -24,6 +24,7 @@ namespace Money_Vault.ViewModel
         private double _currentAmount;
         private double _remainingAmount;
         private string _forecastTime;
+        private string _currentGoalLabelText;
 
         private SeriesCollection _operationsSeries;
         private string[] _datesLabels;
@@ -90,6 +91,16 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public string CurrentGoalLabelText
+        {
+            get => _currentGoalLabelText;
+            set
+            {
+                _currentGoalLabelText = value;
+                OnPropertyChanged("CurrentGoalLabelText");
+            }
+        }
+
         public SeriesCollection OperationsSeries
         {
             get => _operationsSeries;
@@ -118,8 +129,8 @@ namespace Money_Vault.ViewModel
                 {
                     var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var planningAccountAddViewModel = new PlanningAccountAddViewModel();
-                    await _displayRootRegistry.ShowModalPresentation(planningAccountAddViewModel);
+                    var planningGoalAddViewModel = new PlanningGoalAddViewModel();
+                    await _displayRootRegistry.ShowModalPresentation(planningGoalAddViewModel);
 
                     UpdateData();
                 }));
@@ -136,14 +147,15 @@ namespace Money_Vault.ViewModel
                     {
                         int lastSelectedId = SelectedGoal.Id;
 
-                        //var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        //var planningAccountEditViewModel = new PlanningAccountEditViewModel(
-                        //    SelectedGoal.Id,
-                        //    SelectedGoal.Name,
-                        //    SelectedGoal.Number,
-                        //    SelectedGoal.Current_Amount);
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                        var planningGoalEditViewModel = new PlanningGoalEditViewModel(
+                            SelectedGoal.Id,
+                            SelectedGoal.Name,
+                            SelectedGoal.Required_Amount,
+                            SelectedGoal.Account_Id,
+                            SelectedGoal.Note);
 
-                        //await _displayRootRegistry.ShowModalPresentation(planningAccountEditViewModel);
+                        await _displayRootRegistry.ShowModalPresentation(planningGoalEditViewModel);
 
                         UpdateData();
 
@@ -219,6 +231,7 @@ namespace Money_Vault.ViewModel
             {
                 if (SelectedGoal != null)
                 {
+                    CurrentGoalLabelText = $"Текущее состояние цели (счёт №{database.Accounts.ToList().Find(x => x.Id == SelectedGoal.Account_Id).Number})";
                     RequiredAmount = AdditionalFunctions.ConvertToCurrencyFormat(SelectedGoal.Required_Amount);
                     int tempSum = 0;
                     tempSum = database.Accounts.ToList().Find(x => x.Id == SelectedGoal.Account_Id).Current_Amount;
