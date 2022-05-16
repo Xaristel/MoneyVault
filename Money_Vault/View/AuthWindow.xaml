@@ -73,7 +73,8 @@
             Width="300" 
             FontSize="36" 
             ToolTip="Нажмите, чтобы проверить введённые данные и войти в программу." 
-            Command="{Binding AuthCommand}">
+            Command="{Binding AuthCommand}"
+            IsDefault="True">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource multiConverter}">
                     <Binding Path="Text" ElementName="textBox_Login"/>

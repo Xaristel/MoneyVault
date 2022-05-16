@@ -57,7 +57,7 @@ namespace Money_Vault.ViewModel
                     {
                         using (DatabaseContext database = new DatabaseContext())
                         {
-                            if (database.Shops.ToList().Find(x => x.Name == Shop) == null)
+                            if (database.Shops.ToList().Find(x => x.Name == Shop && x.Id != _id) == null)
                             {
                                 Shop currentShop = database.Shops.ToList().Find(x => x.Id == _id);
                                 currentShop.Name = Shop;

@@ -154,12 +154,19 @@ namespace Money_Vault.ViewModel
             {
                 return _showAddOperationFrameCommand ?? (_showAddOperationFrameCommand = new RelayCommand(async (args) =>
                 {
-                    var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                    if (SelectedAccount != null)
+                    {
+                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
 
-                    var planningAccountsOperationAddViewModel = new PlanningAccountsOperationAddViewModel(SelectedAccount.Id);
-                    await _displayRootRegistry.ShowModalPresentation(planningAccountsOperationAddViewModel);
+                        var planningAccountsOperationAddViewModel = new PlanningAccountsOperationAddViewModel(SelectedAccount.Id);
+                        await _displayRootRegistry.ShowModalPresentation(planningAccountsOperationAddViewModel);
 
-                    FillAccountData();
+                        FillAccountData();
+                    }
+                    else
+                    {
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали счёт!");
+                    }
                 }));
             }
         }
@@ -170,22 +177,29 @@ namespace Money_Vault.ViewModel
             {
                 return _showEditOperationFrameCommand ?? (_showEditOperationFrameCommand = new RelayCommand(async (args) =>
                 {
-                    if (SelectedOperation != null)
+                    if (SelectedAccount != null)
                     {
-                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        var planningAccountsOperationEditViewModel = new PlanningAccountsOperationEditViewModel(
-                            SelectedOperation.Id,
-                            SelectedOperation.Type,
-                            SelectedOperation.Amount.ToString(),
-                            SelectedOperation.Date);
+                        if (SelectedOperation != null)
+                        {
+                            var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                            var planningAccountsOperationEditViewModel = new PlanningAccountsOperationEditViewModel(
+                                SelectedOperation.Id,
+                                SelectedOperation.Type,
+                                SelectedOperation.Amount.ToString(),
+                                SelectedOperation.Date);
 
-                        await _displayRootRegistry.ShowModalPresentation(planningAccountsOperationEditViewModel);
+                            await _displayRootRegistry.ShowModalPresentation(planningAccountsOperationEditViewModel);
 
-                        FillAccountData();
+                            FillAccountData();
+                        }
+                        else
+                        {
+                            await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали операцию для редактирования.");
+                        }
                     }
                     else
                     {
-                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для редактирования.");
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали счёт!");
                     }
                 }));
             }
@@ -197,29 +211,36 @@ namespace Money_Vault.ViewModel
             {
                 return _showDeleteOperationFrameCommand ?? (_showDeleteOperationFrameCommand = new RelayCommand(async (args) =>
                 {
-                    if (SelectedOperation != null)
+                    if (SelectedAccount != null)
                     {
-                        var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                        var messageViewModel = new MessageViewModel(
-                                                "Внимание",
-                                                "Вы действительно хотите удалить данную запись?");
-
-                        await _displayRootRegistry.ShowModalPresentation(messageViewModel);
-
-                        if (messageViewModel.Result)
+                        if (SelectedOperation != null)
                         {
-                            using (DatabaseContext database = new DatabaseContext())
+                            var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
+                            var messageViewModel = new MessageViewModel(
+                                                    "Внимание",
+                                                    "Вы действительно хотите удалить данную операцию?");
+
+                            await _displayRootRegistry.ShowModalPresentation(messageViewModel);
+
+                            if (messageViewModel.Result)
                             {
-                                Account_Operation item = database.Account_Operations.ToList().Find(x => x.Id == SelectedOperation.Id);
-                                database.Account_Operations.Remove(item);
-                                database.SaveChanges();
+                                using (DatabaseContext database = new DatabaseContext())
+                                {
+                                    Account_Operation item = database.Account_Operations.ToList().Find(x => x.Id == SelectedOperation.Id);
+                                    database.Account_Operations.Remove(item);
+                                    database.SaveChanges();
+                                }
+                                FillAccountData();
                             }
-                            FillAccountData();
+                        }
+                        else
+                        {
+                            await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали операцию для удаления.");
                         }
                     }
                     else
                     {
-                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для удаления.");
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали счёт!");
                     }
                 }));
             }
@@ -269,7 +290,7 @@ namespace Money_Vault.ViewModel
                     }
                     else
                     {
-                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для редактирования.");
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали счёт для редактирования.");
                     }
                 }));
             }
@@ -286,7 +307,7 @@ namespace Money_Vault.ViewModel
                         var _displayRootRegistry = (Application.Current as App).displayRootRegistry;
                         var messageViewModel = new MessageViewModel(
                                                 "Внимание",
-                                                "Вы действительно хотите удалить данную запись?");
+                                                "Вы действительно хотите удалить данный счёт?");
 
                         await _displayRootRegistry.ShowModalPresentation(messageViewModel);
 
@@ -304,7 +325,7 @@ namespace Money_Vault.ViewModel
                     }
                     else
                     {
-                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали запись для удаления.");
+                        await AdditionalFunctions.CallModalMessage("Внимание", "Вы не выбрали счёт для удаления.");
                     }
                 }));
             }
