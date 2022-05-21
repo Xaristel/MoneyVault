@@ -62,29 +62,42 @@ namespace Money_Vault.ViewModel
             {
                 return _registerNewUserCommand ?? (_registerNewUserCommand = new RelayCommand(async (args) =>
                 {
-                    using (DatabaseContext database = new DatabaseContext())
+                    if (RegLogin != "" || RegPassword != "")
                     {
-                        if (database.Users.ToList().Find(x => x.Login == RegLogin) == null)
+                        using (DatabaseContext database = new DatabaseContext())
                         {
-                            database.Users.Add(new User()
+                            if (database.Users.ToList().Find(x => x.Login == RegLogin) == null)
                             {
-                                Login = RegLogin,
-                                Password = Convert.ToString(RegPassword.GetHashCode() + RegLogin.GetHashCode()),
-                                Name = RegName,
-                                Surname = RegSurname
-                            });
-                            database.SaveChanges();
+                                database.Users.Add(new User()
+                                {
+                                    Login = RegLogin,
+                                    Password = Convert.ToString(RegPassword.GetHashCode() + RegLogin.GetHashCode()),
+                                    Name = RegName,
+                                    Surname = RegSurname
+                                });
+                                database.SaveChanges();
 
-                            await AdditionalFunctions.CallModalMessage("Внимание", $"Пользователь {RegLogin} успешно зарегистрирован.");
-                            (Application.Current as App).displayRootRegistry.HidePresentation(this);
+                                await AdditionalFunctions.CallModalMessage("Внимание", $"Пользователь {RegLogin} успешно зарегистрирован.");
+                                (Application.Current as App).displayRootRegistry.HidePresentation(this);
+                            }
+                            else
+                            {
+                                await AdditionalFunctions.CallModalMessage("Ошибка", $"Пользователь с таким логином уже зарегистрирован! Укажите другой логин.");
+                            }
                         }
-                        else
-                        {
-                            await AdditionalFunctions.CallModalMessage("Ошибка", $"Пользователь с таким логином уже зарегистрирован! Укажите другой логин.");
-                        }
+                    }
+                    else
+                    {
+                        await AdditionalFunctions.CallModalMessage("Ошибка", $"Заполнены не все поля или введены некорректные данные!");
                     }
                 }));
             }
+        }
+
+        public RegistrationViewModel()
+        {
+            RegLogin = "";
+            RegPassword = "";
         }
     }
 }
