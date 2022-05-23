@@ -174,20 +174,6 @@ namespace Money_Vault.ViewModel
 
             using (DatabaseContext database = new DatabaseContext())
             {
-                foreach (var item in database.Incomes.ToList())
-                {
-                    if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
-                    {
-                        //try to get year from date (14.05.2022 -> 2022)
-                        string tempYear = item.Date.Split('.')[2];
-
-                        if (!YearsList.Contains(tempYear))
-                        {
-                            YearsList.Add(tempYear);
-                        }
-                    }
-                }
-
                 foreach (var item in database.Expenses.ToList())
                 {
                     if (item.User_Id == Convert.ToInt32(Settings.Default["currentUserId"]))
