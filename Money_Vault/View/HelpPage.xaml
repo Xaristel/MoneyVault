@@ -9,22 +9,25 @@
       Width="1439" 
       Height="852" 
       ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-      Background="White">
+      Background="White"
+      FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid>
         <FlowDocumentPageViewer 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
+            FontFamily="{StaticResource Balsamiq Sans}"
             VerticalContentAlignment="Stretch" 
             HorizontalContentAlignment="Stretch" 
             Margin="0,0,26,30">
-            <FlowDocument ColumnWidth="1200" FontFamily="Balsamiq Sans">
+            <FlowDocument ColumnWidth="1200" FontFamily="{StaticResource Balsamiq Sans}">
                 <Paragraph FontSize="30" FontWeight="Bold" TextAlignment="Center">Зачем нужен раздел "Общая сводка"?</Paragraph>
                 <Paragraph FontSize="24">В данном разделе можно просмотреть статистику доходов 
-                    и расходов по категориям и увидеть прогноз на основе предыдущих доходов и трат. 
+                    и расходов по категориям и увидеть прогноз на основе предыдущих доходов и трат.   
                     В верхней части страницы можно выбрать интересующий промежуток времени, 
                     а в левой части середины страницы вы можете отключить показ доходов или расходов. 
-                    Большая диаграмма показывает процентное соотношение всех ваших операций.</Paragraph>
+                    Большая диаграмма показывает процентное соотношение всех ваших операций.
+                    При выборе опции "Весь год" прогноз считается на основе предыдущего года, то есть если в прошлом 
+                    году не было операций, то прогноз в текущем году будет равен нулю.</Paragraph>
 
                 <Paragraph FontSize="30" FontWeight="Bold" TextAlignment="Center">Зачем нужен раздел "Доходы"?</Paragraph>
                 <Paragraph FontSize="24">Данный раздел содержит всю информацию о ваших доходах.

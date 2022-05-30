@@ -16,7 +16,7 @@
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" 
         WindowStyle="ThreeDBorderWindow" 
-        FontFamily="Balsamiq Sans" 
+        FontFamily="{StaticResource Balsamiq Sans}"
         FontWeight="Bold" 
         FontSize="14">
     <Grid>
@@ -44,7 +44,8 @@
             FontWeight="Normal"
             Text="{Binding RegLogin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <TextBox x:Name="textBox_Password" 
+        <TextBox 
+            x:Name="textBox_Password" 
             HorizontalAlignment="Center" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 

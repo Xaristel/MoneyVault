@@ -13,13 +13,14 @@
         Width="700" 
         HorizontalAlignment="Center" 
         VerticalAlignment="Center" 
-        FontFamily="Balsamiq Sans" 
+        FontFamily="{StaticResource Balsamiq Sans}"
         FontSize="14" 
         FontWeight="Normal" 
         Icon="/Icon/icon_chest_fill.png" 
         ResizeMode="NoResize" 
         WindowStyle="ThreeDBorderWindow" 
-        WindowStartupLocation="CenterScreen" SizeToContent="Height">
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="Height">
 
     <Grid Margin="0,0,0,-6">
         <Label 
@@ -44,7 +45,9 @@
             FontSize="28" 
             ToolTip="Нажмите, чтобы закрыть окно." 
             Click="button_Ok_Click"
-            IsDefault="True" Height="50" VerticalAlignment="Bottom"
+            IsDefault="True" 
+            Height="50" 
+            VerticalAlignment="Bottom"
             />
         <TextBlock 
             Margin="25,70,25,83" 
@@ -61,7 +64,11 @@
             Margin="0,0,25,20" 
             FontSize="28" 
             ToolTip="Нажмите, чтобы закрыть окно." 
-            IsCancel="True" HorizontalAlignment="Right" Width="230" Height="50" VerticalAlignment="Bottom"
+            IsCancel="True" 
+            HorizontalAlignment="Right" 
+            Width="230" 
+            Height="50" 
+            VerticalAlignment="Bottom"
             />
 
     </Grid>

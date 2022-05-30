@@ -11,14 +11,14 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="planningAccountsOperationAddViewModel">
+        Name="planningAccountsOperationAddViewModel"
+        FontFamily="{StaticResource Balsamiq Sans}">
     <Grid Margin="0,0,0,-6">
         <Label 
             x:Name="LabelHeader" 
             Content="Добавление новой записи" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -50,11 +50,11 @@
             IsCancel="True" Height="50" VerticalAlignment="Top"/>
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Вид операции:" 
             HorizontalAlignment="Left" 
             Margin="25,85,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571"/>
 
@@ -82,7 +82,6 @@
             Margin="185,85,25,0" 
             VerticalAlignment="Top" 
             FontSize="22"
-            FontFamily="Balsamiq Sans"
             BorderThickness="3"
             ItemsSource="{Binding OperationTypesList, Mode=OneWay}"
             SelectedItem="{Binding SelectedOperationType, Mode=TwoWay}" 
@@ -116,7 +115,6 @@
         <DatePicker 
             Margin="185,212,25,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="14"
             BorderThickness="2,2,2,2"
             BorderBrush="Black"

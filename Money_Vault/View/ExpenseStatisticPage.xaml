@@ -14,7 +14,8 @@
       Height="852" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
-      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+      FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid>
         <Button 
@@ -100,7 +101,6 @@
             Width="200" 
             HorizontalContentAlignment="Center" 
             VerticalContentAlignment="Center" 
-            FontFamily="Balsamiq Sans" 
             FontWeight="Bold" 
             FontSize="18" 
             ToolTip="Выберите год для отображения статистики." 
@@ -119,7 +119,6 @@
             Width="200" 
             HorizontalContentAlignment="Center" 
             VerticalContentAlignment="Center" 
-            FontFamily="Balsamiq Sans" 
             FontWeight="Bold" 
             FontSize="18" 
             Height="30"
@@ -158,7 +157,7 @@
                 <lvc:DefaultLegend 
                     BulletSize="18" 
                     TextBlock.FontSize="18"
-                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
                     TextBlock.FontStyle="Normal"
                     TextBlock.Foreground="Black" Width="180" Height="259"/>
             </lvc:PieChart.ChartLegend>
@@ -167,7 +166,7 @@
                 <lvc:DefaultTooltip 
                     BulletSize="18"
                     TextBlock.FontSize="18"
-                    TextBlock.FontFamily="Balsamiq Sans"
+                    TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
                     TextBlock.FontStyle="Normal"
                     TextBlock.Foreground="Black"
                     Background="LightGray"/>

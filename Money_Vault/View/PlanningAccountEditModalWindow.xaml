@@ -11,7 +11,8 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="planningAccountEditModalWindow">
+        Name="planningAccountEditModalWindow"
+        FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid Margin="0,0,0,-6">
         <Label 
@@ -19,7 +20,6 @@
             Content="Изменение счёта" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 

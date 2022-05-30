@@ -12,15 +12,16 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="categoryAddModalWindow">
+        Name="categoryAddModalWindow"
+        FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid Margin="0,0,0,-6">
         <Label 
+            Style="{StaticResource Label_Common}"
             x:Name="LabelHeader" 
             Content="Добавление новой записи" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -55,11 +56,11 @@
             VerticalAlignment="Top"/>
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Категория:" 
             HorizontalAlignment="Left" 
             Margin="25,130,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571" Width="144"/>
 
@@ -93,11 +94,11 @@
             Text="{Binding Note, Mode=TwoWay}" />
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Тип записи:" 
             HorizontalAlignment="Left" 
             Margin="25,76,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571" Width="144"/>
 
@@ -107,7 +108,6 @@
             Margin="185,76,25,0" 
             VerticalAlignment="Top" 
             FontSize="22"
-            FontFamily="Balsamiq Sans"
             BorderThickness="3"
             ItemsSource="{Binding TypesList, Mode=OneWay}"
             SelectedItem="{Binding Type, Mode=TwoWay}" 

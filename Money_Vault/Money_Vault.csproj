@@ -478,18 +478,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Font\BalsamiqSans-Bold.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Font\BalsamiqSans-BoldItalic.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Font\BalsamiqSans-Italic.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Font\BalsamiqSans-Regular.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Font\BalsamiqSans-Bold.ttf" />
+    <Resource Include="Font\BalsamiqSans-BoldItalic.ttf" />
+    <Resource Include="Font\BalsamiqSans-Italic.ttf" />
+    <Resource Include="Font\BalsamiqSans-Regular.ttf" />
     <Resource Include="Font\Password.ttf" />
     <None Include="Database\Database.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -504,11 +496,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\icon_box.png" />
-    <Resource Include="Icon\icon_chest_empty.png" />
-    <Resource Include="Icon\icon_chest_fill.png" />
-    <Resource Include="Icon\icon_money_empty.png" />
-    <Resource Include="Icon\icon_money_fill.png" />
+    <Resource Include="Icon\icon_box.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icon_chest_empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icon_chest_fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icon_money_empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icon_money_fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon_money_fill.ico" />

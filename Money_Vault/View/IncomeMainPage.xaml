@@ -13,7 +13,8 @@
       Height="852" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
-      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+      FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid>
         <Rectangle 
@@ -21,7 +22,8 @@
             Stroke="Black" 
             VerticalAlignment="Top" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-            StrokeThickness="3" Panel.ZIndex="1"
+            StrokeThickness="3" 
+            Panel.ZIndex="1"
             />
 
         <Rectangle 

@@ -10,7 +10,7 @@
         Title="Money Vault v2.01" 
         Height="680" 
         Width="1200" 
-        FontFamily="Balsamiq Sans"
+        FontFamily="{StaticResource Balsamiq Sans}"
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         Name="expenseGeneralFullAddModalWindow">
@@ -22,6 +22,7 @@
 
     <Grid>
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Добавление новой записи" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Top" 
@@ -76,7 +77,7 @@
         <DatePicker 
             Margin="0,253,15,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
+            FontFamily="{StaticResource Balsamiq Sans}" 
             FontSize="14"
             BorderThickness="2,2,2,2"
             BorderBrush="Black"
@@ -107,10 +108,13 @@
             Template="{StaticResource ComboBoxTemplateCommon}"
             Margin="0,177,15,0" 
             FontSize="22"
+            FontFamily="{StaticResource Balsamiq Sans}"
             BorderThickness="3"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
             SelectedItem="{Binding Shop, Mode=TwoWay}" 
-            Height="35" HorizontalAlignment="Right" Width="266"/>
+            Height="35" 
+            HorizontalAlignment="Right" 
+            Width="266"/>
 
         <Label 
             x:Name="LabelPlaceHolderShop"
@@ -122,7 +126,9 @@
             FontSize="22" 
             Foreground="DarkGray"
             Height="35"
-            Visibility="{Binding IsVisibleLabelPlaceHolderShop, Mode=TwoWay}" HorizontalAlignment="Right" Width="266"/>
+            Visibility="{Binding IsVisibleLabelPlaceHolderShop, Mode=TwoWay}" 
+            HorizontalAlignment="Right" 
+            Width="266"/>
 
         <Button 
             x:Name="button_Add" 
@@ -162,9 +168,12 @@
             Margin="0,102,15,0" 
             FontSize="22"
             BorderThickness="3"
+            FontFamily="{StaticResource Balsamiq Sans}"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}"
             SelectedItem="{Binding Category, Mode=TwoWay}" 
-            Height="34" HorizontalAlignment="Right" Width="266"/>
+            Height="34" 
+            HorizontalAlignment="Right" 
+            Width="266"/>
 
         <Label 
             x:Name="LabelPlaceHolderCategory"
@@ -176,13 +185,20 @@
             FontSize="22" 
             Foreground="DarkGray"
             Height="34"
-            Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}" HorizontalAlignment="Right" Width="265"/>
+            Visibility="{Binding IsVisibleLabelPlaceHolderCategory, Mode=TwoWay}" 
+            HorizontalAlignment="Right" 
+            Width="265"/>
+
         <TextBlock 
             Margin="0,0,14,60" 
             TextWrapping="Wrap"
             FontSize="18" 
             FontStretch="Normal" 
-            FontWeight="Normal" HorizontalAlignment="Right" Width="266" Height="132" VerticalAlignment="Bottom">            
+            FontWeight="Normal" 
+            HorizontalAlignment="Right" 
+            Width="266" 
+            Height="132" 
+            VerticalAlignment="Bottom">            
             <Run Text="Подсказка" FontWeight="Bold"/>
             <Run Text=": " FontWeight="Bold"/>
             <Run Text="для"/>

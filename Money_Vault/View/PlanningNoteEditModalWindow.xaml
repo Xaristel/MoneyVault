@@ -9,7 +9,7 @@
         Title="Money Vault v2.01" 
         Height="680" 
         Width="1200" 
-        FontFamily="Balsamiq Sans"
+        FontFamily="{StaticResource Balsamiq Sans}"
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         Name="planningNoteEditModalWindow">

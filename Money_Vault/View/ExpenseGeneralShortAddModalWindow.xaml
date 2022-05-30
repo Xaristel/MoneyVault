@@ -12,14 +12,14 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="expenseGeneralShortAddModalWindow">
+        Name="expenseGeneralShortAddModalWindow"
+        FontFamily="{StaticResource Balsamiq Sans}">
     <Grid Margin="0,0,0,-6">
         <Label 
             x:Name="LabelHeader" 
             Content="Добавление новой записи" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -53,11 +53,11 @@
             IsCancel="True"/>
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Категория:" 
             HorizontalAlignment="Left" 
             Margin="25,85,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571"/>
 
@@ -95,7 +95,6 @@
             VerticalAlignment="Top" 
             FontSize="22"
             BorderThickness="3"
-            FontFamily="Balsamiq Sans"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}"
             SelectedItem="{Binding Category, Mode=TwoWay}" Height="35"/>
 
@@ -127,7 +126,6 @@
         <DatePicker 
             Margin="185,215,25,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="14"
             BorderThickness="2,2,2,2"
             BorderBrush="Black"
@@ -157,6 +155,7 @@
             AcceptsReturn="True"/>
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Магазин:" 
             HorizontalAlignment="Left" 
             Margin="25,280,0,0" 
@@ -172,7 +171,6 @@
             VerticalAlignment="Top" 
             FontSize="22"
             BorderThickness="3"
-            FontFamily="Balsamiq Sans"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
             SelectedItem="{Binding Shop, Mode=TwoWay}" 
             Height="35"/>

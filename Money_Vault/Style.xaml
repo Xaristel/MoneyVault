@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
+    <FontFamily x:Key="Balsamiq Sans">pack://application:,,,/Font/#Balsamiq Sans</FontFamily>
+    <FontFamily x:Key="Password">pack://application:,,,/Font/#Password</FontFamily>
+
     <!--Стиль для обычных textBox с реализацией placeHolderText-->
     <Style 
         x:Key="TextBox_Common" 
@@ -21,13 +24,13 @@
                                  Panel.ZIndex="2" 
                                  BorderBrush="Black" 
                                  BorderThickness="3" 
-                                 FontFamily="Balsamiq Sans"
+                                 FontFamily="{StaticResource Balsamiq Sans}"
                                  FontWeight="Normal"
                                  />
                         <TextBox 
                             Text="{TemplateBinding Tag}" 
                             Background="{TemplateBinding Background}" 
-                            FontFamily="Balsamiq Sans"
+                            FontFamily="{StaticResource Balsamiq Sans}"
                             FontWeight="Normal"
                             Panel.ZIndex="1">
                             <TextBox.Style>
@@ -64,7 +67,7 @@
                                  x:Name="textSource"
                                  Background="Transparent"
                                  Panel.ZIndex="2" 
-                                 FontFamily="Password"
+                                 FontFamily="{StaticResource Password}"
                                  BorderBrush="Black" 
                                  BorderThickness="3" >
 
@@ -121,7 +124,7 @@
                                  Panel.ZIndex="2" 
                                  BorderBrush="Black" 
                                  BorderThickness="3" 
-                                 FontFamily="Balsamiq Sans"
+                                 FontFamily="{StaticResource Balsamiq Sans}"
                                  FontWeight="Normal"
                                  VerticalScrollBarVisibility="Visible"
                                  HorizontalScrollBarVisibility="Disabled" 
@@ -132,7 +135,7 @@
                         <TextBox 
                             Text="{TemplateBinding Tag}" 
                             Background="{TemplateBinding Background}" 
-                            FontFamily="Balsamiq Sans"
+                            FontFamily="{StaticResource Balsamiq Sans}"
                             FontWeight="Normal"
                             Panel.ZIndex="1">
                             <TextBox.Style>
@@ -350,7 +353,7 @@
                 Background="{TemplateBinding Background}" 
                 BorderBrush="{TemplateBinding BorderBrush}" 
                 BorderThickness="{TemplateBinding BorderThickness}" 
-                FontFamily="Balsamiq Sans"
+                FontFamily="{StaticResource Balsamiq Sans}"
                 Grid.ColumnSpan="2" 
                 IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                 Style="{StaticResource ComboBoxToggleButton}"/>
@@ -394,7 +397,7 @@
         TargetType="{x:Type Label}" 
         BasedOn="{StaticResource {x:Type Label}}">
 
-        <Setter Property="FontFamily" Value="Balsamiq Sans" />
+        <Setter Property="FontFamily" Value="{StaticResource Balsamiq Sans}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="FontSize" Value="18" />
     </Style>
@@ -421,7 +424,7 @@
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="Balsamiq Sans" />
+        <Setter Property="FontFamily" Value="{StaticResource Balsamiq Sans}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="BorderThickness" Value="3,3,3,3"/>
@@ -443,7 +446,7 @@
         BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontFamily" Value="Balsamiq Sans"/>
+        <Setter Property="FontFamily" Value="{StaticResource Balsamiq Sans}"/>
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Background" Value="White"/>

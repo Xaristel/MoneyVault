@@ -12,7 +12,8 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="expenseShopEditModalWindow">
+        Name="expenseShopEditModalWindow"
+        FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid Margin="0,0,0,-6">
         <Label 
@@ -20,7 +21,6 @@
             Content="Изменение записи" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -55,11 +55,11 @@
             VerticalAlignment="Bottom"/>
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Магазин:" 
             HorizontalAlignment="Left" 
             Margin="25,77,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571" Width="144"/>
 

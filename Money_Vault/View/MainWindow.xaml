@@ -18,7 +18,7 @@
         ScrollViewer.VerticalScrollBarVisibility="Disabled" 
         HorizontalContentAlignment="Center" 
         VerticalContentAlignment="Center" 
-        FontFamily="Balsamiq Sans" 
+        FontFamily="{StaticResource Balsamiq Sans}"
         FontSize="14" 
         WindowState="Normal" 
         WindowStyle="ThreeDBorderWindow" 

@@ -13,7 +13,8 @@
       Height="850" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
-      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+      FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid Width="1439">
         <Rectangle 
@@ -188,12 +189,12 @@
             LegendLocation="None" 
             Margin="839,177,20,20"
             BorderBrush="White"
-            FontFamily="Balsamiq Sans"
+            FontFamily="{StaticResource Balsamiq Sans}"
             FontSize="20">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis 
                     Title="Сумма" 
-                    FontFamily="Balsamiq Sans"
+                    FontFamily="{StaticResource Balsamiq Sans}"
                     FontSize="14"
                     Foreground="Black">
                 </lvc:Axis>
@@ -202,7 +203,7 @@
                 <lvc:Axis 
                     Title="Дата" 
                     Labels="{Binding DatesLabels}"
-                    FontFamily="Balsamiq Sans"
+                    FontFamily="{StaticResource Balsamiq Sans}"
                     FontSize="14"
                     Foreground="Black">
                 </lvc:Axis>
@@ -218,7 +219,8 @@
             VerticalAlignment="Top" 
             Width="231"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="38"/>
+            FontSize="22" 
+            Height="38"/>
 
         <Label 
             Name="Label_RequiredAmount"
@@ -229,7 +231,8 @@
             VerticalAlignment="Top" 
             Width="229"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="38"/>
+            FontSize="22" 
+            Height="38"/>
 
         <Label 
             Name="Label_CurrentAmount"
@@ -240,7 +243,8 @@
             VerticalAlignment="Top" 
             Width="229"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="36"/>
+            FontSize="22" 
+            Height="36"/>
 
         <Label 
             Name="Label_RemainingAmount"
@@ -251,7 +255,8 @@
             VerticalAlignment="Top" 
             Width="229"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="36"/>
+            FontSize="22" 
+            Height="36"/>
 
         <Label 
             Name="Label_ForecastTime"
@@ -262,7 +267,8 @@
             VerticalAlignment="Top" 
             Width="231"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="36"/>
+            FontSize="22" 
+            Height="36"/>
 
         <TextBox 
             x:Name="TextBox_Note"

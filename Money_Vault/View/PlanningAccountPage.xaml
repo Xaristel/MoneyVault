@@ -13,7 +13,8 @@
       Height="850" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
-      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+      FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid Width="1439">
         <Rectangle 
@@ -214,7 +215,7 @@
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis 
                     Title="Сумма" 
-                    FontFamily="Balsamiq Sans"
+                    FontFamily="{StaticResource Balsamiq Sans}"
                     FontSize="14"
                     Foreground="Black">
                 </lvc:Axis>
@@ -223,7 +224,7 @@
                 <lvc:Axis 
                     Title="Дата" 
                     Labels="{Binding DatesLabels}"
-                    FontFamily="Balsamiq Sans"
+                    FontFamily="{StaticResource Balsamiq Sans}"
                     FontSize="14"
                     Foreground="Black">
                 </lvc:Axis>
@@ -239,7 +240,8 @@
             VerticalAlignment="Top" 
             Width="290"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="38"/>
+            FontSize="22" 
+            Height="38"/>
 
         <Label 
             Name="Label_CurrentAmount"
@@ -250,7 +252,8 @@
             VerticalAlignment="Top" 
             Width="290"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="38"/>
+            FontSize="22" 
+            Height="38"/>
 
         <Label 
             Name="Label_ForecastMonth"
@@ -261,7 +264,8 @@
             VerticalAlignment="Top" 
             Width="290"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="36"/>
+            FontSize="22" 
+            Height="36"/>
 
         <Label 
             Name="Label_ForecastYear"
@@ -272,7 +276,8 @@
             VerticalAlignment="Top" 
             Width="290"
             HorizontalContentAlignment="Left"
-            FontSize="22" Height="36"/>
+            FontSize="22" 
+            Height="36"/>
 
     </Grid>
 </Page>

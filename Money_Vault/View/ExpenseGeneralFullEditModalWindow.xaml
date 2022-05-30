@@ -10,7 +10,7 @@
         Title="Money Vault v2.01" 
         Height="680" 
         Width="1200" 
-        FontFamily="Balsamiq Sans"
+        FontFamily="{StaticResource Balsamiq Sans}"
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         Name="expenseGeneralFullEditModalWindow">
@@ -26,7 +26,8 @@
             HorizontalAlignment="Center" 
             VerticalAlignment="Top" 
             FontWeight="Bold" 
-            FontSize="50" Width="456"/>
+            FontSize="50" 
+            Width="456"/>
 
         <DataGrid 
             x:Name="dataGrid_ExpenseItems" 
@@ -108,9 +109,12 @@
             Margin="0,178,15,0" 
             FontSize="22"
             BorderThickness="3"
+            FontFamily="{StaticResource Balsamiq Sans}"
             ItemsSource="{Binding ShopsList, Mode=OneWay}"
             SelectedItem="{Binding Shop, Mode=TwoWay}" 
-            Height="35" HorizontalAlignment="Right" Width="265"/>
+            Height="35" 
+            HorizontalAlignment="Right" 
+            Width="265"/>
 
         <Label 
             x:Name="LabelPlaceHolderShop"
@@ -134,7 +138,9 @@
             Command="{Binding AddCommand}"
             CommandParameter="{Binding ElementName=expenseGeneralFullEditModalWindow}" 
             Height="50" 
-            VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="128"/>
+            VerticalAlignment="Bottom" 
+            HorizontalAlignment="Right" 
+            Width="128"/>
 
         <Button 
             x:Name="button_Cancel" 
@@ -161,10 +167,13 @@
             Template="{StaticResource ComboBoxTemplateCommon}"
             Margin="0,102,15,0" 
             FontSize="22"
+            FontFamily="{StaticResource Balsamiq Sans}"
             BorderThickness="3"
             ItemsSource="{Binding CategoriesList, Mode=OneWay}"
             SelectedItem="{Binding Category, Mode=TwoWay}" 
-            Height="35" HorizontalAlignment="Right" Width="266"/>
+            Height="35" 
+            HorizontalAlignment="Right" 
+            Width="266"/>
 
         <Label 
             x:Name="LabelPlaceHolderCategory"

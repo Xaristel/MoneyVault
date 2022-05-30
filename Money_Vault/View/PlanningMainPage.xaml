@@ -12,7 +12,8 @@
       Height="852" 
       HorizontalAlignment="Center" 
       VerticalAlignment="Center" 
-      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+      FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid>
         <Rectangle 
@@ -25,7 +26,8 @@
 
         <Rectangle 
             HorizontalAlignment="Left" 
-            Height="125" Margin="894,0,0,0" 
+            Height="125" 
+            Margin="894,0,0,0" 
             Stroke="Black" 
             VerticalAlignment="Top" 
             Width="3" 

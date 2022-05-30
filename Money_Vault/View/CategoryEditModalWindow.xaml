@@ -12,15 +12,16 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="categoryEditModalWindow">
+        Name="categoryEditModalWindow"
+        FontFamily="{StaticResource Balsamiq Sans}">
 
     <Grid Margin="0,0,0,-6">
         <Label 
+            Style="{StaticResource Label_Common}"
             x:Name="LabelHeader" 
             Content="Изменение записи" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -53,11 +54,11 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             IsCancel="True" Height="50" VerticalAlignment="Top"/>
 
         <Label 
+            Style="{StaticResource Label_Common}"
             Content="Категория:" 
             HorizontalAlignment="Left" 
             Margin="25,85,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571"/>
 

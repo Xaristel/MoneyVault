@@ -11,14 +11,14 @@
         Width="700" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        Name="planningGoalAddModalWindow">
+        Name="planningGoalAddModalWindow"
+        FontFamily="{StaticResource Balsamiq Sans}">
     <Grid Margin="0,0,0,-6">
         <Label 
             x:Name="LabelHeader" 
             Content="Добавление новой цели" 
             VerticalAlignment="Top" 
             FontSize="50" 
-            FontFamily="Balsamiq Sans"
             FontWeight="Bold"
             Height="61" 
             ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -93,7 +93,6 @@
             VerticalAlignment="Top" 
             FontSize="22"
             BorderThickness="3"
-            FontFamily="Balsamiq Sans"
             ItemsSource="{Binding AccountsList, Mode=OneWay}"
             SelectedItem="{Binding Account, Mode=TwoWay}" 
             Height="35"/>
@@ -121,7 +120,8 @@
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             FontSize="22"
-            Text="{Binding Amount, Mode=TwoWay}" Height="35"/>
+            Text="{Binding Amount, Mode=TwoWay}" 
+            Height="35"/>
 
         <TextBox 
             x:Name="TextBox_Goal"
