@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -42,6 +43,15 @@ namespace Money_Vault.ViewModel
             if (IsKeepLogin)
             {
                 Login = Settings.Default["keepLogin"].ToString();
+            }
+
+            if (!File.Exists(@"Database/Database.db"))
+            {
+                using (DatabaseContext databaseContext = new DatabaseContext())
+                {
+                    databaseContext.Database.Initialize(true);
+                    databaseContext.Database.ExecuteSqlCommand(DatabaseCreateScript.DatabaseCreateCommand);
+                }
             }
         }
 
