@@ -28,7 +28,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -38,7 +38,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -54,7 +54,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon_money_fill.ico</ApplicationIcon>
+    <ApplicationIcon>CoinGoldBorderDollarFlat.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>C3FF85710E4735F68C6C508333A071D25E4505CE</ManifestCertificateThumbprint>
@@ -497,7 +497,9 @@
     <Resource Include="Font\BalsamiqSans-Italic.ttf" />
     <Resource Include="Font\BalsamiqSans-Regular.ttf" />
     <Resource Include="Font\Password.ttf" />
-    <None Include="Database\Database.db" />
+    <None Include="Database\Database.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Money_Vault_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -526,9 +528,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icon_money_fill.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
@@ -555,7 +554,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="CoinGoldBorderDollarFlat.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Database\CreateDatabase.sql" />
+    <Resource Include="Icon\CoinGoldBorderDollarFlat.ico" />
+    <Resource Include="Icon\CoinGoldDollarFlat.ico" />
+    <Resource Include="Icon\CoinBlackDollarFlat.png.png" />
+    <Resource Include="Icon\CoinGoldBorderDollarFlat.png" />
+    <Resource Include="Icon\CoinGoldDollar.png" />
+    <Resource Include="Icon\CoinGoldDollarFlat.png" />
+    <Resource Include="Icon\CoinWhiteDollar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
