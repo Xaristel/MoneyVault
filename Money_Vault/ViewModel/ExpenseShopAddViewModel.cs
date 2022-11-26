@@ -56,7 +56,7 @@ namespace Money_Vault.ViewModel
                     {
                         using (DatabaseContext database = new DatabaseContext())
                         {
-                            if (database.Shops.ToList().Find(x => x.Name == Shop) == null)
+                            if (database.Shops.ToList().Find(x => x.Name == Shop && x.UserId == Convert.ToInt32(Settings.Default["currentUserId"])) == null)
                             {
                                 database.Shops.Add(new Shop()
                                 {

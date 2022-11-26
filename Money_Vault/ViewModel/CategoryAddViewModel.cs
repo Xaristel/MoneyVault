@@ -84,7 +84,7 @@ namespace Money_Vault.ViewModel
                         {
                             if (Convert.ToBoolean(Settings.Default["isIncomePage"]))
                             {
-                                if (database.Income_Types.ToList().Find(x => x.Name == Category) == null)
+                                if (database.Income_Types.ToList().Find(x => x.Name == Category && x.UserId == Convert.ToInt32(Settings.Default["currentUserId"])) == null)
                                 {
                                     database.Income_Types.Add(new Income_Type()
                                     {
@@ -106,8 +106,8 @@ namespace Money_Vault.ViewModel
                             }
                             else
                             {
-                                if (database.Expense_Types.ToList().Find(x => x.Name == Category) == null
-                                && database.Expense_Subtypes.ToList().Find(x => x.Name == Category) == null)
+                                if (database.Expense_Types.ToList().Find(x => x.Name == Category && x.UserId == Convert.ToInt32(Settings.Default["currentUserId"])) == null
+                                && database.Expense_Subtypes.ToList().Find(x => x.Name == Category && x.UserId == Convert.ToInt32(Settings.Default["currentUserId"])) == null)
                                 {
                                     if (Type == "Категория")
                                     {
