@@ -1,14 +1,13 @@
-﻿using Money_Vault.Database;
-using Money_Vault.Model;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using Money_Vault.Database;
+using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using LiveCharts;
-using LiveCharts.Wpf;
-using LiveCharts.Defaults;
-using System.Windows.Media;
 using System.Globalization;
-using Money_Vault.Properties;
+using System.Linq;
+using System.Windows.Media;
 
 namespace Money_Vault.ViewModel
 {
@@ -20,16 +19,9 @@ namespace Money_Vault.ViewModel
         private bool _isRemoveExpenses;
         private bool _isEnableComboBoxMonth;
 
-        private int _incomesForecast;
-        private int _expensesForecast;
-        private string _minIncomesDate;
-        private string _minExpensesDate;
-
-        private IEnumerable<TotalListItem> _incomesList;
-        private IEnumerable<TotalListItem> _expensesList;
-        private SeriesCollection _seriesGeneral;
-        private SeriesCollection _seriesIncomes;
-        private SeriesCollection _seriesExpenses;
+        private List<TotalListItem> _incomesList = new List<TotalListItem>();
+        private List<TotalListItem> _expensesList = new List<TotalListItem>();
+        private SeriesCollection _seriesGeneral = new SeriesCollection();
 
         private List<string> _yearsList;
         private string _currentYear;
@@ -101,7 +93,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<TotalListItem> IncomesList
+        public List<TotalListItem> IncomesList
         {
             get => _incomesList;
             set
@@ -111,7 +103,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public IEnumerable<TotalListItem> ExpensesList
+        public List<TotalListItem> ExpensesList
         {
             get => _expensesList;
             set
@@ -161,24 +153,6 @@ namespace Money_Vault.ViewModel
                 OnPropertyChanged("SeriesGeneral");
             }
         }
-        public SeriesCollection SeriesIncomes
-        {
-            get => _seriesIncomes;
-            set
-            {
-                _seriesIncomes = value;
-                OnPropertyChanged("SeriesIncomes");
-            }
-        }
-        public SeriesCollection SeriesExpenses
-        {
-            get => _seriesExpenses;
-            set
-            {
-                _seriesExpenses = value;
-                OnPropertyChanged("SeriesExpenses");
-            }
-        }
 
         public bool IsEnableComboBoxMonth
         {
@@ -201,9 +175,6 @@ namespace Money_Vault.ViewModel
 
         public void UpdateData()
         {
-            _minIncomesDate = GetMinDate(true);
-            _minExpensesDate = GetMinDate(false);
-
             if (CurrentYear == "Все годы")
             {
                 if (CurrentMonth != "Полный год")
@@ -220,12 +191,12 @@ namespace Money_Vault.ViewModel
             if (IsRemoveExpenses && !IsRemoveIncomes)
             {
                 FillIncomesTotalList();
-                ExpensesList = new List<TotalListItem>();
+                ExpensesList.Clear();
             }
             else if (IsRemoveIncomes && !IsRemoveExpenses)
             {
                 FillExpensesTotalList();
-                IncomesList = new List<TotalListItem>();
+                IncomesList.Clear();
             }
             else if (!IsRemoveIncomes && !IsRemoveExpenses)
             {
@@ -234,8 +205,8 @@ namespace Money_Vault.ViewModel
             }
             else
             {
-                IncomesList = new List<TotalListItem>();
-                ExpensesList = new List<TotalListItem>();
+                IncomesList.Clear();
+                ExpensesList.Clear();
             }
 
             FillPieChartData();
@@ -280,14 +251,13 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-
             YearsList.Sort();
             YearsList.Add("Все годы");
         }
 
         private void FillIncomesTotalList()
         {
-            List<TotalListItem> tempList = new List<TotalListItem>();
+            IncomesList.Clear();
             int totalSum = 0;
 
             using (DatabaseContext database = new DatabaseContext())
@@ -310,7 +280,7 @@ namespace Money_Vault.ViewModel
                 {
                     if (item.TotalAmount != 0)
                     {
-                        tempList.Add(new TotalListItem()
+                        IncomesList.Add(new TotalListItem()
                         {
                             TypeName = database.Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                             TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
@@ -321,32 +291,16 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            tempList.Add(new TotalListItem()
+            IncomesList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
             });
-
-            _incomesForecast = CalculateForecast(true);
-
-            tempList.Add(new TotalListItem()
-            {
-                TypeName = "Прогноз",
-                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(_incomesForecast)
-            });
-
-            tempList.Add(new TotalListItem()
-            {
-                TypeName = "Разница",
-                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(Math.Abs(totalSum - _incomesForecast))
-            });
-
-            IncomesList = tempList;
         }
 
         private void FillExpensesTotalList()
         {
-            List<TotalListItem> tempList = new List<TotalListItem>();
+            ExpensesList.Clear();
             int totalSum = 0;
 
             using (DatabaseContext database = new DatabaseContext())
@@ -369,7 +323,7 @@ namespace Money_Vault.ViewModel
                 {
                     if (item.TotalAmount != 0)
                     {
-                        tempList.Add(new TotalListItem()
+                        ExpensesList.Add(new TotalListItem()
                         {
                             TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                             TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
@@ -380,129 +334,11 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            tempList.Add(new TotalListItem()
+            ExpensesList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
             });
-
-            _expensesForecast = CalculateForecast(false);
-
-            tempList.Add(new TotalListItem()
-            {
-                TypeName = "Прогноз",
-                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(_expensesForecast)
-            });
-
-            tempList.Add(new TotalListItem()
-            {
-                TypeName = "Разница",
-                TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(Math.Abs(totalSum - _expensesForecast))
-            });
-
-            ExpensesList = tempList;
-        }
-
-        private int CalculateForecast(bool isIncomeForecast)
-        {
-            int timeDiff = 0;
-            int tempTotalAmount = 0;
-
-            using (DatabaseContext database = new DatabaseContext())
-            {
-                if (CurrentMonth != "Полный год")
-                {
-                    if (isIncomeForecast)
-                    {
-                        timeDiff = (Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2])) * 12
-                        + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minIncomesDate.Split('.')[1]);
-
-                        tempTotalAmount = (from income in database.Incomes.ToList()
-                                           where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
-                                           && AdditionalFunctions.FindLessDate(income.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                           select income.Total_Amount).Sum();
-                    }
-                    else
-                    {
-                        timeDiff = (Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2])) * 12
-                        + MonthsList.IndexOf(CurrentMonth) + 1 - Convert.ToInt32(_minExpensesDate.Split('.')[1]);
-
-                        tempTotalAmount = (from expense in database.Expenses.ToList()
-                                           where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
-                                           && AdditionalFunctions.FindLessDate(expense.Date, $"01.{MonthsList.IndexOf(CurrentMonth) + 1}.{CurrentYear}")
-                                           select expense.Total_Price).Sum();
-                    }
-                }
-                else
-                {
-                    if (CurrentYear != "Все годы")
-                    {
-                        if (isIncomeForecast)
-                        {
-                            timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minIncomesDate.Split('.')[2]);
-
-                            tempTotalAmount = (from income in database.Incomes.ToList()
-                                               where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
-                                               && AdditionalFunctions.FindLessDate(income.Date, $"01.01.{CurrentYear}")
-                                               select income.Total_Amount).Sum();
-                        }
-                        else
-                        {
-                            timeDiff = Convert.ToInt32(CurrentYear) - Convert.ToInt32(_minExpensesDate.Split('.')[2]);
-
-                            tempTotalAmount = (from expense in database.Expenses.ToList()
-                                               where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
-                                               && AdditionalFunctions.FindLessDate(expense.Date, $"01.01.{CurrentYear}")
-                                               select expense.Total_Price).Sum();
-                        }
-                    }
-                    else
-                    {
-                        timeDiff = 0;
-                        tempTotalAmount = 0;
-                    }
-                }
-            }
-
-            if (tempTotalAmount == 0 || timeDiff == 0)
-            {
-                return tempTotalAmount;
-            }
-
-            return (int)((double)tempTotalAmount / (double)timeDiff);
-        }
-
-        private string GetMinDate(bool isIncomesList)
-        {
-            string minDate = "99.99.9999";
-
-            IEnumerable<string> tempDates = new List<string>();
-
-            using (DatabaseContext database = new DatabaseContext())
-            {
-                if (isIncomesList)
-                {
-                    tempDates = from income in database.Incomes.ToList()
-                                where income.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
-                                select income.Date;
-                }
-                else
-                {
-                    tempDates = from expense in database.Expenses.ToList()
-                                where expense.User_Id == Convert.ToInt32(Settings.Default["currentUserId"])
-                                select expense.Date;
-                }
-            }
-
-            foreach (var date in tempDates)
-            {
-                if (AdditionalFunctions.FindLessDate(date, minDate))
-                {
-                    minDate = date;
-                }
-            }
-
-            return minDate;
         }
 
         private void FillPieChartData()
@@ -513,133 +349,56 @@ namespace Money_Vault.ViewModel
                 NumberDecimalDigits = 2
             };
 
-            SeriesCollection tempCollectionIncomes = new SeriesCollection();
-            SeriesCollection tempCollectionExpenses = new SeriesCollection();
-            SeriesCollection tempCollectionGeneral = new SeriesCollection();
+            SeriesGeneral.Clear();
 
-            if (IncomesList.Count() > 3)
+            if (IncomesList.Count() > 1)
             {
-                for (int i = 0; i < IncomesList.Count() - 3; i++)
+                for (int i = 0; i < IncomesList.Count() - 1; i++)
                 {
-                    tempCollectionGeneral.Add(
+                    SeriesGeneral.Add(
                         new PieSeries
                         {
                             Title = IncomesList.ToList()[i].TypeName,
                             Values = new ChartValues<ObservableValue>
                             {
-                            new ObservableValue(Convert.ToDouble(IncomesList.ToList()[i].TotalAmount, provider))
+                                new ObservableValue(Convert.ToDouble(IncomesList.ToList()[i].TotalAmount, provider))
                             },
                             DataLabels = false
                         });
                 }
-
-                tempCollectionIncomes.Add(
-                    new PieSeries
-                    {
-                        Title = "Текущий доход",
-                        Values = new ChartValues<ObservableValue>
-                        {
-                            new ObservableValue(Convert.ToDouble(IncomesList.ToList()[IncomesList.Count() - 3].TotalAmount, provider))
-                        },
-                        DataLabels = false
-                    });
-                tempCollectionIncomes.Add(
-                    new PieSeries
-                    {
-                        Title = "Прогноз",
-                        Values = new ChartValues<ObservableValue>
-                        {
-                            new ObservableValue(AdditionalFunctions.ConvertToCurrencyFormat(_incomesForecast))
-                        },
-                        DataLabels = false
-                    });
-            }
-            else
-            {
-                tempCollectionIncomes.Add(
-                        new PieSeries
-                        {
-                            Title = "Нет доходов",
-                            Values = new ChartValues<ObservableValue>
-                            {
-                            new ObservableValue(100)
-                            },
-                            DataLabels = false,
-                            Fill = new SolidColorBrush(Colors.Gray)
-                        });
             }
 
-            if (ExpensesList.Count() > 3)
+            if (ExpensesList.Count() > 1)
             {
-                for (int i = 0; i < ExpensesList.Count() - 3; i++)
+                for (int i = 0; i < ExpensesList.Count() - 1; i++)
                 {
-                    tempCollectionGeneral.Add(
+                    SeriesGeneral.Add(
                         new PieSeries
                         {
                             Title = ExpensesList.ToList()[i].TypeName,
                             Values = new ChartValues<ObservableValue>
                             {
-                            new ObservableValue(Convert.ToDouble(ExpensesList.ToList()[i].TotalAmount, provider))
+                                new ObservableValue(Convert.ToDouble(ExpensesList.ToList()[i].TotalAmount, provider))
                             },
                             DataLabels = false
                         });
                 }
+            }
 
-                tempCollectionExpenses.Add(
+            if (ExpensesList.Count() <= 1 && IncomesList.Count() <= 1)
+            {
+                SeriesGeneral.Add(
                     new PieSeries
                     {
-                        Title = "Текущий расход",
+                        Title = "Нет расходов\n и доходов",
                         Values = new ChartValues<ObservableValue>
                         {
-                            new ObservableValue(Convert.ToDouble(ExpensesList.ToList()[ExpensesList.Count() - 3].TotalAmount, provider))
+                            new ObservableValue(100)
                         },
-                        DataLabels = false
-                    });
-
-                tempCollectionExpenses.Add(
-                    new PieSeries
-                    {
-                        Title = "Прогноз",
-                        Values = new ChartValues<ObservableValue>
-                        {
-                            new ObservableValue(AdditionalFunctions.ConvertToCurrencyFormat(_expensesForecast))
-                        },
-                        DataLabels = false
+                        DataLabels = false,
+                        Fill = new SolidColorBrush(Colors.Gray)
                     });
             }
-            else
-            {
-                tempCollectionExpenses.Add(
-                        new PieSeries
-                        {
-                            Title = "Нет расходов",
-                            Values = new ChartValues<ObservableValue>
-                            {
-                            new ObservableValue(100)
-                            },
-                            DataLabels = false,
-                            Fill = new SolidColorBrush(Colors.Gray)
-                        });
-            }
-
-            if (ExpensesList.Count() <= 3 && IncomesList.Count() <= 3)
-            {
-                tempCollectionGeneral.Add(
-                        new PieSeries
-                        {
-                            Title = "Нет расходов\n и доходов",
-                            Values = new ChartValues<ObservableValue>
-                            {
-                            new ObservableValue(100)
-                            },
-                            DataLabels = false,
-                            Fill = new SolidColorBrush(Colors.Gray)
-                        });
-            }
-
-            SeriesIncomes = tempCollectionIncomes;
-            SeriesExpenses = tempCollectionExpenses;
-            SeriesGeneral = tempCollectionGeneral;
         }
     }
 }

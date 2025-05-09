@@ -54,15 +54,13 @@
             x:Name="checkBox_Income" 
             Content="Убрать доходы" 
             HorizontalAlignment="Left" 
-            Margin="30,405,0,0" 
-            VerticalAlignment="Top" 
+            Margin="30,770,0,62" 
             Background="White" 
             BorderBrush="Black" 
             HorizontalContentAlignment="Left" 
             VerticalContentAlignment="Center" 
             FontWeight="Bold" 
             FontSize="20" 
-            Height="20" 
             Width="204" 
             BorderThickness="3,3,3,3"
             Command="{Binding RemoveTypeCommand}"
@@ -73,61 +71,19 @@
             x:Name="checkBox_Expense" 
             Content="Убрать расходы" 
             HorizontalAlignment="Left" 
-            Margin="30,441,0,0" 
-            VerticalAlignment="Top" 
+            Margin="30,806,0,26" 
             Background="White" 
             BorderBrush="Black" 
             HorizontalContentAlignment="Left" 
             VerticalContentAlignment="Center" 
             FontWeight="Bold" 
             FontSize="20" 
-            Height="20" 
             Width="204" 
             BorderThickness="3,3,3,3"
             Command="{Binding RemoveTypeCommand}"
             IsChecked="{Binding IsRemoveExpenses, Mode=TwoWay}" 
             Panel.ZIndex="1"
             />
-
-        <Label 
-            Style="{StaticResource Label_Common}"
-            Content="Прогноз" 
-            HorizontalAlignment="Left" 
-            Margin="30,466,0,0" 
-            VerticalAlignment="Top" 
-            Background="White" 
-            BorderBrush="Black" 
-            HorizontalContentAlignment="Center" 
-            VerticalContentAlignment="Center"  
-            FontWeight="Bold" 
-            FontSize="24" 
-            Width="702"/>
-
-        <Label 
-            Style="{StaticResource Label_Common}"
-            Content="Расходы" 
-            HorizontalAlignment="Left" 
-            Margin="529,794,0,0" 
-            VerticalAlignment="Top" 
-            Background="White" 
-            BorderBrush="Black" 
-            HorizontalContentAlignment="Center" 
-            VerticalContentAlignment="Center" 
-            FontWeight="Bold" 
-            FontSize="24"/>
-
-        <Label 
-            Style="{StaticResource Label_Common}"
-            Content="Доходы" 
-            HorizontalAlignment="Left" 
-            Margin="148,794,0,0" 
-            VerticalAlignment="Top" 
-            Background="White" 
-            BorderBrush="Black" 
-            HorizontalContentAlignment="Center" 
-            VerticalContentAlignment="Center" 
-            FontWeight="Bold" 
-            FontSize="24"/>
 
         <ComboBox 
             Template="{DynamicResource ComboBoxTemplateCommon}"
@@ -208,74 +164,22 @@
 
         <lvc:PieChart x:Name="pieChart_General" 
             Hoverable="True" 
-            Margin="30,61,706,432"
-            LegendLocation="Right"
+            Margin="30,63,676,120"
+            LegendLocation="Bottom"
             Series="{Binding SeriesGeneral, Mode=OneWay}">
 
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend 
-                    BulletSize="18" 
-                    TextBlock.FontSize="18"
-                    TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
-                    TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black" 
-                    Width="180" 
-                    Height="221"/>
-            </lvc:PieChart.ChartLegend>
-
-            <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip 
-                    BulletSize="18"
+                    BulletSize="20" 
                     TextBlock.FontSize="18"
                     TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
                     TextBlock.FontStyle="Normal"
                     TextBlock.Foreground="Black"
-                    Background="LightGray"/>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
-
-        <lvc:PieChart x:Name="pieChart_Incomes" 
-            Hoverable="True" 
-            Margin="30,505,1079,65"
-            LegendLocation="Bottom"
-            Series="{Binding SeriesIncomes, Mode=OneWay}" 
-            Width="330">
-
-            <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend 
-                    BulletSize="18" 
-                    TextBlock.FontSize="18"
-                    TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
-                    TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black" Width="170"/>
+                    Margin="-6,0,0,0"
+                    Width="733"
+                    Height="90"/>
             </lvc:PieChart.ChartLegend>
 
-            <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip 
-                    BulletSize="18"
-                    TextBlock.FontSize="18"
-                    TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
-                    TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black"
-                    Background="LightGray"/>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
-
-        <lvc:PieChart x:Name="pieChart_Expenses" 
-            Hoverable="True" 
-            Margin="417,505,692,65"
-            LegendLocation="Bottom"
-            Series="{Binding SeriesExpenses, Mode=OneWay}" 
-            Width="330"
-            >
-            <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend 
-                    BulletSize="18" 
-                    TextBlock.FontSize="18"
-                    TextBlock.FontFamily="{StaticResource Balsamiq Sans}"
-                    TextBlock.FontStyle="Normal"
-                    TextBlock.Foreground="Black" Width="170"/>
-            </lvc:PieChart.ChartLegend>
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip 
                     BulletSize="18"
