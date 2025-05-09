@@ -17,5 +17,11 @@
     <Setting Name="currentExpenseMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="isKeepPassword" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="keepPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NoPassword</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

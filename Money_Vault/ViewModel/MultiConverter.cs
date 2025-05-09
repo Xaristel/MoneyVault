@@ -8,8 +8,7 @@ namespace Money_Vault.ViewModel
 
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Tuple<string, string, bool> tuple = new Tuple<string, string, bool>((string)values[0], (string)values[1], (bool)values[2]);
-            return tuple;
+            return new Tuple<string, string, bool, bool>((string)values[0], (string)values[1], (bool)values[2], (bool)values[3]);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)

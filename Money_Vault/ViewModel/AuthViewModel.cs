@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Money_Vault.Database;
+using Money_Vault.Properties;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using Money_Vault.Database;
-using Money_Vault.Properties;
 
 namespace Money_Vault.ViewModel
 {
@@ -12,6 +12,8 @@ namespace Money_Vault.ViewModel
     {
         private string _login;
         private bool _isKeepLogin;
+        private string _password;
+        private bool _isKeepPassword;
 
         private RelayCommand _registerCommand;
         private RelayCommand _authCommand;
@@ -36,13 +38,39 @@ namespace Money_Vault.ViewModel
             }
         }
 
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+
+        public bool IsKeepPassword
+        {
+            get => _isKeepPassword;
+            set
+            {
+                _isKeepPassword = value;
+                OnPropertyChanged("IsKeepPassword");
+            }
+        }
+
         public AuthViewModel()
         {
             IsKeepLogin = Convert.ToBoolean(Settings.Default["isKeepLogin"]);
+            IsKeepPassword = Convert.ToBoolean(Settings.Default["isKeepPassword"]);
 
             if (IsKeepLogin)
             {
                 Login = Settings.Default["keepLogin"].ToString();
+            }
+
+            if (IsKeepPassword)
+            {
+                Password = Settings.Default["keepPassword"].ToString();
             }
 
             if (!File.Exists(@"Database/Database.db"))
@@ -76,13 +104,16 @@ namespace Money_Vault.ViewModel
                 return _authCommand ??
                 (_authCommand = new RelayCommand(async tuple =>
                 {
-                    string login = ((Tuple<string, string, bool>)tuple).Item1;
-                    string password = ((Tuple<string, string, bool>)tuple).Item2;
-                    IsKeepLogin = ((Tuple<string, string, bool>)tuple).Item3;
+                    string login = ((Tuple<string, string, bool, bool>)tuple).Item1;
+                    string password = ((Tuple<string, string, bool, bool>)tuple).Item2;
+                    IsKeepLogin = ((Tuple<string, string, bool, bool>)tuple).Item3;
+                    IsKeepPassword = ((Tuple<string, string, bool, bool>)tuple).Item4;
 
                     string secretPassword = Convert.ToString(login.GetHashCode() + password.GetHashCode());
                     Settings.Default["isKeepLogin"] = IsKeepLogin;
                     Settings.Default["keepLogin"] = login;
+                    Settings.Default["isKeepPassword"] = IsKeepPassword;
+                    Settings.Default["keepPassword"] = password;
 
                     using (DatabaseContext database = new DatabaseContext())
                     {
@@ -99,7 +130,7 @@ namespace Money_Vault.ViewModel
                             var mainViewModel = new MainViewModel();
 
                             displayRootRegistry.ShowPresentation(mainViewModel);
-                            Thread.Sleep(200);
+                            Thread.Sleep(150);
                             displayRootRegistry.HidePresentation(this);
                         }
                         else
