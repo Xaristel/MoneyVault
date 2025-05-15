@@ -19,8 +19,8 @@ namespace Money_Vault.ViewModel
         private bool _isRemoveExpenses;
         private bool _isEnableComboBoxMonth;
 
-        private List<TotalListItem> _incomesList = new List<TotalListItem>();
-        private List<TotalListItem> _expensesList = new List<TotalListItem>();
+        private IEnumerable<TotalListItem> _incomesList;
+        private IEnumerable<TotalListItem> _expensesList;
         private SeriesCollection _seriesGeneral = new SeriesCollection();
 
         private List<string> _yearsList;
@@ -93,7 +93,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public List<TotalListItem> IncomesList
+        public IEnumerable<TotalListItem> IncomesList
         {
             get => _incomesList;
             set
@@ -103,7 +103,7 @@ namespace Money_Vault.ViewModel
             }
         }
 
-        public List<TotalListItem> ExpensesList
+        public IEnumerable<TotalListItem> ExpensesList
         {
             get => _expensesList;
             set
@@ -191,12 +191,12 @@ namespace Money_Vault.ViewModel
             if (IsRemoveExpenses && !IsRemoveIncomes)
             {
                 FillIncomesTotalList();
-                ExpensesList.Clear();
+                ExpensesList = null;
             }
             else if (IsRemoveIncomes && !IsRemoveExpenses)
             {
                 FillExpensesTotalList();
-                IncomesList.Clear();
+                IncomesList = null;
             }
             else if (!IsRemoveIncomes && !IsRemoveExpenses)
             {
@@ -205,8 +205,8 @@ namespace Money_Vault.ViewModel
             }
             else
             {
-                IncomesList.Clear();
-                ExpensesList.Clear();
+                IncomesList = null;
+                ExpensesList = null;
             }
 
             FillPieChartData();
@@ -257,7 +257,8 @@ namespace Money_Vault.ViewModel
 
         private void FillIncomesTotalList()
         {
-            IncomesList.Clear();
+            IncomesList = null;
+            var incomesList = new List<TotalListItem>();
             int totalSum = 0;
 
             using (DatabaseContext database = new DatabaseContext())
@@ -280,7 +281,7 @@ namespace Money_Vault.ViewModel
                 {
                     if (item.TotalAmount != 0)
                     {
-                        IncomesList.Add(new TotalListItem()
+                        incomesList.Add(new TotalListItem()
                         {
                             TypeName = database.Income_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                             TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
@@ -291,16 +292,18 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            IncomesList.Add(new TotalListItem()
+            incomesList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
             });
+            IncomesList = incomesList;
         }
 
         private void FillExpensesTotalList()
         {
-            ExpensesList.Clear();
+            ExpensesList = null;
+            var expensesList = new List<TotalListItem>();
             int totalSum = 0;
 
             using (DatabaseContext database = new DatabaseContext())
@@ -323,7 +326,7 @@ namespace Money_Vault.ViewModel
                 {
                     if (item.TotalAmount != 0)
                     {
-                        ExpensesList.Add(new TotalListItem()
+                        expensesList.Add(new TotalListItem()
                         {
                             TypeName = database.Expense_Types.ToList().Find(x => x.Id == item.TypeId).Name,
                             TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(item.TotalAmount)
@@ -334,11 +337,12 @@ namespace Money_Vault.ViewModel
                 }
             }
 
-            ExpensesList.Add(new TotalListItem()
+            expensesList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
                 TotalAmount = AdditionalFunctions.ConvertToCurrencyFormat(totalSum)
             });
+            ExpensesList = expensesList;
         }
 
         private void FillPieChartData()
