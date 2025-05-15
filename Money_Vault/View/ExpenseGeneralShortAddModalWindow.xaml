@@ -160,7 +160,6 @@
             HorizontalAlignment="Left" 
             Margin="25,280,0,0" 
             VerticalAlignment="Top" 
-            FontFamily="Balsamiq Sans" 
             FontSize="22" 
             RenderTransformOrigin="0.748,0.571"/>
 
