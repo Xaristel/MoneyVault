@@ -1,10 +1,11 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Money_Vault.Model
 {
     [Table("Income_Types")]
-    public partial class Income_Type : BaseModel
+    public partial class Income_Type : BaseModel, IComparable<Income_Type>
     {
         private int _id;
         private int _userId;
@@ -50,6 +51,11 @@ namespace Money_Vault.Model
                 _note = value;
                 OnPropertyChanged("Note");
             }
+        }
+
+        public int CompareTo(Income_Type other)
+        {
+            return Name.CompareTo(other.Name);
         }
     }
 }
