@@ -1,6 +1,8 @@
-﻿namespace Money_Vault.ViewModel
+﻿using System;
+
+namespace Money_Vault.ViewModel
 {
-    public class TotalListItem
+    public class TotalListItem : IComparable<TotalListItem>
     {
         private string _typeName;
         private double _totalAmount;
@@ -20,6 +22,11 @@
             {
                 _totalAmount = value;
             }
+        }
+
+        public int CompareTo(TotalListItem other)
+        {
+            return other.TotalAmount.CompareTo(TotalAmount);
         }
     }
 }

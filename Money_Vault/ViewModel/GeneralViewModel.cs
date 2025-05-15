@@ -191,12 +191,12 @@ namespace Money_Vault.ViewModel
             if (IsRemoveExpenses && !IsRemoveIncomes)
             {
                 FillIncomesTotalList();
-                ExpensesList = null;
+                ExpensesList = Enumerable.Empty<TotalListItem>();
             }
             else if (IsRemoveIncomes && !IsRemoveExpenses)
             {
                 FillExpensesTotalList();
-                IncomesList = null;
+                IncomesList = Enumerable.Empty<TotalListItem>();
             }
             else if (!IsRemoveIncomes && !IsRemoveExpenses)
             {
@@ -205,8 +205,8 @@ namespace Money_Vault.ViewModel
             }
             else
             {
-                IncomesList = null;
-                ExpensesList = null;
+                IncomesList = Enumerable.Empty<TotalListItem>();
+                ExpensesList = Enumerable.Empty<TotalListItem>();
             }
 
             FillPieChartData();
@@ -257,7 +257,7 @@ namespace Money_Vault.ViewModel
 
         private void FillIncomesTotalList()
         {
-            IncomesList = null;
+            IncomesList = Enumerable.Empty<TotalListItem>();
             var incomesList = new List<TotalListItem>();
             int totalSum = 0;
 
@@ -292,6 +292,7 @@ namespace Money_Vault.ViewModel
                 }
             }
 
+            incomesList.Sort();
             incomesList.Add(new TotalListItem()
             {
                 TypeName = "Итого",
@@ -302,7 +303,7 @@ namespace Money_Vault.ViewModel
 
         private void FillExpensesTotalList()
         {
-            ExpensesList = null;
+            ExpensesList = Enumerable.Empty<TotalListItem>();
             var expensesList = new List<TotalListItem>();
             int totalSum = 0;
 
@@ -337,6 +338,7 @@ namespace Money_Vault.ViewModel
                 }
             }
 
+            expensesList.Sort();
             expensesList.Add(new TotalListItem()
             {
                 TypeName = "Итого",

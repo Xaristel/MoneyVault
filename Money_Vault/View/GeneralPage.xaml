@@ -127,7 +127,8 @@
             ItemsSource="{Binding IncomesList, Mode=OneWay}" 
             Margin="800,61,20,431" 
             Height="360" 
-            CanUserSortColumns="False">
+            CanUserSortColumns="False"
+            LoadingRow="ColorTotalRow">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Категория дохода" 
@@ -148,7 +149,8 @@
             ItemsSource="{Binding ExpensesList, Mode=OneWay}" 
             Margin="800,466,20,26" 
             Height="360" 
-            CanUserSortColumns="False">
+            CanUserSortColumns="False"
+            LoadingRow="ColorTotalRow">
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="Категория расхода" 
@@ -164,7 +166,7 @@
 
         <lvc:PieChart x:Name="pieChart_General" 
             Hoverable="True" 
-            Margin="30,63,676,120"
+            Margin="30,63,676,95"
             LegendLocation="Bottom"
             Series="{Binding SeriesGeneral, Mode=OneWay}">
 
@@ -177,7 +179,7 @@
                     TextBlock.Foreground="Black"
                     Margin="-6,0,0,0"
                     Width="733"
-                    Height="90"/>
+                    Height="145"/>
             </lvc:PieChart.ChartLegend>
 
             <lvc:PieChart.DataTooltip>

@@ -1,5 +1,6 @@
 ﻿using Money_Vault.ViewModel;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Money_Vault.View
 {
@@ -13,6 +14,23 @@ namespace Money_Vault.View
             InitializeComponent();
 
             DataContext = new GeneralViewModel();
+        }
+
+        private void ColorTotalRow(object sender, DataGridRowEventArgs e)
+        {
+            DataGridRow row = e.Row;
+
+            if (e.Row.DataContext is TotalListItem data)
+            {
+                if (data.TypeName == "Итого")
+                {
+                    row.Background = Brushes.LightGray;
+                }
+                else
+                {
+                    row.Background = Brushes.White;
+                }
+            }
         }
     }
 }
