@@ -5,8 +5,6 @@ using Money_Vault.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Money_Vault.ViewModel
@@ -175,11 +173,17 @@ namespace Money_Vault.ViewModel
         {
             using (DatabaseContext database = new DatabaseContext())
             {
-                CategoriesList = from item in database.Expense_Types.ToList()
+                var categoriesList = database.Expense_Types.ToList();
+                categoriesList.Sort();
+
+                CategoriesList = from item in categoriesList
                                  where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                  select item.Name;
 
-                ShopsList = from item in database.Shops.ToList()
+                var shopsList = database.Shops.ToList();
+                shopsList.Sort();
+
+                ShopsList = from item in shopsList
                             where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                             select item.Name;
             }

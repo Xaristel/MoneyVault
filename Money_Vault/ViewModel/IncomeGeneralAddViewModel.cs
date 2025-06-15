@@ -124,7 +124,6 @@ namespace Money_Vault.ViewModel
         {
             using (DatabaseContext database = new DatabaseContext())
             {
-
                 var incomeTypes = database.Income_Types.ToList();
                 incomeTypes.Sort();
 

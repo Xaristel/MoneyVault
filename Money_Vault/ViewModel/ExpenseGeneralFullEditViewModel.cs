@@ -217,15 +217,21 @@ namespace Money_Vault.ViewModel
         {
             using (DatabaseContext database = new DatabaseContext())
             {
-                CategoriesList = from item in database.Expense_Types.ToList()
+                var categoriesList = database.Expense_Types.ToList();
+                categoriesList.Sort();
+                CategoriesList = from item in categoriesList
                                  where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                  select item.Name;
 
-                SubcategoriesList = from item in database.Expense_Subtypes.ToList()
+                var subcategoriesList = database.Expense_Subtypes.ToList();
+                subcategoriesList.Sort();
+                SubcategoriesList = from item in subcategoriesList
                                     where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                                     select item.Name;
 
-                ShopsList = from item in database.Shops.ToList()
+                var shopsList = database.Shops.ToList();
+                shopsList.Sort();
+                ShopsList = from item in shopsList
                             where item.UserId == Convert.ToInt32(Settings.Default["currentUserId"])
                             select item.Name;
 
